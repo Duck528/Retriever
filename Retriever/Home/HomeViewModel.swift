@@ -6,8 +6,16 @@
 //  Copyright © 2018 thekan. All rights reserved.
 //
 
-import Foundation
+import RxSwift
+import RxCocoa
 
 class HomeViewModel {
+    enum SyncState {
+        case success
+        case fail
+        case unregistered
+        case progress(ratio: CGFloat)
+    }
     
+    let synchronizedToRemote = BehaviorRelay<SyncState>(value: .unregistered)
 }

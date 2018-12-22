@@ -31,13 +31,122 @@
             <objects>
                 <viewController id="RbG-eT-XMv" customClass="HomeViewController" customModule="Retriever" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="mA7-xz-FFm">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                        <rect key="frame" x="0.0" y="0.0" width="712" height="628"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="hRc-i8-s7u" userLabel="Status View">
+                                <rect key="frame" x="0.0" y="592" width="712" height="36"/>
+                                <subviews>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9Ww-RV-GL9">
+                                        <rect key="frame" x="18" y="9" width="676" height="19"/>
+                                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="동기화되지 않음" id="xZP-mI-GX1">
+                                            <font key="font" size="13" name="HelveticaNeue"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                    <box titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="Ren-h2-gu2">
+                                        <rect key="frame" x="-3" y="-4" width="718" height="42"/>
+                                        <view key="contentView" id="5vd-Na-nJc">
+                                            <rect key="frame" x="3" y="3" width="712" height="36"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        </view>
+                                    </box>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="Ren-h2-gu2" secondAttribute="bottom" id="3dg-UN-J00"/>
+                                    <constraint firstItem="9Ww-RV-GL9" firstAttribute="centerY" secondItem="hRc-i8-s7u" secondAttribute="centerY" id="Pwb-sI-Bcg"/>
+                                    <constraint firstAttribute="trailing" secondItem="9Ww-RV-GL9" secondAttribute="trailing" constant="20" id="Sf7-hE-PKt"/>
+                                    <constraint firstItem="Ren-h2-gu2" firstAttribute="top" secondItem="hRc-i8-s7u" secondAttribute="top" id="XdO-IT-4O7"/>
+                                    <constraint firstItem="9Ww-RV-GL9" firstAttribute="centerX" secondItem="hRc-i8-s7u" secondAttribute="centerX" id="hID-6m-LDd"/>
+                                    <constraint firstItem="9Ww-RV-GL9" firstAttribute="leading" secondItem="hRc-i8-s7u" secondAttribute="leading" constant="20" id="laa-Nl-yOf"/>
+                                    <constraint firstAttribute="trailing" secondItem="Ren-h2-gu2" secondAttribute="trailing" id="uwS-G7-Wtg"/>
+                                    <constraint firstAttribute="height" constant="36" id="vk0-F7-929"/>
+                                    <constraint firstItem="Ren-h2-gu2" firstAttribute="leading" secondItem="hRc-i8-s7u" secondAttribute="leading" id="x5z-Qr-R0f"/>
+                                </constraints>
+                            </customView>
+                            <tabView translatesAutoresizingMaskIntoConstraints="NO" id="FvO-KS-lZY">
+                                <rect key="frame" x="-7" y="-10" width="726" height="608"/>
+                                <font key="font" metaFont="system"/>
+                                <tabViewItems>
+                                    <tabViewItem label="Tab" identifier="" id="pGv-tu-jqa" userLabel="Home">
+                                        <view key="view" id="8Po-w1-39p">
+                                            <rect key="frame" x="10" y="33" width="706" height="562"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <subviews>
+                                                <customView translatesAutoresizingMaskIntoConstraints="NO" id="s8y-Cj-zUZ" userLabel="Left Side View">
+                                                    <rect key="frame" x="0.0" y="0.0" width="240" height="562"/>
+                                                    <subviews>
+                                                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="SfT-h6-n3x" userLabel="Search Section View">
+                                                            <rect key="frame" x="0.0" y="482" width="240" height="80"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="80" id="QVx-2x-Lfu"/>
+                                                            </constraints>
+                                                        </customView>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="240" id="3L8-Hs-ZAl"/>
+                                                        <constraint firstAttribute="trailing" secondItem="SfT-h6-n3x" secondAttribute="trailing" id="GMM-fw-37u"/>
+                                                        <constraint firstItem="SfT-h6-n3x" firstAttribute="leading" secondItem="s8y-Cj-zUZ" secondAttribute="leading" id="KRe-kq-Mnr"/>
+                                                        <constraint firstItem="SfT-h6-n3x" firstAttribute="top" secondItem="s8y-Cj-zUZ" secondAttribute="top" id="c7k-lK-qMz"/>
+                                                    </constraints>
+                                                </customView>
+                                                <customView translatesAutoresizingMaskIntoConstraints="NO" id="O9l-TM-pq6">
+                                                    <rect key="frame" x="240" y="0.0" width="466" height="562"/>
+                                                </customView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="s8y-Cj-zUZ" firstAttribute="leading" secondItem="8Po-w1-39p" secondAttribute="leading" id="4fo-49-A9A"/>
+                                                <constraint firstAttribute="bottom" secondItem="O9l-TM-pq6" secondAttribute="bottom" id="8p0-0F-SOa"/>
+                                                <constraint firstItem="O9l-TM-pq6" firstAttribute="leading" secondItem="s8y-Cj-zUZ" secondAttribute="trailing" id="WuW-gB-pJs"/>
+                                                <constraint firstItem="O9l-TM-pq6" firstAttribute="top" secondItem="8Po-w1-39p" secondAttribute="top" id="Yi7-OC-vkB"/>
+                                                <constraint firstAttribute="bottom" secondItem="s8y-Cj-zUZ" secondAttribute="bottom" id="dnF-TX-pZE"/>
+                                                <constraint firstAttribute="trailing" secondItem="O9l-TM-pq6" secondAttribute="trailing" id="ire-yf-t9r"/>
+                                                <constraint firstItem="s8y-Cj-zUZ" firstAttribute="top" secondItem="8Po-w1-39p" secondAttribute="top" id="tdb-hO-Lmx"/>
+                                            </constraints>
+                                        </view>
+                                    </tabViewItem>
+                                    <tabViewItem label="View" identifier="" id="SxG-A2-noP">
+                                        <view key="view" id="hDd-D5-KlD">
+                                            <rect key="frame" x="10" y="33" width="706" height="578"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        </view>
+                                    </tabViewItem>
+                                    <tabViewItem label="Tab" identifier="" id="q4A-pa-pRw">
+                                        <view key="view" id="JYA-xD-nef">
+                                            <rect key="frame" x="10" y="33" width="706" height="578"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        </view>
+                                    </tabViewItem>
+                                    <tabViewItem label="Tab" identifier="" id="WoK-bA-GCg">
+                                        <view key="view" id="OWR-yW-pPC">
+                                            <rect key="frame" x="10" y="33" width="706" height="578"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        </view>
+                                    </tabViewItem>
+                                </tabViewItems>
+                            </tabView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="hRc-i8-s7u" firstAttribute="top" secondItem="mA7-xz-FFm" secondAttribute="top" id="09Q-5q-z6N"/>
+                            <constraint firstItem="FvO-KS-lZY" firstAttribute="top" secondItem="hRc-i8-s7u" secondAttribute="bottom" id="3wa-mZ-eMT"/>
+                            <constraint firstAttribute="trailing" secondItem="hRc-i8-s7u" secondAttribute="trailing" id="N6R-B7-Kpa"/>
+                            <constraint firstAttribute="bottom" secondItem="FvO-KS-lZY" secondAttribute="bottom" id="OSi-Y1-CVv"/>
+                            <constraint firstAttribute="trailing" secondItem="FvO-KS-lZY" secondAttribute="trailing" id="Tmc-Ff-iVO"/>
+                            <constraint firstItem="FvO-KS-lZY" firstAttribute="top" secondItem="hRc-i8-s7u" secondAttribute="bottom" id="VDl-Zq-nGi"/>
+                            <constraint firstItem="FvO-KS-lZY" firstAttribute="leading" secondItem="mA7-xz-FFm" secondAttribute="leading" id="fVk-va-JNe"/>
+                            <constraint firstItem="hRc-i8-s7u" firstAttribute="leading" secondItem="mA7-xz-FFm" secondAttribute="leading" id="scX-dM-9aV"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="statusColor" destination="Ren-h2-gu2" id="7Ix-vx-iZX"/>
+                        <outlet property="statusTextField" destination="9Ww-RV-GL9" id="DOc-gS-vvA"/>
+                        <outlet property="statusView" destination="hRc-i8-s7u" id="oSj-9x-uQe"/>
+                    </connections>
                 </viewController>
                 <customObject id="EEf-PK-ekX" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="23" y="444"/>
+            <point key="canvasLocation" x="23" y="667"/>
         </scene>
     </scenes>
 </document>
