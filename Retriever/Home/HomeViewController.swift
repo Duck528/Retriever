@@ -80,7 +80,7 @@ extension HomeViewController {
     private func showStatus() {
         NSAnimationContext.runAnimationGroup { context in
             statusView.heightAnchor
-                .constraint(equalToConstant: 32.0)
+                .constraint(equalToConstant: 0.0)
                 .isActive = true
             context.duration = 0.25
         }
@@ -90,7 +90,7 @@ extension HomeViewController {
         NSAnimationContext.runAnimationGroup { context in
             statusView.heightAnchor
                 .constraint(equalToConstant: 0.0)
-                .isActive = true
+                .isActive = true    
             context.duration = 0.25
         }
     }

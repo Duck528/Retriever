@@ -13,6 +13,6 @@ extension NSColor {
         let redRatio = red / 255.0
         let greenRatio = green / 255.0
         let blueRatio = blue / 255.0
-        self.init(calibratedRed: redRatio, green: greenRatio, blue: blueRatio, alpha: 1)
+        self.init(calibratedRed: redRatio, green: greenRatio, blue: blueRatio, alpha: 0)
     }
 }

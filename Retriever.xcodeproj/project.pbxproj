@@ -17,6 +17,7 @@
 		938CEC4621CE82DC0035B80A /* HomeWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938CEC4521CE82DC0035B80A /* HomeWindowController.swift */; };
 		938CEC4921CE89660035B80A /* IocContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938CEC4821CE89660035B80A /* IocContainer.swift */; };
 		938CEC4C21CEB01D0035B80A /* NSColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938CEC4B21CEB01D0035B80A /* NSColor+Extension.swift */; };
+		938CEC4D21CEB0FD0035B80A /* RxAtomic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 938CEC3C21CE5FFE0035B80A /* RxAtomic.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +42,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				938CEC4D21CEB0FD0035B80A /* RxAtomic.framework in Frameworks */,
 				938CEC3A21CE5E840035B80A /* RxCocoa.framework in Frameworks */,
 				938CEC3821CE5E790035B80A /* RxSwift.framework in Frameworks */,
 			);
@@ -194,6 +196,7 @@
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/Mac/RxSwift.framework",
 				"$(SRCROOT)/Carthage/Build/Mac/RxCocoa.framework",
+				"$(SRCROOT)/Carthage/Build/Mac/RxAtomic.framework",
 			);
 			name = Carthage;
 			outputFileListPaths = (
