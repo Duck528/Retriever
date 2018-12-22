@@ -12,4 +12,20 @@ import RxCocoa
 
 class HomeViewController: NSViewController {
     
+    let viewModel: HomeViewModel
+    
+    override init(nibName nibNameOrNil: NSNib.Name?, bundle nibBundleOrNil: Bundle?) {
+        viewModel = Assembler().resolve()
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
+    
+    required init?(coder: NSCoder) {
+        viewModel = Assembler().resolve()
+        super.init(coder: coder)
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+    }
 }
