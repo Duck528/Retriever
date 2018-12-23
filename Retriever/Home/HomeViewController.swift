@@ -29,6 +29,7 @@ class HomeViewController: NSViewController {
     @IBOutlet weak var statusView: NSView!
     @IBOutlet weak var statusTextField: NSTextField!
     @IBOutlet weak var statusColor: NSBox!
+    
     let viewModel: HomeViewModel
     let disposeBag = DisposeBag()
     
@@ -64,7 +65,7 @@ extension HomeViewController {
                     self.updateStatus(message: "실패", color: ColorTable.brightRed.color)
                     self.showStatus()
                 case .unregistered:
-                    self.updateStatus(message: "실패", color: ColorTable.brightRed.color)
+                    self.updateStatus(message: "등록되지 않음", color: ColorTable.brightRed.color)
                     self.showStatus()
                 case .progress:
                     self.updateStatus(message: "진행 중", color: ColorTable.clear.color)
@@ -90,7 +91,7 @@ extension HomeViewController {
         NSAnimationContext.runAnimationGroup { context in
             statusView.heightAnchor
                 .constraint(equalToConstant: 0.0)
-                .isActive = true    
+                .isActive = true
             context.duration = 0.25
         }
     }
