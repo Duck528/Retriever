@@ -11,10 +11,9 @@
 		938CEC2B21CE5B950035B80A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 938CEC2A21CE5B950035B80A /* Assets.xcassets */; };
 		938CEC3821CE5E790035B80A /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 938CEC3721CE5E790035B80A /* RxSwift.framework */; };
 		938CEC3A21CE5E840035B80A /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 938CEC3921CE5E840035B80A /* RxCocoa.framework */; };
-		938CEC4021CE634A0035B80A /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938CEC3F21CE634A0035B80A /* HomeViewController.swift */; };
-		938CEC4221CE63510035B80A /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938CEC4121CE63510035B80A /* HomeViewModel.swift */; };
-		938CEC4421CE638B0035B80A /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 938CEC4321CE638B0035B80A /* Home.storyboard */; };
-		938CEC4621CE82DC0035B80A /* HomeWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938CEC4521CE82DC0035B80A /* HomeWindowController.swift */; };
+		938CEC4021CE634A0035B80A /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938CEC3F21CE634A0035B80A /* RootViewController.swift */; };
+		938CEC4221CE63510035B80A /* RootViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938CEC4121CE63510035B80A /* RootViewModel.swift */; };
+		938CEC4421CE638B0035B80A /* Root.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 938CEC4321CE638B0035B80A /* Root.storyboard */; };
 		938CEC4921CE89660035B80A /* IocContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938CEC4821CE89660035B80A /* IocContainer.swift */; };
 		938CEC4C21CEB01D0035B80A /* NSColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938CEC4B21CEB01D0035B80A /* NSColor+Extension.swift */; };
 		938CEC4D21CEB0FD0035B80A /* RxAtomic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 938CEC3C21CE5FFE0035B80A /* RxAtomic.framework */; };
@@ -29,10 +28,9 @@
 		938CEC3721CE5E790035B80A /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = Carthage/Build/Mac/RxSwift.framework; sourceTree = "<group>"; };
 		938CEC3921CE5E840035B80A /* RxCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxCocoa.framework; path = Carthage/Build/Mac/RxCocoa.framework; sourceTree = "<group>"; };
 		938CEC3C21CE5FFE0035B80A /* RxAtomic.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxAtomic.framework; path = Carthage/Build/Mac/RxAtomic.framework; sourceTree = "<group>"; };
-		938CEC3F21CE634A0035B80A /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
-		938CEC4121CE63510035B80A /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
-		938CEC4321CE638B0035B80A /* Home.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Home.storyboard; sourceTree = "<group>"; };
-		938CEC4521CE82DC0035B80A /* HomeWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeWindowController.swift; sourceTree = "<group>"; };
+		938CEC3F21CE634A0035B80A /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
+		938CEC4121CE63510035B80A /* RootViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewModel.swift; sourceTree = "<group>"; };
+		938CEC4321CE638B0035B80A /* Root.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Root.storyboard; sourceTree = "<group>"; };
 		938CEC4821CE89660035B80A /* IocContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IocContainer.swift; sourceTree = "<group>"; };
 		938CEC4B21CEB01D0035B80A /* NSColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSColor+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -73,7 +71,7 @@
 			children = (
 				938CEC4A21CEB00D0035B80A /* Extension */,
 				938CEC4721CE89350035B80A /* Common */,
-				938CEC3E21CE63260035B80A /* Home */,
+				938CEC3E21CE63260035B80A /* Root */,
 				938CEC2621CE5B940035B80A /* AppDelegate.swift */,
 				938CEC2A21CE5B950035B80A /* Assets.xcassets */,
 				938CEC2F21CE5B950035B80A /* Info.plist */,
@@ -92,15 +90,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		938CEC3E21CE63260035B80A /* Home */ = {
+		938CEC3E21CE63260035B80A /* Root */ = {
 			isa = PBXGroup;
 			children = (
-				938CEC4321CE638B0035B80A /* Home.storyboard */,
-				938CEC3F21CE634A0035B80A /* HomeViewController.swift */,
-				938CEC4121CE63510035B80A /* HomeViewModel.swift */,
-				938CEC4521CE82DC0035B80A /* HomeWindowController.swift */,
+				938CEC4321CE638B0035B80A /* Root.storyboard */,
+				938CEC3F21CE634A0035B80A /* RootViewController.swift */,
+				938CEC4121CE63510035B80A /* RootViewModel.swift */,
 			);
-			path = Home;
+			path = Root;
 			sourceTree = "<group>";
 		};
 		938CEC4721CE89350035B80A /* Common */ = {
@@ -178,7 +175,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				938CEC4421CE638B0035B80A /* Home.storyboard in Resources */,
+				938CEC4421CE638B0035B80A /* Root.storyboard in Resources */,
 				938CEC2B21CE5B950035B80A /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -215,11 +212,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				938CEC2721CE5B940035B80A /* AppDelegate.swift in Sources */,
-				938CEC4021CE634A0035B80A /* HomeViewController.swift in Sources */,
+				938CEC4021CE634A0035B80A /* RootViewController.swift in Sources */,
 				938CEC4C21CEB01D0035B80A /* NSColor+Extension.swift in Sources */,
 				938CEC4921CE89660035B80A /* IocContainer.swift in Sources */,
-				938CEC4621CE82DC0035B80A /* HomeWindowController.swift in Sources */,
-				938CEC4221CE63510035B80A /* HomeViewModel.swift in Sources */,
+				938CEC4221CE63510035B80A /* RootViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

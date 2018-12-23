@@ -10,7 +10,7 @@ import Cocoa
 import RxSwift
 import RxCocoa
 
-class HomeViewController: NSViewController {
+class RootViewController: NSViewController {
     
     enum ColorTable {
         case brightRed
@@ -30,7 +30,7 @@ class HomeViewController: NSViewController {
     @IBOutlet weak var statusTextField: NSTextField!
     @IBOutlet weak var statusColor: NSBox!
     
-    let viewModel: HomeViewModel
+    let viewModel: RootViewModel
     let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
@@ -49,7 +49,7 @@ class HomeViewController: NSViewController {
     }
 }
 
-extension HomeViewController {
+extension RootViewController {
     private func bindViewModel() {
         bindSynchronized()
     }

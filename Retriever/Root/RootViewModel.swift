@@ -9,7 +9,7 @@
 import RxSwift
 import RxCocoa
 
-class HomeViewModel {
+class RootViewModel {
     enum SyncState {
         case success
         case fail
