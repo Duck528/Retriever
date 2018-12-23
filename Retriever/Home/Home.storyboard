@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Home View Controller-->
+        <scene sceneID="Fev-Pg-h4J">
+            <objects>
+                <viewController storyboardIdentifier="Home" id="rzy-vk-Z4i" customClass="HomeViewController" customModule="Retriever" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="EbV-a0-Y2C">
+                        <rect key="frame" x="0.0" y="0.0" width="650" height="518"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <view translatesAutoresizingMaskIntoConstraints="NO" id="Ppg-QW-cRA">
+                                <rect key="frame" x="0.0" y="0.0" width="650" height="518"/>
+                                <subviews>
+                                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="ZzB-ji-eBj">
+                                        <rect key="frame" x="0.0" y="0.0" width="650" height="518"/>
+                                        <subviews>
+                                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="gLL-xG-04a" userLabel="Left Side View">
+                                                <rect key="frame" x="0.0" y="0.0" width="240" height="518"/>
+                                                <subviews>
+                                                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="Q5i-ZJ-2Ve" userLabel="Search Section View">
+                                                        <rect key="frame" x="0.0" y="438" width="240" height="80"/>
+                                                        <subviews>
+                                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eis-TZ-G6v">
+                                                                <rect key="frame" x="8" y="43" width="214" height="17"/>
+                                                                <textFieldCell key="cell" lineBreakMode="clipping" title="검색" id="zHz-Em-EdS">
+                                                                    <font key="font" usesAppearanceFont="YES"/>
+                                                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                </textFieldCell>
+                                                            </textField>
+                                                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="38n-w0-tiC">
+                                                                <rect key="frame" x="10" y="13" width="210" height="22"/>
+                                                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="검색" drawsBackground="YES" id="3ZN-cN-H8t">
+                                                                    <font key="font" metaFont="system"/>
+                                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                </textFieldCell>
+                                                            </textField>
+                                                        </subviews>
+                                                        <constraints>
+                                                            <constraint firstItem="38n-w0-tiC" firstAttribute="trailing" secondItem="eis-TZ-G6v" secondAttribute="trailing" id="9ca-eO-d65"/>
+                                                            <constraint firstItem="eis-TZ-G6v" firstAttribute="top" secondItem="Q5i-ZJ-2Ve" secondAttribute="top" constant="20" id="Ch3-w0-8nC"/>
+                                                            <constraint firstItem="38n-w0-tiC" firstAttribute="leading" secondItem="eis-TZ-G6v" secondAttribute="leading" id="QqI-UE-Myd"/>
+                                                            <constraint firstItem="eis-TZ-G6v" firstAttribute="leading" secondItem="Q5i-ZJ-2Ve" secondAttribute="leading" constant="10" id="VVh-wX-Xc0"/>
+                                                            <constraint firstAttribute="height" constant="80" id="WMA-VA-IcM"/>
+                                                            <constraint firstItem="38n-w0-tiC" firstAttribute="top" secondItem="eis-TZ-G6v" secondAttribute="bottom" constant="8" id="e9C-w4-euO"/>
+                                                            <constraint firstAttribute="trailing" secondItem="eis-TZ-G6v" secondAttribute="trailing" constant="20" id="oJo-fY-BLW"/>
+                                                        </constraints>
+                                                    </customView>
+                                                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="Mfi-fV-0Hu">
+                                                        <rect key="frame" x="0.0" y="328" width="240" height="110"/>
+                                                        <subviews>
+                                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ctV-PJ-GoM">
+                                                                <rect key="frame" x="8" y="73" width="214" height="17"/>
+                                                                <textFieldCell key="cell" lineBreakMode="clipping" title="난이도" id="jWI-zr-5Gt">
+                                                                    <font key="font" usesAppearanceFont="YES"/>
+                                                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                </textFieldCell>
+                                                            </textField>
+                                                        </subviews>
+                                                        <constraints>
+                                                            <constraint firstAttribute="trailing" secondItem="ctV-PJ-GoM" secondAttribute="trailing" constant="20" id="DVQ-QG-eIf"/>
+                                                            <constraint firstItem="ctV-PJ-GoM" firstAttribute="top" secondItem="Mfi-fV-0Hu" secondAttribute="top" constant="20" id="M5Z-es-3ZQ"/>
+                                                            <constraint firstItem="ctV-PJ-GoM" firstAttribute="leading" secondItem="Mfi-fV-0Hu" secondAttribute="leading" constant="10" id="Sb5-8L-UN5"/>
+                                                            <constraint firstAttribute="height" constant="110" id="ifg-5G-9eS"/>
+                                                        </constraints>
+                                                    </customView>
+                                                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="wGj-8j-SiM">
+                                                        <rect key="frame" x="0.0" y="211" width="240" height="117"/>
+                                                        <subviews>
+                                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ozi-hy-1Tg">
+                                                                <rect key="frame" x="8" y="80" width="214" height="17"/>
+                                                                <textFieldCell key="cell" lineBreakMode="clipping" title="태그" id="oqc-xi-14i">
+                                                                    <font key="font" usesAppearanceFont="YES"/>
+                                                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                </textFieldCell>
+                                                            </textField>
+                                                            <scrollView wantsLayer="YES" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zWt-yK-yUP">
+                                                                <rect key="frame" x="10" y="10" width="220" height="60"/>
+                                                                <clipView key="contentView" id="zZQ-Bt-HdK">
+                                                                    <rect key="frame" x="1" y="1" width="218" height="58"/>
+                                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                                    <subviews>
+                                                                        <collectionView id="koj-JA-SUs">
+                                                                            <rect key="frame" x="0.0" y="0.0" width="218" height="158"/>
+                                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
+                                                                            <collectionViewFlowLayout key="collectionViewLayout" minimumInteritemSpacing="10" minimumLineSpacing="10" id="1fD-TR-0Cx">
+                                                                                <size key="itemSize" width="50" height="50"/>
+                                                                            </collectionViewFlowLayout>
+                                                                            <color key="primaryBackgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                        </collectionView>
+                                                                    </subviews>
+                                                                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                </clipView>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="60" id="vgn-10-i3t"/>
+                                                                </constraints>
+                                                                <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="fN2-nK-6LS">
+                                                                    <rect key="frame" x="1" y="126" width="218" height="16"/>
+                                                                    <autoresizingMask key="autoresizingMask"/>
+                                                                </scroller>
+                                                                <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="8ot-yD-CCG">
+                                                                    <rect key="frame" x="203" y="1" width="16" height="58"/>
+                                                                    <autoresizingMask key="autoresizingMask"/>
+                                                                </scroller>
+                                                            </scrollView>
+                                                        </subviews>
+                                                        <constraints>
+                                                            <constraint firstItem="ozi-hy-1Tg" firstAttribute="top" secondItem="wGj-8j-SiM" secondAttribute="top" constant="20" id="COQ-1j-Ifm"/>
+                                                            <constraint firstAttribute="bottom" secondItem="zWt-yK-yUP" secondAttribute="bottom" constant="10" id="Civ-sa-xuA"/>
+                                                            <constraint firstAttribute="trailing" secondItem="ozi-hy-1Tg" secondAttribute="trailing" constant="20" id="Jes-hr-Rta"/>
+                                                            <constraint firstItem="zWt-yK-yUP" firstAttribute="top" secondItem="ozi-hy-1Tg" secondAttribute="bottom" constant="10" id="Kef-z7-mEh"/>
+                                                            <constraint firstItem="zWt-yK-yUP" firstAttribute="leading" secondItem="wGj-8j-SiM" secondAttribute="leading" constant="10" id="L9B-83-iCy"/>
+                                                            <constraint firstItem="ozi-hy-1Tg" firstAttribute="leading" secondItem="wGj-8j-SiM" secondAttribute="leading" constant="10" id="Xgs-Jh-ZHf"/>
+                                                            <constraint firstAttribute="trailing" secondItem="zWt-yK-yUP" secondAttribute="trailing" constant="10" id="vvE-dr-oRU"/>
+                                                        </constraints>
+                                                    </customView>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="trailing" secondItem="Q5i-ZJ-2Ve" secondAttribute="trailing" id="4m6-bf-eNX"/>
+                                                    <constraint firstItem="Mfi-fV-0Hu" firstAttribute="top" secondItem="Q5i-ZJ-2Ve" secondAttribute="bottom" id="Bdr-YM-JUt"/>
+                                                    <constraint firstItem="wGj-8j-SiM" firstAttribute="top" secondItem="Mfi-fV-0Hu" secondAttribute="bottom" id="Q4q-aZ-X8a"/>
+                                                    <constraint firstItem="wGj-8j-SiM" firstAttribute="leading" secondItem="gLL-xG-04a" secondAttribute="leading" id="fRe-YG-IHZ"/>
+                                                    <constraint firstItem="Mfi-fV-0Hu" firstAttribute="leading" secondItem="gLL-xG-04a" secondAttribute="leading" id="g0V-0W-a2b"/>
+                                                    <constraint firstItem="Q5i-ZJ-2Ve" firstAttribute="top" secondItem="gLL-xG-04a" secondAttribute="top" id="ga8-J5-yjB"/>
+                                                    <constraint firstAttribute="trailing" secondItem="Mfi-fV-0Hu" secondAttribute="trailing" id="rKe-ax-Yvd"/>
+                                                    <constraint firstAttribute="trailing" secondItem="wGj-8j-SiM" secondAttribute="trailing" id="t5U-VP-r14"/>
+                                                    <constraint firstAttribute="width" constant="240" id="trr-Ta-rsO"/>
+                                                    <constraint firstItem="Q5i-ZJ-2Ve" firstAttribute="leading" secondItem="gLL-xG-04a" secondAttribute="leading" id="xaL-z9-dwZ"/>
+                                                </constraints>
+                                            </customView>
+                                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="h6A-Jt-EhP">
+                                                <rect key="frame" x="240" y="0.0" width="410" height="518"/>
+                                                <subviews>
+                                                    <box boxType="custom" borderWidth="0.0" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="L4D-m0-Ylm">
+                                                        <rect key="frame" x="0.0" y="0.0" width="410" height="518"/>
+                                                        <view key="contentView" id="Jxx-11-xG5">
+                                                            <rect key="frame" x="0.0" y="0.0" width="410" height="518"/>
+                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                        </view>
+                                                        <color key="borderColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <color key="fillColor" red="0.15686274510000001" green="0.15686274510000001" blue="0.15686274510000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    </box>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstItem="L4D-m0-Ylm" firstAttribute="top" secondItem="h6A-Jt-EhP" secondAttribute="top" id="8vv-bO-84a"/>
+                                                    <constraint firstItem="L4D-m0-Ylm" firstAttribute="leading" secondItem="h6A-Jt-EhP" secondAttribute="leading" id="dfL-BX-kZN"/>
+                                                    <constraint firstAttribute="trailing" secondItem="L4D-m0-Ylm" secondAttribute="trailing" id="eWK-oe-X2T"/>
+                                                    <constraint firstAttribute="bottom" secondItem="L4D-m0-Ylm" secondAttribute="bottom" id="fAK-KQ-LVD"/>
+                                                </constraints>
+                                            </customView>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="h6A-Jt-EhP" secondAttribute="bottom" id="7vr-zL-6qh"/>
+                                            <constraint firstAttribute="trailing" secondItem="h6A-Jt-EhP" secondAttribute="trailing" id="AkP-VT-z8V"/>
+                                            <constraint firstItem="gLL-xG-04a" firstAttribute="leading" secondItem="ZzB-ji-eBj" secondAttribute="leading" id="HI1-So-jFN"/>
+                                            <constraint firstItem="h6A-Jt-EhP" firstAttribute="leading" secondItem="gLL-xG-04a" secondAttribute="trailing" id="SDH-OD-FP0"/>
+                                            <constraint firstAttribute="bottom" secondItem="gLL-xG-04a" secondAttribute="bottom" id="cre-M7-LiG"/>
+                                            <constraint firstItem="h6A-Jt-EhP" firstAttribute="top" secondItem="ZzB-ji-eBj" secondAttribute="top" id="gHo-QH-cNo"/>
+                                            <constraint firstItem="gLL-xG-04a" firstAttribute="top" secondItem="ZzB-ji-eBj" secondAttribute="top" id="qdE-b8-Ols"/>
+                                        </constraints>
+                                    </customView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="ZzB-ji-eBj" secondAttribute="trailing" id="OgE-5p-MOK"/>
+                                    <constraint firstItem="ZzB-ji-eBj" firstAttribute="top" secondItem="Ppg-QW-cRA" secondAttribute="top" id="Orh-3V-Hof"/>
+                                    <constraint firstAttribute="bottom" secondItem="ZzB-ji-eBj" secondAttribute="bottom" id="erM-JQ-6kN"/>
+                                    <constraint firstItem="ZzB-ji-eBj" firstAttribute="leading" secondItem="Ppg-QW-cRA" secondAttribute="leading" id="peW-Ag-NFS"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="Ppg-QW-cRA" secondAttribute="trailing" id="BYO-4L-qLw"/>
+                            <constraint firstAttribute="bottom" secondItem="Ppg-QW-cRA" secondAttribute="bottom" id="Khs-7Z-mKb"/>
+                            <constraint firstItem="Ppg-QW-cRA" firstAttribute="top" secondItem="EbV-a0-Y2C" secondAttribute="top" id="YsZ-32-Tuj"/>
+                            <constraint firstItem="Ppg-QW-cRA" firstAttribute="leading" secondItem="EbV-a0-Y2C" secondAttribute="leading" id="vST-E5-c2G"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="searchWordTextField" destination="38n-w0-tiC" id="ClH-Kk-Jqo"/>
+                        <outlet property="tagCollectionView" destination="zWt-yK-yUP" id="4ZJ-NX-NsH"/>
+                    </connections>
+                </viewController>
+                <customObject id="z9E-Pn-hec" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4" y="188"/>
+        </scene>
+    </scenes>
+</document>

@@ -18,4 +18,8 @@ extension ViewModelAssembler where Self: Assembler {
     func resolve() -> RootViewModel {
         return RootViewModel()
     }
+    
+    func resolve() -> HomeViewModel {
+        return HomeViewModel()
+    }
 }
