@@ -13,13 +13,13 @@ import RxSwift
 class HomeViewController: NSViewController {
     
     @IBOutlet weak var searchWordTextField: NSTextField!
-    @IBOutlet weak var tagCollectionView: NSScrollView!
+    @IBOutlet weak var tagCollectionView: NSCollectionView!
     
     let viewModel: HomeViewModel!
     let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
-        super.viewDidLoad()
+        super.viewDidLoad()        
         bindViewModel()
     }
     
@@ -34,6 +34,21 @@ class HomeViewController: NSViewController {
     }
 }
 
+extension HomeViewController: NSCollectionViewDelegateFlowLayout {
+    
+}
+
+extension HomeViewController: NSCollectionViewDataSource {
+    func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
+        <#code#>
+    }
+    
+    func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
+        <#code#>
+    }
+}
+
+
 extension HomeViewController {
     func bindViewModel() {
         bindSearchToWord()
@@ -44,5 +59,9 @@ extension HomeViewController {
             .map { $0 ?? "" }
             .bind(to: viewModel.wordToSearch)
             .disposed(by: disposeBag)
+    }
+    
+    private func bindCollectionView() {
+        
     }
 }
