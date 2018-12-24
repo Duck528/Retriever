@@ -12,4 +12,5 @@ import RxCocoa
 class HomeViewModel {
     
     let wordToSearch = BehaviorRelay<String>(value: "")
+    let allTags = BehaviorRelay<[TagItem]>(value: [])
 }

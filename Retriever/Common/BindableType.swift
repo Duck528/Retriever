@@ -17,7 +17,6 @@ protocol BindableType: class {
 extension BindableType where Self: NSCollectionViewItem {
     func bind(to viewModel: Self.ViewModelType) {
         self.viewModel = viewModel
-        loadView()
         bindViewModel()
     }
 }

@@ -82,14 +82,14 @@
                                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                 </textFieldCell>
                                                             </textField>
-                                                            <scrollView wantsLayer="YES" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QTl-hl-jaq">
+                                                            <scrollView wantsLayer="YES" borderType="line" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="QTl-hl-jaq">
                                                                 <rect key="frame" x="10" y="10" width="220" height="60"/>
                                                                 <clipView key="contentView" id="ruM-h8-h4y">
                                                                     <rect key="frame" x="1" y="1" width="218" height="58"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <collectionView id="55D-Z0-Usu">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="218" height="158"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="218" height="58"/>
                                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                                                                             <collectionViewFlowLayout key="collectionViewLayout" minimumInteritemSpacing="10" minimumLineSpacing="10" id="Lm6-1X-DUy">
                                                                                 <size key="itemSize" width="50" height="50"/>
@@ -106,11 +106,11 @@
                                                                     <constraint firstAttribute="height" constant="60" id="xun-8f-EJ2"/>
                                                                 </constraints>
                                                                 <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="6gQ-Un-SCf">
-                                                                    <rect key="frame" x="1" y="143" width="218" height="16"/>
+                                                                    <rect key="frame" x="-100" y="-100" width="218" height="16"/>
                                                                     <autoresizingMask key="autoresizingMask"/>
                                                                 </scroller>
-                                                                <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="R7g-w9-OCP">
-                                                                    <rect key="frame" x="203" y="1" width="16" height="58"/>
+                                                                <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="R7g-w9-OCP">
+                                                                    <rect key="frame" x="-100" y="-100" width="16" height="58"/>
                                                                     <autoresizingMask key="autoresizingMask"/>
                                                                 </scroller>
                                                             </scrollView>

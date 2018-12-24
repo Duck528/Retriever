@@ -19,7 +19,8 @@ class HomeViewController: NSViewController {
     let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
-        super.viewDidLoad()        
+        super.viewDidLoad()
+        setupCollectionView()
         bindViewModel()
     }
     
@@ -34,17 +35,32 @@ class HomeViewController: NSViewController {
     }
 }
 
-extension HomeViewController: NSCollectionViewDelegateFlowLayout {
+extension HomeViewController {
+    private func setupViews() {
+        setupCollectionView()
+    }
     
+    private func setupCollectionView() {
+        tagCollectionView.register(
+            TagItemCell.self,
+            forItemWithIdentifier: NSUserInterfaceItemIdentifier("Cell"))
+    }
 }
 
 extension HomeViewController: NSCollectionViewDataSource {
     func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
-        <#code#>
+        return 10
     }
     
     func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
-        <#code#>
+        guard let item = collectionView.makeItem(
+            withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "Cell"),
+            for: indexPath) as? TagItemCell else {
+                return NSCollectionViewItem()
+        }
+        let cellViewModel = TagItemCellViewModel(tagItem: TagItem(title: "Hello World"))
+        item.bind(to: cellViewModel)
+        return item
     }
 }
 
