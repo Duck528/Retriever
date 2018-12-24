@@ -20,17 +20,19 @@ class TagItemCell: NSCollectionViewItem, BindableType {
     var disposeBag = DisposeBag()
     
     func bindViewModel() {
-        bindTagItemCellViewModel()
+        bindTagItemCellViewwModel()
     }
     
     override func prepareForReuse() {
+        clearCell()
         super.prepareForReuse()
-        disposeBag = DisposeBag()
     }
+}
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do view setup here.
+extension TagItemCell {
+    private func clearCell() {
+        disposeBag = DisposeBag()
+        titleTextField.stringValue = ""
     }
 }
 
@@ -38,7 +40,8 @@ extension TagItemCell {
     private func bindTagItemCellViewModel() {
         viewModel.tagItem
             .subscribe(onNext: { tagItem in
-                 self.titleTextField.stringValue = tagItem.title
+                print("title: \(tagItem.title)")
+                self.titleTextField.stringValue = tagItem.title
             }).disposed(by: disposeBag)
         
         viewModel.selected

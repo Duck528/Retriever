@@ -11,8 +11,9 @@ import Foundation
 class Assembler: AssemblerProtocol { }
 
 protocol ViewModelAssembler { }
+protocol UsecaseAssembler { }
 
-protocol AssemblerProtocol: ViewModelAssembler { }
+protocol AssemblerProtocol: ViewModelAssembler, UsecaseAssembler { }
 
 extension ViewModelAssembler where Self: Assembler {
     func resolve() -> RootViewModel {
@@ -21,5 +22,11 @@ extension ViewModelAssembler where Self: Assembler {
     
     func resolve() -> HomeViewModel {
         return HomeViewModel()
+    }
+}
+
+extension UsecaseAssembler where Self: Assembler {
+    func resolve() -> FetchTagUsecase {
+        return FetchTagUsecase()
     }
 }

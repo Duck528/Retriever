@@ -49,7 +49,7 @@ extension HomeViewController {
 
 extension HomeViewController: NSCollectionViewDataSource {
     func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return viewModel.allTags.value.count
     }
     
     func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
@@ -58,7 +58,7 @@ extension HomeViewController: NSCollectionViewDataSource {
             for: indexPath) as? TagItemCell else {
                 return NSCollectionViewItem()
         }
-        let cellViewModel = TagItemCellViewModel(tagItem: TagItem(title: "Hello World"))
+        let cellViewModel = viewModel.allTags.value[indexPath.item]
         item.bind(to: cellViewModel)
         return item
     }
@@ -78,6 +78,9 @@ extension HomeViewController {
     }
     
     private func bindCollectionView() {
-        
+        viewModel.allTags
+            .subscribe(onNext: { fetchedTags in
+                self.tagCollectionView.reloadData()
+            }).disposed(by: disposeBag)
     }
 }

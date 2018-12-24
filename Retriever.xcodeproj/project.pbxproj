@@ -25,6 +25,7 @@
 		938CEC5421CFF0790035B80A /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938CEC5321CFF0790035B80A /* HomeViewController.swift */; };
 		938CEC5621CFF0810035B80A /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938CEC5521CFF0810035B80A /* HomeViewModel.swift */; };
 		93EE701B21D116CB00728013 /* LeftAlignFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EE701A21D116CB00728013 /* LeftAlignFlowLayout.swift */; };
+		93EE701E21D1184F00728013 /* FetchTagUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EE701D21D1184F00728013 /* FetchTagUsecase.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,6 +50,7 @@
 		938CEC5321CFF0790035B80A /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		938CEC5521CFF0810035B80A /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		93EE701A21D116CB00728013 /* LeftAlignFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeftAlignFlowLayout.swift; sourceTree = "<group>"; };
+		93EE701D21D1184F00728013 /* FetchTagUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchTagUsecase.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +90,7 @@
 				938CEC3E21CE63260035B80A /* Root */,
 				938CEC4E21CFF0400035B80A /* Home */,
 				938CEC4721CE89350035B80A /* Common */,
+				93EE701C21D1182B00728013 /* Usecase */,
 				938CEC4A21CEB00D0035B80A /* Extension */,
 				93EE701921D1164800728013 /* Util */,
 				938CEC2621CE5B940035B80A /* AppDelegate.swift */,
@@ -154,6 +157,14 @@
 				93EE701A21D116CB00728013 /* LeftAlignFlowLayout.swift */,
 			);
 			path = Util;
+			sourceTree = "<group>";
+		};
+		93EE701C21D1182B00728013 /* Usecase */ = {
+			isa = PBXGroup;
+			children = (
+				93EE701D21D1184F00728013 /* FetchTagUsecase.swift */,
+			);
+			path = Usecase;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -256,6 +267,7 @@
 				938CEC2721CE5B940035B80A /* AppDelegate.swift in Sources */,
 				938CEC4021CE634A0035B80A /* RootViewController.swift in Sources */,
 				93EE701B21D116CB00728013 /* LeftAlignFlowLayout.swift in Sources */,
+				93EE701E21D1184F00728013 /* FetchTagUsecase.swift in Sources */,
 				9352D9E821CFFED00031FF15 /* TagItem.swift in Sources */,
 				938CEC5621CFF0810035B80A /* HomeViewModel.swift in Sources */,
 				9352D9EA21D0018E0031FF15 /* BindableType.swift in Sources */,
