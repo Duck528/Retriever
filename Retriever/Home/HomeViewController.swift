@@ -91,12 +91,6 @@ extension HomeViewController {
     }
     
     private func bindCollectionView() {
-        tagCollectionView.rx.observe(NSSize.self, "intrinsicContentSize")
-            .map { $0 ?? .zero }
-            .subscribe(onNext: { contentSize in
-                print("contentSize: \(contentSize)")
-            }).disposed(by: disposeBag)
-        
         viewModel.allTags
             .subscribe(onNext: { fetchedTags in
                 self.tagCollectionView.reloadData()
