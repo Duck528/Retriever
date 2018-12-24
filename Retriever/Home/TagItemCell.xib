@@ -7,7 +7,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TagItemCell" customModule="Retriever" customModuleProvider="target">
             <connections>
-                <outlet property="backgroundView" destination="NJV-Sd-0Up" id="VUI-bp-pc8"/>
+                <outlet property="backgroundBox" destination="fhA-OD-kTV" id="7yh-bC-OdG"/>
                 <outlet property="titleTextField" destination="rgA-nr-f6Y" id="Xlk-Re-GUd"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
             </connections>
@@ -29,12 +29,23 @@
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
+                        <box titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="fhA-OD-kTV">
+                            <rect key="frame" x="-3" y="-4" width="486" height="278"/>
+                            <view key="contentView" id="MhA-IN-lM7">
+                                <rect key="frame" x="3" y="3" width="480" height="272"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </view>
+                        </box>
                     </subviews>
                     <constraints>
                         <constraint firstItem="rgA-nr-f6Y" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="NJV-Sd-0Up" secondAttribute="leading" constant="10" id="7SZ-6X-fCr"/>
+                        <constraint firstItem="fhA-OD-kTV" firstAttribute="top" secondItem="NJV-Sd-0Up" secondAttribute="top" id="B67-E9-T5s"/>
+                        <constraint firstAttribute="trailing" secondItem="fhA-OD-kTV" secondAttribute="trailing" id="L2s-AS-Gfh"/>
+                        <constraint firstItem="fhA-OD-kTV" firstAttribute="leading" secondItem="NJV-Sd-0Up" secondAttribute="leading" id="MsB-OA-ib1"/>
                         <constraint firstItem="rgA-nr-f6Y" firstAttribute="centerX" secondItem="NJV-Sd-0Up" secondAttribute="centerX" id="azE-Rr-hWz"/>
                         <constraint firstItem="rgA-nr-f6Y" firstAttribute="centerY" secondItem="NJV-Sd-0Up" secondAttribute="centerY" id="nh5-vP-o5Q"/>
                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="rgA-nr-f6Y" secondAttribute="trailing" constant="10" id="riX-pm-kyW"/>
+                        <constraint firstAttribute="bottom" secondItem="fhA-OD-kTV" secondAttribute="bottom" id="u1f-o3-rWQ"/>
                     </constraints>
                 </customView>
             </subviews>

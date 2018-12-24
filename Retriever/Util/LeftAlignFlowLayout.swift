@@ -9,8 +9,19 @@
 import AppKit
 
 class LeftAlignFlowLayout: NSCollectionViewFlowLayout {
-    override func layoutAttributesForElements(in rect: NSRect) -> [NSCollectionViewLayoutAttributes] {
-        let attributesList = super.layoutAttributesForElements(in: rect)
-        return attributesList
+    
+    override func layoutAttributesForElements(in rect: CGRect) -> [NSCollectionViewLayoutAttributes] {
+        let attributes = super.layoutAttributesForElements(in: rect)
+        var maxY: CGFloat = -1
+        var xPos = sectionInset.left
+        for a in attributes {
+            if a.frame.maxY > maxY {
+                xPos = sectionInset.left
+            }
+            a.frame.origin.x = xPos
+            xPos += a.frame.width + minimumInteritemSpacing
+            maxY = max(a.frame.maxY, maxY)
+        }
+        return attributes
     }
 }

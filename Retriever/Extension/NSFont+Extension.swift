@@ -22,4 +22,8 @@ extension NSFont {
             CGSize(width: width, height: .greatestFiniteMagnitude),
             nil)
     }
+    
+    class func helveticaNeueBold(size: CGFloat) -> NSFont {
+        return NSFont(name: "Helvetica-Neue-Bold", size: size) ?? NSFont.systemFont(ofSize: size)
+    }
 }

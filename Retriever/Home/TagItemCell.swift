@@ -13,8 +13,22 @@ import RxCocoa
 class TagItemCell: NSCollectionViewItem, BindableType {
     typealias ViewModelType = TagItemCellViewModel
     
+    enum Colors {
+        case lightBlue
+        case lightGray
+        
+        var color: NSColor {
+            switch self {
+            case .lightBlue:
+                return NSColor(red: 68, green: 144, blue: 255)
+            case .lightGray:
+                return NSColor.lightGray
+            }
+        }
+    }
+    
     @IBOutlet weak var titleTextField: NSTextField!
-    @IBOutlet weak var backgroundView: NSView!
+    @IBOutlet weak var backgroundBox: NSBox!
     
     var viewModel: TagItemCellViewModel!
     var disposeBag = DisposeBag()
@@ -26,6 +40,11 @@ class TagItemCell: NSCollectionViewItem, BindableType {
     override func prepareForReuse() {
         clearCell()
         super.prepareForReuse()
+    }
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        backgroundBox.cornerRadius = 60
     }
 }
 
@@ -45,7 +64,7 @@ extension TagItemCell {
         
         viewModel.selected
             .subscribe(onNext: { selected in
-                print("selected: \(selected)")
+                self.backgroundBox.fillColor = selected ? Colors.lightBlue.color : Colors.lightGray.color
             }).disposed(by: disposeBag)
     }
 }

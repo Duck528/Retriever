@@ -26,15 +26,15 @@
                                                         <rect key="frame" x="0.0" y="531" width="300" height="80"/>
                                                         <subviews>
                                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eis-TZ-G6v">
-                                                                <rect key="frame" x="8" y="43" width="274" height="17"/>
+                                                                <rect key="frame" x="8" y="40" width="274" height="20"/>
                                                                 <textFieldCell key="cell" lineBreakMode="clipping" title="검색" id="zHz-Em-EdS">
-                                                                    <font key="font" usesAppearanceFont="YES"/>
+                                                                    <font key="font" size="13" name="HelveticaNeue-Bold"/>
                                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                 </textFieldCell>
                                                             </textField>
                                                             <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="38n-w0-tiC">
-                                                                <rect key="frame" x="10" y="13" width="270" height="22"/>
+                                                                <rect key="frame" x="10" y="10" width="270" height="22"/>
                                                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="검색" drawsBackground="YES" id="3ZN-cN-H8t">
                                                                     <font key="font" metaFont="system"/>
                                                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -56,9 +56,9 @@
                                                         <rect key="frame" x="0.0" y="421" width="300" height="110"/>
                                                         <subviews>
                                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ctV-PJ-GoM">
-                                                                <rect key="frame" x="8" y="73" width="274" height="17"/>
+                                                                <rect key="frame" x="8" y="70" width="274" height="20"/>
                                                                 <textFieldCell key="cell" lineBreakMode="clipping" title="난이도" id="jWI-zr-5Gt">
-                                                                    <font key="font" usesAppearanceFont="YES"/>
+                                                                    <font key="font" size="13" name="HelveticaNeue-Bold"/>
                                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                 </textFieldCell>
@@ -75,23 +75,23 @@
                                                         <rect key="frame" x="0.0" y="0.0" width="300" height="421"/>
                                                         <subviews>
                                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ozi-hy-1Tg">
-                                                                <rect key="frame" x="8" y="384" width="274" height="17"/>
+                                                                <rect key="frame" x="8" y="381" width="274" height="20"/>
                                                                 <textFieldCell key="cell" lineBreakMode="clipping" title="태그" id="oqc-xi-14i">
-                                                                    <font key="font" usesAppearanceFont="YES"/>
+                                                                    <font key="font" size="13" name="HelveticaNeue-Bold"/>
                                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                 </textFieldCell>
                                                             </textField>
                                                             <scrollView wantsLayer="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="QTl-hl-jaq">
-                                                                <rect key="frame" x="10" y="10" width="280" height="364"/>
+                                                                <rect key="frame" x="10" y="10" width="280" height="361"/>
                                                                 <clipView key="contentView" id="ruM-h8-h4y">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="280" height="364"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="280" height="361"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <collectionView id="55D-Z0-Usu">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="280" height="364"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="280" height="361"/>
                                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
-                                                                            <collectionViewFlowLayout key="collectionViewLayout" minimumInteritemSpacing="10" minimumLineSpacing="10" id="Lm6-1X-DUy">
+                                                                            <collectionViewFlowLayout key="collectionViewLayout" minimumInteritemSpacing="10" minimumLineSpacing="10" id="Lm6-1X-DUy" customClass="LeftAlignFlowLayout" customModule="Retriever" customModuleProvider="target">
                                                                                 <size key="itemSize" width="50" height="50"/>
                                                                             </collectionViewFlowLayout>
                                                                             <color key="primaryBackgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -108,7 +108,7 @@
                                                                     <autoresizingMask key="autoresizingMask"/>
                                                                 </scroller>
                                                                 <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="R7g-w9-OCP">
-                                                                    <rect key="frame" x="-100" y="-100" width="16" height="58"/>
+                                                                    <rect key="frame" x="264" y="0.0" width="16" height="361"/>
                                                                     <autoresizingMask key="autoresizingMask"/>
                                                                 </scroller>
                                                             </scrollView>

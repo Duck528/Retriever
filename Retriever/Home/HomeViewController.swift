@@ -52,9 +52,9 @@ extension HomeViewController {
 extension HomeViewController: NSCollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: NSCollectionView, layout collectionViewLayout: NSCollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> NSSize {
         let tagTitle = viewModel.allTags.value[indexPath.item].tagItem.value.title
-        let width = NSFont.systemFont(ofSize: 13)
+        let width = NSFont.helveticaNeueBold(size: 13)
             .size(text: tagTitle, constrainedToWidth: CGFloat.greatestFiniteMagnitude)
-            .width
+            .width + 25
         return CGSize(width: width, height: 20)
     }
 }
