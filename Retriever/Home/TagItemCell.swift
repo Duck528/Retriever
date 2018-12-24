@@ -29,12 +29,14 @@ class TagItemCell: NSCollectionViewItem, BindableType {
     
     @IBOutlet weak var titleTextField: NSTextField!
     @IBOutlet weak var backgroundBox: NSBox!
+    @IBOutlet weak var selectTagButton: NSButton!
     
     var viewModel: TagItemCellViewModel!
     var disposeBag = DisposeBag()
     
     func bindViewModel() {
         bindTagItemCellViewModel()
+        bindSelectButton()
     }
     
     override func prepareForReuse() {
@@ -63,8 +65,17 @@ extension TagItemCell {
             }).disposed(by: disposeBag)
         
         viewModel.selected
+            .subscribeOn(MainScheduler.instance)
             .subscribe(onNext: { selected in
-                self.backgroundBox.fillColor = selected ? Colors.lightBlue.color : Colors.lightGray.color
+//                self.backgroundBox.fillColor = selected ? NSColor.red : Colors.lightGray.color
+            }).disposed(by: disposeBag)
+    }
+    
+    private func bindSelectButton() {
+        selectTagButton.rx.tap
+            .throttle(0.5, latest: true, scheduler: MainScheduler.instance)
+            .subscribe(onNext: {
+                self.viewModel.toggleTag()
             }).disposed(by: disposeBag)
     }
 }
@@ -76,5 +87,10 @@ class TagItemCellViewModel {
     init(tagItem: TagItem, selected: Bool = false) {
         self.tagItem = BehaviorRelay<TagItem>(value: tagItem)
         self.selected = BehaviorRelay<Bool>(value: selected)
+    }
+    
+    func toggleTag() {
+        let flag = !selected.value
+        selected.accept(flag)
     }
 }

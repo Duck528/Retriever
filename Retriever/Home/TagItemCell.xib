@@ -7,7 +7,8 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TagItemCell" customModule="Retriever" customModuleProvider="target">
             <connections>
-                <outlet property="backgroundBox" destination="fhA-OD-kTV" id="7yh-bC-OdG"/>
+                <outlet property="backgroundBox" destination="hea-D0-kl0" id="pN5-dh-apO"/>
+                <outlet property="selectTagButton" destination="FNQ-RY-YLl" id="zlE-lh-DXQ"/>
                 <outlet property="titleTextField" destination="rgA-nr-f6Y" id="Xlk-Re-GUd"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
             </connections>
@@ -18,6 +19,15 @@
             <rect key="frame" x="0.0" y="0.0" width="480" height="272"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
+                <box canDrawConcurrently="YES" boxType="custom" borderType="line" borderWidth="2" cornerRadius="22" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="hea-D0-kl0">
+                    <rect key="frame" x="0.0" y="0.0" width="480" height="272"/>
+                    <view key="contentView" id="UGS-Fj-oyK">
+                        <rect key="frame" x="2" y="2" width="476" height="268"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    </view>
+                    <color key="borderColor" name="systemGrayColor" catalog="System" colorSpace="catalog"/>
+                    <color key="fillColor" name="systemRedColor" catalog="System" colorSpace="catalog"/>
+                </box>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="NJV-Sd-0Up">
                     <rect key="frame" x="0.0" y="0.0" width="480" height="272"/>
                     <subviews>
@@ -29,30 +39,34 @@
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
-                        <box titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="fhA-OD-kTV">
-                            <rect key="frame" x="-3" y="-4" width="486" height="278"/>
-                            <view key="contentView" id="MhA-IN-lM7">
-                                <rect key="frame" x="3" y="3" width="480" height="272"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                            </view>
-                        </box>
                     </subviews>
                     <constraints>
                         <constraint firstItem="rgA-nr-f6Y" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="NJV-Sd-0Up" secondAttribute="leading" constant="10" id="7SZ-6X-fCr"/>
-                        <constraint firstItem="fhA-OD-kTV" firstAttribute="top" secondItem="NJV-Sd-0Up" secondAttribute="top" id="B67-E9-T5s"/>
-                        <constraint firstAttribute="trailing" secondItem="fhA-OD-kTV" secondAttribute="trailing" id="L2s-AS-Gfh"/>
-                        <constraint firstItem="fhA-OD-kTV" firstAttribute="leading" secondItem="NJV-Sd-0Up" secondAttribute="leading" id="MsB-OA-ib1"/>
                         <constraint firstItem="rgA-nr-f6Y" firstAttribute="centerX" secondItem="NJV-Sd-0Up" secondAttribute="centerX" id="azE-Rr-hWz"/>
                         <constraint firstItem="rgA-nr-f6Y" firstAttribute="centerY" secondItem="NJV-Sd-0Up" secondAttribute="centerY" id="nh5-vP-o5Q"/>
                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="rgA-nr-f6Y" secondAttribute="trailing" constant="10" id="riX-pm-kyW"/>
-                        <constraint firstAttribute="bottom" secondItem="fhA-OD-kTV" secondAttribute="bottom" id="u1f-o3-rWQ"/>
                     </constraints>
                 </customView>
+                <button translatesAutoresizingMaskIntoConstraints="NO" id="FNQ-RY-YLl">
+                    <rect key="frame" x="0.0" y="0.0" width="480" height="272"/>
+                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="D0n-fB-8kW">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                </button>
             </subviews>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="NJV-Sd-0Up" secondAttribute="bottom" id="2B2-u7-XSz"/>
+                <constraint firstAttribute="trailing" secondItem="FNQ-RY-YLl" secondAttribute="trailing" id="2D3-d8-mOd"/>
                 <constraint firstItem="NJV-Sd-0Up" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="8Oo-tc-w5m"/>
+                <constraint firstItem="FNQ-RY-YLl" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="Dhk-kd-Nex"/>
                 <constraint firstItem="NJV-Sd-0Up" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="MwI-Zh-NIX"/>
+                <constraint firstAttribute="trailing" secondItem="hea-D0-kl0" secondAttribute="trailing" id="Z4t-os-IWu"/>
+                <constraint firstAttribute="bottom" secondItem="FNQ-RY-YLl" secondAttribute="bottom" id="bRu-Ic-PeE"/>
+                <constraint firstItem="hea-D0-kl0" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="dFw-PC-cEE"/>
+                <constraint firstItem="hea-D0-kl0" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="eBc-l9-4WZ"/>
+                <constraint firstItem="FNQ-RY-YLl" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="fhC-sh-mAa"/>
+                <constraint firstAttribute="bottom" secondItem="hea-D0-kl0" secondAttribute="bottom" id="lGw-8M-cX0"/>
                 <constraint firstAttribute="trailing" secondItem="NJV-Sd-0Up" secondAttribute="trailing" id="vUC-Rq-8YN"/>
             </constraints>
         </customView>
