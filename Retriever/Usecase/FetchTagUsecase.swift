@@ -12,14 +12,14 @@ import RxSwift
 class FetchTagUsecase {
     func execute() -> Observable<[TagItem]> {
         let tagItem = [
-            TagItem(title: "Tag01"),
-            TagItem(title: "Tag02"),
-            TagItem(title: "Tag03"),
-            TagItem(title: "Tag04"),
-            TagItem(title: "Tag05"),
-            TagItem(title: "Tag06"),
-            TagItem(title: "Tag07"),
-            TagItem(title: "Tag08")
+            TagItem(title: "Tag1"),
+            TagItem(title: "Tag2"),
+            TagItem(title: "Tag3"),
+            TagItem(title: "Tag4"),
+            TagItem(title: "Tag5"),
+            TagItem(title: "Tag6"),
+            TagItem(title: "Tag7"),
+            TagItem(title: "Tag8")
         ]
         return .of(tagItem)
     }
