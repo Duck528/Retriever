@@ -71,25 +71,25 @@
                                                             <constraint firstAttribute="height" constant="110" id="ifg-5G-9eS"/>
                                                         </constraints>
                                                     </customView>
-                                                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="wGj-8j-SiM" userLabel="Tag Section View">
-                                                        <rect key="frame" x="0.0" y="304" width="300" height="117"/>
+                                                    <customView autoresizesSubviews="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wGj-8j-SiM" userLabel="Tag Section View">
+                                                        <rect key="frame" x="0.0" y="0.0" width="300" height="421"/>
                                                         <subviews>
                                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ozi-hy-1Tg">
-                                                                <rect key="frame" x="8" y="80" width="274" height="17"/>
+                                                                <rect key="frame" x="8" y="384" width="274" height="17"/>
                                                                 <textFieldCell key="cell" lineBreakMode="clipping" title="태그" id="oqc-xi-14i">
                                                                     <font key="font" usesAppearanceFont="YES"/>
                                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                 </textFieldCell>
                                                             </textField>
-                                                            <scrollView wantsLayer="YES" borderType="line" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="QTl-hl-jaq">
-                                                                <rect key="frame" x="10" y="10" width="280" height="60"/>
+                                                            <scrollView wantsLayer="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="QTl-hl-jaq">
+                                                                <rect key="frame" x="10" y="10" width="280" height="364"/>
                                                                 <clipView key="contentView" id="ruM-h8-h4y">
-                                                                    <rect key="frame" x="1" y="1" width="278" height="58"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="280" height="364"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <collectionView id="55D-Z0-Usu">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="278" height="58"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="280" height="364"/>
                                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                                                                             <collectionViewFlowLayout key="collectionViewLayout" minimumInteritemSpacing="10" minimumLineSpacing="10" id="Lm6-1X-DUy">
                                                                                 <size key="itemSize" width="50" height="50"/>
@@ -102,9 +102,7 @@
                                                                         </collectionView>
                                                                     </subviews>
                                                                 </clipView>
-                                                                <constraints>
-                                                                    <constraint firstAttribute="height" constant="60" id="xun-8f-EJ2"/>
-                                                                </constraints>
+                                                                <edgeInsets key="contentInsets" left="0.0" right="0.0" top="0.0" bottom="0.0"/>
                                                                 <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="6gQ-Un-SCf">
                                                                     <rect key="frame" x="-100" y="-100" width="218" height="16"/>
                                                                     <autoresizingMask key="autoresizingMask"/>
@@ -130,6 +128,7 @@
                                                     <constraint firstAttribute="trailing" secondItem="Q5i-ZJ-2Ve" secondAttribute="trailing" id="4m6-bf-eNX"/>
                                                     <constraint firstItem="Mfi-fV-0Hu" firstAttribute="top" secondItem="Q5i-ZJ-2Ve" secondAttribute="bottom" id="Bdr-YM-JUt"/>
                                                     <constraint firstItem="wGj-8j-SiM" firstAttribute="top" secondItem="Mfi-fV-0Hu" secondAttribute="bottom" id="Q4q-aZ-X8a"/>
+                                                    <constraint firstAttribute="bottom" secondItem="wGj-8j-SiM" secondAttribute="bottom" id="bFA-qr-sLm"/>
                                                     <constraint firstItem="wGj-8j-SiM" firstAttribute="leading" secondItem="gLL-xG-04a" secondAttribute="leading" id="fRe-YG-IHZ"/>
                                                     <constraint firstItem="Mfi-fV-0Hu" firstAttribute="leading" secondItem="gLL-xG-04a" secondAttribute="leading" id="g0V-0W-a2b"/>
                                                     <constraint firstItem="Q5i-ZJ-2Ve" firstAttribute="top" secondItem="gLL-xG-04a" secondAttribute="top" id="ga8-J5-yjB"/>

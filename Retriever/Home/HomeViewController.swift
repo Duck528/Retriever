@@ -41,6 +41,8 @@ extension HomeViewController {
     }
     
     private func setupCollectionView() {
+        tagCollectionView.backgroundColors = [.clear]
+        
         tagCollectionView.register(
             TagItemCell.self,
             forItemWithIdentifier: NSUserInterfaceItemIdentifier("Cell"))
@@ -53,7 +55,7 @@ extension HomeViewController: NSCollectionViewDelegateFlowLayout {
         let width = NSFont.systemFont(ofSize: 13)
             .size(text: tagTitle, constrainedToWidth: CGFloat.greatestFiniteMagnitude)
             .width
-        return CGSize(width: width, height: 30)
+        return CGSize(width: width, height: 20)
     }
 }
 
@@ -78,6 +80,7 @@ extension HomeViewController: NSCollectionViewDataSource {
 extension HomeViewController {
     func bindViewModel() {
         bindSearchToWord()
+        bindCollectionView()
     }
     
     private func bindSearchToWord() {
@@ -88,6 +91,12 @@ extension HomeViewController {
     }
     
     private func bindCollectionView() {
+        tagCollectionView.rx.observe(NSSize.self, "intrinsicContentSize")
+            .map { $0 ?? .zero }
+            .subscribe(onNext: { contentSize in
+                print("contentSize: \(contentSize)")
+            }).disposed(by: disposeBag)
+        
         viewModel.allTags
             .subscribe(onNext: { fetchedTags in
                 self.tagCollectionView.reloadData()

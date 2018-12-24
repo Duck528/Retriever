@@ -27,6 +27,7 @@
 		93EE701B21D116CB00728013 /* LeftAlignFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EE701A21D116CB00728013 /* LeftAlignFlowLayout.swift */; };
 		93EE701E21D1184F00728013 /* FetchTagUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EE701D21D1184F00728013 /* FetchTagUsecase.swift */; };
 		93EE702021D1272800728013 /* NSFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EE701F21D1272800728013 /* NSFont+Extension.swift */; };
+		93EE702221D1312A00728013 /* NSView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EE702121D1312A00728013 /* NSView+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,6 +54,7 @@
 		93EE701A21D116CB00728013 /* LeftAlignFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeftAlignFlowLayout.swift; sourceTree = "<group>"; };
 		93EE701D21D1184F00728013 /* FetchTagUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchTagUsecase.swift; sourceTree = "<group>"; };
 		93EE701F21D1272800728013 /* NSFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSFont+Extension.swift"; sourceTree = "<group>"; };
+		93EE702121D1312A00728013 /* NSView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSView+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,6 +139,7 @@
 			children = (
 				938CEC4B21CEB01D0035B80A /* NSColor+Extension.swift */,
 				93EE701F21D1272800728013 /* NSFont+Extension.swift */,
+				93EE702121D1312A00728013 /* NSView+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -274,6 +277,7 @@
 				93EE702021D1272800728013 /* NSFont+Extension.swift in Sources */,
 				9352D9E821CFFED00031FF15 /* TagItem.swift in Sources */,
 				938CEC5621CFF0810035B80A /* HomeViewModel.swift in Sources */,
+				93EE702221D1312A00728013 /* NSView+Extension.swift in Sources */,
 				9352D9EA21D0018E0031FF15 /* BindableType.swift in Sources */,
 				938CEC4C21CEB01D0035B80A /* NSColor+Extension.swift in Sources */,
 				938CEC4921CE89660035B80A /* IocContainer.swift in Sources */,
