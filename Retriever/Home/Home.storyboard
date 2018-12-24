@@ -10,23 +10,23 @@
             <objects>
                 <viewController storyboardIdentifier="Home" id="rzy-vk-Z4i" customClass="HomeViewController" customModule="Retriever" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="EbV-a0-Y2C">
-                        <rect key="frame" x="0.0" y="0.0" width="650" height="518"/>
+                        <rect key="frame" x="0.0" y="0.0" width="740" height="611"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <view translatesAutoresizingMaskIntoConstraints="NO" id="Ppg-QW-cRA">
-                                <rect key="frame" x="0.0" y="0.0" width="650" height="518"/>
+                                <rect key="frame" x="0.0" y="0.0" width="740" height="611"/>
                                 <subviews>
                                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="ZzB-ji-eBj">
-                                        <rect key="frame" x="0.0" y="0.0" width="650" height="518"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="740" height="611"/>
                                         <subviews>
                                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="gLL-xG-04a" userLabel="Left Side View">
-                                                <rect key="frame" x="0.0" y="0.0" width="240" height="518"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="300" height="611"/>
                                                 <subviews>
                                                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="Q5i-ZJ-2Ve" userLabel="Search Section View">
-                                                        <rect key="frame" x="0.0" y="438" width="240" height="80"/>
+                                                        <rect key="frame" x="0.0" y="531" width="300" height="80"/>
                                                         <subviews>
                                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eis-TZ-G6v">
-                                                                <rect key="frame" x="8" y="43" width="214" height="17"/>
+                                                                <rect key="frame" x="8" y="43" width="274" height="17"/>
                                                                 <textFieldCell key="cell" lineBreakMode="clipping" title="검색" id="zHz-Em-EdS">
                                                                     <font key="font" usesAppearanceFont="YES"/>
                                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -34,7 +34,7 @@
                                                                 </textFieldCell>
                                                             </textField>
                                                             <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="38n-w0-tiC">
-                                                                <rect key="frame" x="10" y="13" width="210" height="22"/>
+                                                                <rect key="frame" x="10" y="13" width="270" height="22"/>
                                                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="검색" drawsBackground="YES" id="3ZN-cN-H8t">
                                                                     <font key="font" metaFont="system"/>
                                                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -53,10 +53,10 @@
                                                         </constraints>
                                                     </customView>
                                                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="Mfi-fV-0Hu">
-                                                        <rect key="frame" x="0.0" y="328" width="240" height="110"/>
+                                                        <rect key="frame" x="0.0" y="421" width="300" height="110"/>
                                                         <subviews>
                                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ctV-PJ-GoM">
-                                                                <rect key="frame" x="8" y="73" width="214" height="17"/>
+                                                                <rect key="frame" x="8" y="73" width="274" height="17"/>
                                                                 <textFieldCell key="cell" lineBreakMode="clipping" title="난이도" id="jWI-zr-5Gt">
                                                                     <font key="font" usesAppearanceFont="YES"/>
                                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -72,24 +72,24 @@
                                                         </constraints>
                                                     </customView>
                                                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="wGj-8j-SiM" userLabel="Tag Section View">
-                                                        <rect key="frame" x="0.0" y="211" width="240" height="117"/>
+                                                        <rect key="frame" x="0.0" y="304" width="300" height="117"/>
                                                         <subviews>
                                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ozi-hy-1Tg">
-                                                                <rect key="frame" x="8" y="80" width="214" height="17"/>
+                                                                <rect key="frame" x="8" y="80" width="274" height="17"/>
                                                                 <textFieldCell key="cell" lineBreakMode="clipping" title="태그" id="oqc-xi-14i">
                                                                     <font key="font" usesAppearanceFont="YES"/>
                                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                 </textFieldCell>
                                                             </textField>
-                                                            <scrollView wantsLayer="YES" borderType="line" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="QTl-hl-jaq">
-                                                                <rect key="frame" x="10" y="10" width="220" height="60"/>
+                                                            <scrollView wantsLayer="YES" borderType="line" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="QTl-hl-jaq">
+                                                                <rect key="frame" x="10" y="10" width="280" height="60"/>
                                                                 <clipView key="contentView" id="ruM-h8-h4y">
-                                                                    <rect key="frame" x="1" y="1" width="218" height="58"/>
+                                                                    <rect key="frame" x="1" y="1" width="278" height="58"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <collectionView id="55D-Z0-Usu">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="218" height="58"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="278" height="58"/>
                                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                                                                             <collectionViewFlowLayout key="collectionViewLayout" minimumInteritemSpacing="10" minimumLineSpacing="10" id="Lm6-1X-DUy">
                                                                                 <size key="itemSize" width="50" height="50"/>
@@ -135,17 +135,17 @@
                                                     <constraint firstItem="Q5i-ZJ-2Ve" firstAttribute="top" secondItem="gLL-xG-04a" secondAttribute="top" id="ga8-J5-yjB"/>
                                                     <constraint firstAttribute="trailing" secondItem="Mfi-fV-0Hu" secondAttribute="trailing" id="rKe-ax-Yvd"/>
                                                     <constraint firstAttribute="trailing" secondItem="wGj-8j-SiM" secondAttribute="trailing" id="t5U-VP-r14"/>
-                                                    <constraint firstAttribute="width" constant="240" id="trr-Ta-rsO"/>
+                                                    <constraint firstAttribute="width" constant="300" id="trr-Ta-rsO"/>
                                                     <constraint firstItem="Q5i-ZJ-2Ve" firstAttribute="leading" secondItem="gLL-xG-04a" secondAttribute="leading" id="xaL-z9-dwZ"/>
                                                 </constraints>
                                             </customView>
                                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="h6A-Jt-EhP">
-                                                <rect key="frame" x="240" y="0.0" width="410" height="518"/>
+                                                <rect key="frame" x="300" y="0.0" width="440" height="611"/>
                                                 <subviews>
                                                     <box boxType="custom" borderWidth="0.0" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="L4D-m0-Ylm">
-                                                        <rect key="frame" x="0.0" y="0.0" width="410" height="518"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="440" height="611"/>
                                                         <view key="contentView" id="Jxx-11-xG5">
-                                                            <rect key="frame" x="0.0" y="0.0" width="410" height="518"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="440" height="611"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         </view>
                                                         <color key="borderColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -193,7 +193,7 @@
                 </viewController>
                 <customObject id="z9E-Pn-hec" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4" y="188"/>
+            <point key="canvasLocation" x="49" y="234.5"/>
         </scene>
     </scenes>
 </document>

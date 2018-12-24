@@ -26,6 +26,7 @@
 		938CEC5621CFF0810035B80A /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938CEC5521CFF0810035B80A /* HomeViewModel.swift */; };
 		93EE701B21D116CB00728013 /* LeftAlignFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EE701A21D116CB00728013 /* LeftAlignFlowLayout.swift */; };
 		93EE701E21D1184F00728013 /* FetchTagUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EE701D21D1184F00728013 /* FetchTagUsecase.swift */; };
+		93EE702021D1272800728013 /* NSFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EE701F21D1272800728013 /* NSFont+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,6 +52,7 @@
 		938CEC5521CFF0810035B80A /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		93EE701A21D116CB00728013 /* LeftAlignFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeftAlignFlowLayout.swift; sourceTree = "<group>"; };
 		93EE701D21D1184F00728013 /* FetchTagUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchTagUsecase.swift; sourceTree = "<group>"; };
+		93EE701F21D1272800728013 /* NSFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSFont+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,6 +136,7 @@
 			isa = PBXGroup;
 			children = (
 				938CEC4B21CEB01D0035B80A /* NSColor+Extension.swift */,
+				93EE701F21D1272800728013 /* NSFont+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -268,6 +271,7 @@
 				938CEC4021CE634A0035B80A /* RootViewController.swift in Sources */,
 				93EE701B21D116CB00728013 /* LeftAlignFlowLayout.swift in Sources */,
 				93EE701E21D1184F00728013 /* FetchTagUsecase.swift in Sources */,
+				93EE702021D1272800728013 /* NSFont+Extension.swift in Sources */,
 				9352D9E821CFFED00031FF15 /* TagItem.swift in Sources */,
 				938CEC5621CFF0810035B80A /* HomeViewModel.swift in Sources */,
 				9352D9EA21D0018E0031FF15 /* BindableType.swift in Sources */,

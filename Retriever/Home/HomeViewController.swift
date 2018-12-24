@@ -47,6 +47,16 @@ extension HomeViewController {
     }
 }
 
+extension HomeViewController: NSCollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: NSCollectionView, layout collectionViewLayout: NSCollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> NSSize {
+        let tagTitle = viewModel.allTags.value[indexPath.item].tagItem.value.title
+        let width = NSFont.systemFont(ofSize: 13)
+            .size(text: tagTitle, constrainedToWidth: CGFloat.greatestFiniteMagnitude)
+            .width
+        return CGSize(width: width, height: 30)
+    }
+}
+
 extension HomeViewController: NSCollectionViewDataSource {
     func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.allTags.value.count
