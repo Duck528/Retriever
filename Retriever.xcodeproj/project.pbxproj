@@ -28,6 +28,7 @@
 		93EE701E21D1184F00728013 /* FetchTagUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EE701D21D1184F00728013 /* FetchTagUsecase.swift */; };
 		93EE702021D1272800728013 /* NSFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EE701F21D1272800728013 /* NSFont+Extension.swift */; };
 		93EE702221D1312A00728013 /* NSView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EE702121D1312A00728013 /* NSView+Extension.swift */; };
+		93EE702421D3440700728013 /* ObservableType+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EE702321D3440700728013 /* ObservableType+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,6 +56,7 @@
 		93EE701D21D1184F00728013 /* FetchTagUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchTagUsecase.swift; sourceTree = "<group>"; };
 		93EE701F21D1272800728013 /* NSFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSFont+Extension.swift"; sourceTree = "<group>"; };
 		93EE702121D1312A00728013 /* NSView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSView+Extension.swift"; sourceTree = "<group>"; };
+		93EE702321D3440700728013 /* ObservableType+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ObservableType+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,6 +142,7 @@
 				938CEC4B21CEB01D0035B80A /* NSColor+Extension.swift */,
 				93EE701F21D1272800728013 /* NSFont+Extension.swift */,
 				93EE702121D1312A00728013 /* NSView+Extension.swift */,
+				93EE702321D3440700728013 /* ObservableType+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -150,8 +153,8 @@
 				938CEC4F21CFF0620035B80A /* Home.storyboard */,
 				938CEC5321CFF0790035B80A /* HomeViewController.swift */,
 				938CEC5521CFF0810035B80A /* HomeViewModel.swift */,
-				9352D9E321CFFE460031FF15 /* TagItemCell.swift */,
 				9352D9E421CFFE460031FF15 /* TagItemCell.xib */,
+				9352D9E321CFFE460031FF15 /* TagItemCell.swift */,
 				9352D9E721CFFED00031FF15 /* TagItem.swift */,
 			);
 			path = Home;
@@ -271,6 +274,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				938CEC2721CE5B940035B80A /* AppDelegate.swift in Sources */,
+				93EE702421D3440700728013 /* ObservableType+Extension.swift in Sources */,
 				938CEC4021CE634A0035B80A /* RootViewController.swift in Sources */,
 				93EE701B21D116CB00728013 /* LeftAlignFlowLayout.swift in Sources */,
 				93EE701E21D1184F00728013 /* FetchTagUsecase.swift in Sources */,

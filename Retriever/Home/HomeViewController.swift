@@ -85,7 +85,7 @@ extension HomeViewController {
     
     private func bindSearchToWord() {
         searchWordTextField.rx.text
-            .map { $0 ?? "" }
+            .filterOptional()
             .bind(to: viewModel.wordToSearch)
             .disposed(by: disposeBag)
     }
