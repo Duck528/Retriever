@@ -19,16 +19,32 @@
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="OlO-Ss-8ly">
                     <rect key="frame" x="0.0" y="0.0" width="480" height="272"/>
                     <subviews>
-                        <box fixedFrame="YES" boxType="custom" cornerRadius="4" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="fgK-it-pzk">
-                            <rect key="frame" x="168" y="104" width="177" height="114"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <view key="contentView" ambiguous="YES" id="bgK-WT-SSj">
-                                <rect key="frame" x="1" y="1" width="175" height="112"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                            </view>
-                            <color key="fillColor" name="systemRedColor" catalog="System" colorSpace="catalog"/>
-                        </box>
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tia-Tf-Rhx">
+                            <rect key="frame" x="18" y="230" width="444" height="22"/>
+                            <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Overnight" id="syk-kl-UA3">
+                                <font key="font" metaFont="systemBold" size="18"/>
+                                <color key="textColor" name="linkColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qjc-Np-0gY">
+                            <rect key="frame" x="18" y="203" width="444" height="17"/>
+                            <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="밤 사이에, 하룻동안" id="aMq-ru-Ip0">
+                                <font key="font" metaFont="system"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
                     </subviews>
+                    <constraints>
+                        <constraint firstItem="qjc-Np-0gY" firstAttribute="leading" secondItem="tia-Tf-Rhx" secondAttribute="leading" id="7pC-kg-wad"/>
+                        <constraint firstItem="qjc-Np-0gY" firstAttribute="trailing" secondItem="tia-Tf-Rhx" secondAttribute="trailing" id="QoV-ZW-8An"/>
+                        <constraint firstItem="tia-Tf-Rhx" firstAttribute="centerX" secondItem="OlO-Ss-8ly" secondAttribute="centerX" id="Qzk-qK-RJ5"/>
+                        <constraint firstItem="qjc-Np-0gY" firstAttribute="top" secondItem="tia-Tf-Rhx" secondAttribute="bottom" constant="10" id="Sml-H7-TWA"/>
+                        <constraint firstItem="tia-Tf-Rhx" firstAttribute="leading" secondItem="OlO-Ss-8ly" secondAttribute="leading" constant="20" id="TDa-Cw-dLR"/>
+                        <constraint firstItem="tia-Tf-Rhx" firstAttribute="top" secondItem="OlO-Ss-8ly" secondAttribute="top" constant="20" id="mna-BY-mxL"/>
+                        <constraint firstAttribute="trailing" secondItem="tia-Tf-Rhx" secondAttribute="trailing" constant="20" symbolic="YES" id="uYn-fg-nWC"/>
+                    </constraints>
                 </customView>
             </subviews>
             <constraints>

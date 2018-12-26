@@ -7,12 +7,24 @@
 //
 
 import Cocoa
+import RxSwift
+import RxCocoa
 
-class WordItemCell: NSCollectionViewItem {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do view setup here.
-    }
+class WordItemCell: NSCollectionViewItem, BindableType {
+    typealias ViewModelType = WordItemCellViewModel
     
+    var viewModel: WordItemCellViewModel!
+    
+    func bindViewModel() {
+        
+    }
+}
+
+
+class WordItemCellViewModel {
+    let wordItem: BehaviorRelay<WordItem>
+    
+    init(wordItem: WordItem) {
+        self.wordItem = BehaviorRelay<WordItem>(value: wordItem)
+    }
 }

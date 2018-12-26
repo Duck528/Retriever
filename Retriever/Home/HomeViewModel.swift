@@ -13,6 +13,7 @@ class HomeViewModel {
     let wordToSearch = BehaviorRelay<String>(value: "")
     let allTags = BehaviorRelay<[TagItemCellViewModel]>(value: [])
     
+    
     let fetchTagUsecase: FetchTagUsecase
     let disposeBag = DisposeBag()
     
