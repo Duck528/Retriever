@@ -15,6 +15,7 @@ class HomeViewController: NSViewController {
     @IBOutlet weak var searchWordTextField: NSTextField!
     @IBOutlet weak var tagCollectionView: NSCollectionView!
     @IBOutlet weak var wordCollectionView: NSCollectionView!
+    @IBOutlet weak var AppendWordSectionView: NSView!
     
     let viewModel: HomeViewModel!
     let disposeBag = DisposeBag()
