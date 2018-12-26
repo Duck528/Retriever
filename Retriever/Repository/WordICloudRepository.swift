@@ -11,10 +11,11 @@ import RxCocoa
 import CloudKit
 
 class WordICloudRepository {
+    private let wordType = "Word"
     
     func fetchWords() -> Observable<[WordItem]> {
         let allPredicate = NSPredicate(format: "")
-        let query = CKQuery(recordType: "", predicate: allPredicate)
+        let query = CKQuery(recordType: wordType, predicate: allPredicate)
         let container = CKContainer.default()
         let privateDB = container.privateCloudDatabase
 
@@ -23,18 +24,18 @@ class WordICloudRepository {
                 if let error = error {
                     observer.onError(error)
                 }
-                
+                privateDB.perform(query, inZoneWith: nil) { results, error in
+                    if let error = error {
+                        observer.onError(error)
+                        return
+                    }
+                    let words = (results ?? [])
+                        .compactMap { WordItem(record: $0) }
+                    observer.onNext(words)
+                    observer.onCompleted()
+                }
             }
             return Disposables.create()
         }
-//
-//        privateDB.perform(query, inZoneWith: nil) { results, error in
-//            if let error = error {
-//                print(error.localizedDescription)
-//                return
-//            }
-//
-//
-//        }
     }
 }

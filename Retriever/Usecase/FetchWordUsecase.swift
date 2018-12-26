@@ -9,7 +9,14 @@
 import RxSwift
 
 class FetchWordUsecase {
+    
+    let wordRepository: WordICloudRepository
+    
+    init(_ wordRepository: WordICloudRepository) {
+        self.wordRepository = wordRepository
+    }
+    
     func execute() -> Observable<[WordItem]> {
-        return .of([])
+        return wordRepository.fetchWords()
     }
 }

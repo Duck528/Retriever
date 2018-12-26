@@ -33,6 +33,8 @@
 		93EE702821D3577F00728013 /* FetchWordUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EE702721D3577F00728013 /* FetchWordUsecase.swift */; };
 		93EE702B21D357BE00728013 /* WordItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EE702A21D357BE00728013 /* WordItem.swift */; };
 		93EE702E21D3599300728013 /* WordICloudRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EE702D21D3599300728013 /* WordICloudRepository.swift */; };
+		93EE703121D3867700728013 /* WordItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EE702F21D3867700728013 /* WordItemCell.swift */; };
+		93EE703221D3867700728013 /* WordItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93EE703021D3867700728013 /* WordItemCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -65,6 +67,8 @@
 		93EE702721D3577F00728013 /* FetchWordUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchWordUsecase.swift; sourceTree = "<group>"; };
 		93EE702A21D357BE00728013 /* WordItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordItem.swift; sourceTree = "<group>"; };
 		93EE702D21D3599300728013 /* WordICloudRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordICloudRepository.swift; sourceTree = "<group>"; };
+		93EE702F21D3867700728013 /* WordItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordItemCell.swift; sourceTree = "<group>"; };
+		93EE703021D3867700728013 /* WordItemCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WordItemCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,6 +171,8 @@
 				938CEC5521CFF0810035B80A /* HomeViewModel.swift */,
 				9352D9E421CFFE460031FF15 /* TagItemCell.xib */,
 				9352D9E321CFFE460031FF15 /* TagItemCell.swift */,
+				93EE703021D3867700728013 /* WordItemCell.xib */,
+				93EE702F21D3867700728013 /* WordItemCell.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -276,6 +282,7 @@
 				938CEC4421CE638B0035B80A /* Root.storyboard in Resources */,
 				938CEC2B21CE5B950035B80A /* Assets.xcassets in Resources */,
 				9352D9E621CFFE460031FF15 /* TagItemCell.xib in Resources */,
+				93EE703221D3867700728013 /* WordItemCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -316,6 +323,7 @@
 				938CEC4021CE634A0035B80A /* RootViewController.swift in Sources */,
 				93EE702B21D357BE00728013 /* WordItem.swift in Sources */,
 				93EE701B21D116CB00728013 /* LeftAlignFlowLayout.swift in Sources */,
+				93EE703121D3867700728013 /* WordItemCell.swift in Sources */,
 				93EE701E21D1184F00728013 /* FetchTagUsecase.swift in Sources */,
 				93EE702021D1272800728013 /* NSFont+Extension.swift in Sources */,
 				9352D9E821CFFED00031FF15 /* TagItem.swift in Sources */,

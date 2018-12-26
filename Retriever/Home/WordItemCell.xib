@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="WordItemCell" customModule="Retriever" customModuleProvider="target">
+            <connections>
+                <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="Hz6-mo-xeY">
+            <rect key="frame" x="0.0" y="0.0" width="480" height="272"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="OlO-Ss-8ly">
+                    <rect key="frame" x="0.0" y="0.0" width="480" height="272"/>
+                    <subviews>
+                        <box fixedFrame="YES" boxType="custom" cornerRadius="4" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="fgK-it-pzk">
+                            <rect key="frame" x="168" y="104" width="177" height="114"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <view key="contentView" ambiguous="YES" id="bgK-WT-SSj">
+                                <rect key="frame" x="1" y="1" width="175" height="112"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </view>
+                            <color key="fillColor" name="systemRedColor" catalog="System" colorSpace="catalog"/>
+                        </box>
+                    </subviews>
+                </customView>
+            </subviews>
+            <constraints>
+                <constraint firstItem="OlO-Ss-8ly" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="HmR-NX-Vqt"/>
+                <constraint firstItem="OlO-Ss-8ly" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="PSr-6L-7l3"/>
+                <constraint firstAttribute="bottom" secondItem="OlO-Ss-8ly" secondAttribute="bottom" id="WRV-WK-klV"/>
+                <constraint firstAttribute="trailing" secondItem="OlO-Ss-8ly" secondAttribute="trailing" id="kx8-U8-fy6"/>
+            </constraints>
+        </customView>
+    </objects>
+</document>
