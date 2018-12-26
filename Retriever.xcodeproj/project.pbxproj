@@ -29,6 +29,10 @@
 		93EE702021D1272800728013 /* NSFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EE701F21D1272800728013 /* NSFont+Extension.swift */; };
 		93EE702221D1312A00728013 /* NSView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EE702121D1312A00728013 /* NSView+Extension.swift */; };
 		93EE702421D3440700728013 /* ObservableType+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EE702321D3440700728013 /* ObservableType+Extension.swift */; };
+		93EE702621D354A700728013 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93EE702521D354A700728013 /* CloudKit.framework */; };
+		93EE702821D3577F00728013 /* FetchWordUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EE702721D3577F00728013 /* FetchWordUsecase.swift */; };
+		93EE702B21D357BE00728013 /* WordItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EE702A21D357BE00728013 /* WordItem.swift */; };
+		93EE702E21D3599300728013 /* WordICloudRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EE702D21D3599300728013 /* WordICloudRepository.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,6 +61,10 @@
 		93EE701F21D1272800728013 /* NSFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSFont+Extension.swift"; sourceTree = "<group>"; };
 		93EE702121D1312A00728013 /* NSView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSView+Extension.swift"; sourceTree = "<group>"; };
 		93EE702321D3440700728013 /* ObservableType+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ObservableType+Extension.swift"; sourceTree = "<group>"; };
+		93EE702521D354A700728013 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		93EE702721D3577F00728013 /* FetchWordUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchWordUsecase.swift; sourceTree = "<group>"; };
+		93EE702A21D357BE00728013 /* WordItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordItem.swift; sourceTree = "<group>"; };
+		93EE702D21D3599300728013 /* WordICloudRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordICloudRepository.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +73,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				938CEC4D21CEB0FD0035B80A /* RxAtomic.framework in Frameworks */,
+				93EE702621D354A700728013 /* CloudKit.framework in Frameworks */,
 				938CEC3A21CE5E840035B80A /* RxCocoa.framework in Frameworks */,
 				938CEC3821CE5E790035B80A /* RxSwift.framework in Frameworks */,
 			);
@@ -96,6 +105,8 @@
 				938CEC3E21CE63260035B80A /* Root */,
 				938CEC4E21CFF0400035B80A /* Home */,
 				938CEC4721CE89350035B80A /* Common */,
+				93EE702921D357A500728013 /* Model */,
+				93EE702C21D3597500728013 /* Repository */,
 				93EE701C21D1182B00728013 /* Usecase */,
 				938CEC4A21CEB00D0035B80A /* Extension */,
 				93EE701921D1164800728013 /* Util */,
@@ -110,6 +121,7 @@
 		938CEC3621CE5E790035B80A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				93EE702521D354A700728013 /* CloudKit.framework */,
 				938CEC3C21CE5FFE0035B80A /* RxAtomic.framework */,
 				938CEC3921CE5E840035B80A /* RxCocoa.framework */,
 				938CEC3721CE5E790035B80A /* RxSwift.framework */,
@@ -155,7 +167,6 @@
 				938CEC5521CFF0810035B80A /* HomeViewModel.swift */,
 				9352D9E421CFFE460031FF15 /* TagItemCell.xib */,
 				9352D9E321CFFE460031FF15 /* TagItemCell.swift */,
-				9352D9E721CFFED00031FF15 /* TagItem.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -172,8 +183,26 @@
 			isa = PBXGroup;
 			children = (
 				93EE701D21D1184F00728013 /* FetchTagUsecase.swift */,
+				93EE702721D3577F00728013 /* FetchWordUsecase.swift */,
 			);
 			path = Usecase;
+			sourceTree = "<group>";
+		};
+		93EE702921D357A500728013 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				9352D9E721CFFED00031FF15 /* TagItem.swift */,
+				93EE702A21D357BE00728013 /* WordItem.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		93EE702C21D3597500728013 /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				93EE702D21D3599300728013 /* WordICloudRepository.swift */,
+			);
+			path = Repository;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -209,6 +238,14 @@
 				TargetAttributes = {
 					938CEC2221CE5B940035B80A = {
 						CreatedOnToolsVersion = 10.1;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+							com.apple.iCloud = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -273,15 +310,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				93EE702821D3577F00728013 /* FetchWordUsecase.swift in Sources */,
 				938CEC2721CE5B940035B80A /* AppDelegate.swift in Sources */,
 				93EE702421D3440700728013 /* ObservableType+Extension.swift in Sources */,
 				938CEC4021CE634A0035B80A /* RootViewController.swift in Sources */,
+				93EE702B21D357BE00728013 /* WordItem.swift in Sources */,
 				93EE701B21D116CB00728013 /* LeftAlignFlowLayout.swift in Sources */,
 				93EE701E21D1184F00728013 /* FetchTagUsecase.swift in Sources */,
 				93EE702021D1272800728013 /* NSFont+Extension.swift in Sources */,
 				9352D9E821CFFED00031FF15 /* TagItem.swift in Sources */,
 				938CEC5621CFF0810035B80A /* HomeViewModel.swift in Sources */,
 				93EE702221D1312A00728013 /* NSView+Extension.swift in Sources */,
+				93EE702E21D3599300728013 /* WordICloudRepository.swift in Sources */,
 				9352D9EA21D0018E0031FF15 /* BindableType.swift in Sources */,
 				938CEC4C21CEB01D0035B80A /* NSColor+Extension.swift in Sources */,
 				938CEC4921CE89660035B80A /* IocContainer.swift in Sources */,
