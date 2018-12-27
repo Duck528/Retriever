@@ -9,9 +9,9 @@
 import RxSwift
 
 class SaveWordUsecase {
-    let wordRepository: WordICloudRepository
+    let wordRepository: WordRepositoryProtocol
     
-    init(_ wordRepository: WordICloudRepository) {
+    init(_ wordRepository: WordRepositoryProtocol) {
         self.wordRepository = wordRepository
     }
     

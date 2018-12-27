@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 import CloudKit
 
-class WordICloudRepository {
+class WordICloudRepository: WordRepositoryProtocol {
     
     enum Errors: Error {
         case recordNotFound
@@ -36,16 +36,10 @@ class WordICloudRepository {
                     observer.onError(error)
                     return
                 }
-                self.privateDB.perform(query, inZoneWith: nil) { results, error in
-                    if let error = error {
-                        observer.onError(error)
-                        return
-                    }
-                    let words = (results ?? [])
-                        .compactMap { WordItem(record: $0) }
-                    observer.onNext(words)
-                    observer.onCompleted()
-                }
+                let words = (results ?? [])
+                    .compactMap { WordItem(record: $0) }
+                observer.onNext(words)
+                observer.onCompleted()
             }
             return Disposables.create()
         }

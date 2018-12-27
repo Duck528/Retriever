@@ -17,7 +17,6 @@ class HomeViewModel {
     }
     
     let wordToSearch = BehaviorRelay<String>(value: "")
-    let allTags = BehaviorRelay<[TagItemCellViewModel]>(value: [])
     let viewAction = PublishSubject<ViewAction>()
     
     let wordText = BehaviorRelay<String>(value: "")
@@ -34,20 +33,25 @@ class HomeViewModel {
             .map { $0 && $1 }
     }
     
-    let fetchTagUsecase: FetchTagUsecase
+    let fetchWordUsecase: FetchWordUsecase
     let saveWordUsecase: SaveWordUsecase
+    
+    let wordItems = BehaviorRelay<[WordItemCellViewModel]>(value: [])
+    let allTags = BehaviorRelay<[TagItemCellViewModel]>(value: [])
+    
     let disposeBag = DisposeBag()
     
     init() {
-        fetchTagUsecase = Assembler().resolve()
+        fetchWordUsecase = Assembler().resolve()
         saveWordUsecase = Assembler().resolve()
-        fetchTagItems()
+        fetchWordItems()
     }
     
-    private func fetchTagItems() {
-        fetchTagUsecase.execute()
-            .map { $0.map { TagItemCellViewModel(tagItem: $0) } }
-            .bind(to: allTags)
+    private func fetchWordItems() {
+        fetchWordUsecase.execute()
+            .do(onNext: { print($0.count) })
+            .map { $0.map { WordItemCellViewModel(wordItem: $0) } }
+            .bind(to: wordItems)
             .disposed(by: disposeBag)
     }
     

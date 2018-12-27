@@ -25,7 +25,6 @@
 		938CEC5421CFF0790035B80A /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938CEC5321CFF0790035B80A /* HomeViewController.swift */; };
 		938CEC5621CFF0810035B80A /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938CEC5521CFF0810035B80A /* HomeViewModel.swift */; };
 		93EE701B21D116CB00728013 /* LeftAlignFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EE701A21D116CB00728013 /* LeftAlignFlowLayout.swift */; };
-		93EE701E21D1184F00728013 /* FetchTagUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EE701D21D1184F00728013 /* FetchTagUsecase.swift */; };
 		93EE702021D1272800728013 /* NSFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EE701F21D1272800728013 /* NSFont+Extension.swift */; };
 		93EE702221D1312A00728013 /* NSView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EE702121D1312A00728013 /* NSView+Extension.swift */; };
 		93EE702421D3440700728013 /* ObservableType+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EE702321D3440700728013 /* ObservableType+Extension.swift */; };
@@ -36,6 +35,7 @@
 		93EE703121D3867700728013 /* WordItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EE702F21D3867700728013 /* WordItemCell.swift */; };
 		93EE703221D3867700728013 /* WordItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93EE703021D3867700728013 /* WordItemCell.xib */; };
 		93EE703421D5336B00728013 /* SaveWordUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EE703321D5336B00728013 /* SaveWordUsecase.swift */; };
+		93EE703621D540E000728013 /* WordRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EE703521D540E000728013 /* WordRepositoryProtocol.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -60,7 +60,6 @@
 		938CEC5321CFF0790035B80A /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		938CEC5521CFF0810035B80A /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		93EE701A21D116CB00728013 /* LeftAlignFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeftAlignFlowLayout.swift; sourceTree = "<group>"; };
-		93EE701D21D1184F00728013 /* FetchTagUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchTagUsecase.swift; sourceTree = "<group>"; };
 		93EE701F21D1272800728013 /* NSFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSFont+Extension.swift"; sourceTree = "<group>"; };
 		93EE702121D1312A00728013 /* NSView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSView+Extension.swift"; sourceTree = "<group>"; };
 		93EE702321D3440700728013 /* ObservableType+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ObservableType+Extension.swift"; sourceTree = "<group>"; };
@@ -71,6 +70,7 @@
 		93EE702F21D3867700728013 /* WordItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordItemCell.swift; sourceTree = "<group>"; };
 		93EE703021D3867700728013 /* WordItemCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WordItemCell.xib; sourceTree = "<group>"; };
 		93EE703321D5336B00728013 /* SaveWordUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveWordUsecase.swift; sourceTree = "<group>"; };
+		93EE703521D540E000728013 /* WordRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordRepositoryProtocol.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -190,7 +190,6 @@
 		93EE701C21D1182B00728013 /* Usecase */ = {
 			isa = PBXGroup;
 			children = (
-				93EE701D21D1184F00728013 /* FetchTagUsecase.swift */,
 				93EE702721D3577F00728013 /* FetchWordUsecase.swift */,
 				93EE703321D5336B00728013 /* SaveWordUsecase.swift */,
 			);
@@ -209,6 +208,7 @@
 		93EE702C21D3597500728013 /* Repository */ = {
 			isa = PBXGroup;
 			children = (
+				93EE703521D540E000728013 /* WordRepositoryProtocol.swift */,
 				93EE702D21D3599300728013 /* WordICloudRepository.swift */,
 			);
 			path = Repository;
@@ -327,7 +327,6 @@
 				93EE702B21D357BE00728013 /* WordItem.swift in Sources */,
 				93EE701B21D116CB00728013 /* LeftAlignFlowLayout.swift in Sources */,
 				93EE703121D3867700728013 /* WordItemCell.swift in Sources */,
-				93EE701E21D1184F00728013 /* FetchTagUsecase.swift in Sources */,
 				93EE702021D1272800728013 /* NSFont+Extension.swift in Sources */,
 				9352D9E821CFFED00031FF15 /* TagItem.swift in Sources */,
 				938CEC5621CFF0810035B80A /* HomeViewModel.swift in Sources */,
@@ -337,6 +336,7 @@
 				938CEC4C21CEB01D0035B80A /* NSColor+Extension.swift in Sources */,
 				938CEC4921CE89660035B80A /* IocContainer.swift in Sources */,
 				93EE703421D5336B00728013 /* SaveWordUsecase.swift in Sources */,
+				93EE703621D540E000728013 /* WordRepositoryProtocol.swift in Sources */,
 				938CEC4221CE63510035B80A /* RootViewModel.swift in Sources */,
 				938CEC5421CFF0790035B80A /* HomeViewController.swift in Sources */,
 				9352D9E521CFFE460031FF15 /* TagItemCell.swift in Sources */,

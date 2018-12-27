@@ -10,9 +10,9 @@ import RxSwift
 
 class FetchWordUsecase {
     
-    let wordRepository: WordICloudRepository
+    let wordRepository: WordRepositoryProtocol
     
-    init(_ wordRepository: WordICloudRepository) {
+    init(_ wordRepository: WordRepositoryProtocol) {
         self.wordRepository = wordRepository
     }
     
