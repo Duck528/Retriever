@@ -16,7 +16,7 @@ class WordICloudRepository {
         case recordNotFound
     }
     
-    private let wordType = "Word"
+    private let wordType = "WordItem"
     
     private let container: CKContainer
     private let privateDB: CKDatabase
@@ -53,10 +53,10 @@ class WordICloudRepository {
     
     func save(wordItem: WordItem) -> Observable<WordItem> {
         let wordRecord = CKRecord(recordType: wordType)
-        wordRecord.setValue(wordItem.origin, forKey: "")
-        wordRecord.setValue(wordItem.translate, forKey: "")
-        wordRecord.setValue(wordItem.additionalInfo, forKey: "")
-        wordRecord.setValue(wordItem.tags, forKey: "")
+        wordRecord.setValue(wordItem.word, forKey: "word")
+        wordRecord.setValue(wordItem.mean, forKey: "men")
+        wordRecord.setValue(wordItem.additionalInfo, forKey: "additionalInfo")
+        wordRecord.setValue(wordItem.tags.map { $0.title }, forKey: "tags")
         
         return Observable.create { observer in
             self.privateDB.save(wordRecord) { record, error in

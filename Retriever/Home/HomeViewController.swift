@@ -24,6 +24,10 @@ class HomeViewController: NSViewController {
     @IBOutlet weak var presentAppendWordSectionView: NSView!
     @IBOutlet weak var presentAppendWordSectionButton: NSButton!
     
+    @IBOutlet weak var wordTextField: NSTextField!
+    @IBOutlet weak var meanTextField: NSTextField!
+    @IBOutlet weak var additionalInfoTextView: NSTextView!
+    
     let viewModel: HomeViewModel!
     let disposeBag = DisposeBag()
     
@@ -145,6 +149,11 @@ extension HomeViewController {
         bindCollectionView()
         bindCancelAppendWordButton()
         bindPresentAppendWordSectionButton()
+        bindSaveWordButton()
+        bindWordTextField()
+        bindMeanTextField()
+        bindAdditionalInfoTextView()
+        bindWordAppendableStatus()
     }
     
     private func bindViewAction() {
@@ -198,6 +207,48 @@ extension HomeViewController {
             .throttle(0.5, latest: true, scheduler: MainScheduler.instance)
             .subscribe(onNext: {
                 self.viewModel.presentAppendWordButtonTapped()
+            }).disposed(by: disposeBag)
+    }
+    
+    private func bindSaveWordButton() {
+        appendWordButton.rx.tap
+            .throttle(0.5, latest: true, scheduler: MainScheduler.instance)
+            .subscribe(onNext: {
+                
+            }).disposed(by: disposeBag)
+        
+        appendWordContinouslyButton.rx.tap
+            .throttle(0.5, latest: true, scheduler: MainScheduler.instance)
+            .subscribe(onNext: {
+                
+            }).disposed(by: disposeBag)
+    }
+    
+    private func bindWordTextField() {
+        wordTextField.rx.text
+            .filterOptional()
+            .bind(to: viewModel.wordText)
+            .disposed(by: disposeBag)
+    }
+    
+    private func bindMeanTextField() {
+        meanTextField.rx.text
+            .filterOptional()
+            .bind(to: viewModel.meanText)
+            .disposed(by: disposeBag)
+    }
+    
+    private func bindAdditionalInfoTextView() {
+        additionalInfoTextView.rx.string
+            .bind(to: viewModel.additionalInfoText)
+            .disposed(by: disposeBag)
+    }
+    
+    private func bindWordAppendableStatus() {
+        viewModel.wordAppendable
+            .subscribe(onNext: { appendable in
+                self.appendWordButton.isEnabled = appendable
+                self.appendWordContinouslyButton.isEnabled = appendable
             }).disposed(by: disposeBag)
     }
 }

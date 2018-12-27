@@ -20,11 +20,27 @@ class HomeViewModel {
     let allTags = BehaviorRelay<[TagItemCellViewModel]>(value: [])
     let viewAction = PublishSubject<ViewAction>()
     
+    let wordText = BehaviorRelay<String>(value: "")
+    let meanText = BehaviorRelay<String>(value: "")
+    let additionalInfoText = BehaviorRelay<String>(value: "")
+    
+    var wordAppendable: Observable<Bool> {
+        let hasWordObs = wordText.asObservable()
+            .map { !$0.isEmpty }
+        let hasMeanObs = meanText.asObservable()
+            .map { !$0.isEmpty }
+        
+        return Observable.combineLatest(hasWordObs, hasMeanObs)
+            .map { $0 && $1 }
+    }
+    
     let fetchTagUsecase: FetchTagUsecase
+    let saveWordUsecase: SaveWordUsecase
     let disposeBag = DisposeBag()
     
     init() {
         fetchTagUsecase = Assembler().resolve()
+        saveWordUsecase = Assembler().resolve()
         fetchTagItems()
     }
     
@@ -41,5 +57,19 @@ class HomeViewModel {
     
     func presentAppendWordButtonTapped() {
         viewAction.onNext(.showAppendWordSection)
+    }
+    
+    func saveWordButtonTapped(with wordItem: WordItem) {
+        saveWordUsecase.execute(with: wordItem)
+            .subscribe(onNext: { savedWordItem in
+                print(savedWordItem)
+            }).disposed(by: disposeBag)
+    }
+    
+    func saveWordContinouslyButtonTapped(with wordItem: WordItem) {
+        saveWordUsecase.execute(with: wordItem)
+            .subscribe(onNext: { savedWordItem in
+                print(savedWordItem)
+            }).disposed(by: disposeBag)
     }
 }

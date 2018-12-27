@@ -10,22 +10,22 @@ import Foundation
 import CloudKit
 
 class WordItem {
-    var origin: String = ""
-    var translate: String = ""
+    var word: String = ""
+    var mean: String = ""
     var additionalInfo: String = ""
     var tags: [TagItem] = []
     
     convenience init?(record: CKRecord) {
         guard
-            let origin = record["origin"] as? String,
-            let translate = record["translate"] as? String,
+            let word = record["word"] as? String,
+            let mean = record["mean"] as? String,
             let additionalInfo = record["additionalInfo"] as? String,
             let tags = record["tags"] as? [String] else {
                 return nil
         }
         self.init()
-        self.origin = origin
-        self.translate = translate
+        self.word = word
+        self.mean = mean
         self.additionalInfo = additionalInfo
         self.tags = tags
             .map { TagItem(title: $0) }

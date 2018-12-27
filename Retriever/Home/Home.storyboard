@@ -554,15 +554,18 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="additionalInfoTextView" destination="hkC-6P-SFf" id="4Py-A2-g56"/>
                         <outlet property="appendWordButton" destination="0LM-Wj-ahd" id="093-Vv-6Y8"/>
                         <outlet property="appendWordContinouslyButton" destination="pz2-yV-oYX" id="BAb-r6-NhI"/>
                         <outlet property="appendWordSectionView" destination="uZK-li-Mhi" id="xsb-Xb-mCn"/>
                         <outlet property="cancelAppendWordButton" destination="GlR-gy-NHn" id="Vpy-gb-LiU"/>
+                        <outlet property="meanTextField" destination="xjI-vf-H0L" id="lGi-cK-ong"/>
                         <outlet property="presentAppendWordSectionButton" destination="xBN-1G-NBn" id="cxt-Ky-p2T"/>
                         <outlet property="presentAppendWordSectionView" destination="Oty-iq-zE1" id="cOr-7l-242"/>
                         <outlet property="searchWordTextField" destination="38n-w0-tiC" id="ClH-Kk-Jqo"/>
                         <outlet property="tagCollectionView" destination="55D-Z0-Usu" id="Yzy-m7-8mk"/>
                         <outlet property="wordCollectionView" destination="MQ8-nL-fUN" id="mbp-3B-d4h"/>
+                        <outlet property="wordTextField" destination="wBS-Yp-g4p" id="OdT-xm-pHS"/>
                     </connections>
                 </viewController>
                 <customObject id="z9E-Pn-hec" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>

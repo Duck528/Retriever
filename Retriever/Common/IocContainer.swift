@@ -29,4 +29,9 @@ extension UsecaseAssembler where Self: Assembler {
     func resolve() -> FetchTagUsecase {
         return FetchTagUsecase()
     }
+    
+    func resolve() -> SaveWordUsecase {
+        let repository = WordICloudRepository()
+        return SaveWordUsecase(repository)
+    }
 }

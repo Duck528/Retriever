@@ -35,6 +35,7 @@
 		93EE702E21D3599300728013 /* WordICloudRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EE702D21D3599300728013 /* WordICloudRepository.swift */; };
 		93EE703121D3867700728013 /* WordItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EE702F21D3867700728013 /* WordItemCell.swift */; };
 		93EE703221D3867700728013 /* WordItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93EE703021D3867700728013 /* WordItemCell.xib */; };
+		93EE703421D5336B00728013 /* SaveWordUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EE703321D5336B00728013 /* SaveWordUsecase.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -69,6 +70,7 @@
 		93EE702D21D3599300728013 /* WordICloudRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordICloudRepository.swift; sourceTree = "<group>"; };
 		93EE702F21D3867700728013 /* WordItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordItemCell.swift; sourceTree = "<group>"; };
 		93EE703021D3867700728013 /* WordItemCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WordItemCell.xib; sourceTree = "<group>"; };
+		93EE703321D5336B00728013 /* SaveWordUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveWordUsecase.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -190,6 +192,7 @@
 			children = (
 				93EE701D21D1184F00728013 /* FetchTagUsecase.swift */,
 				93EE702721D3577F00728013 /* FetchWordUsecase.swift */,
+				93EE703321D5336B00728013 /* SaveWordUsecase.swift */,
 			);
 			path = Usecase;
 			sourceTree = "<group>";
@@ -333,6 +336,7 @@
 				9352D9EA21D0018E0031FF15 /* BindableType.swift in Sources */,
 				938CEC4C21CEB01D0035B80A /* NSColor+Extension.swift in Sources */,
 				938CEC4921CE89660035B80A /* IocContainer.swift in Sources */,
+				93EE703421D5336B00728013 /* SaveWordUsecase.swift in Sources */,
 				938CEC4221CE63510035B80A /* RootViewModel.swift in Sources */,
 				938CEC5421CFF0790035B80A /* HomeViewController.swift in Sources */,
 				9352D9E521CFFE460031FF15 /* TagItemCell.swift in Sources */,
