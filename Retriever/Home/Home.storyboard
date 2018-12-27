@@ -410,12 +410,16 @@
                                                                                         <font key="font" metaFont="menu"/>
                                                                                         <menu key="menu" id="vrG-ia-H0r">
                                                                                             <items>
-                                                                                                <menuItem title="쉬움" state="on" id="IXQ-QJ-BoK"/>
-                                                                                                <menuItem title="보통" id="nOm-ZI-dhr"/>
-                                                                                                <menuItem title="어려움" id="QiO-R4-mfN"/>
+                                                                                                <menuItem title="쉬움" state="on" identifier="Easy" id="IXQ-QJ-BoK"/>
+                                                                                                <menuItem title="보통" identifier="Medium" id="nOm-ZI-dhr"/>
+                                                                                                <menuItem title="어려움" identifier="Hard" id="QiO-R4-mfN"/>
+                                                                                                <menuItem title="Undefined" identifier="Undefined" id="hxA-JG-g96"/>
                                                                                             </items>
                                                                                         </menu>
                                                                                     </popUpButtonCell>
+                                                                                    <connections>
+                                                                                        <action selector="difficultyPopYpButtonItemChanged:" target="rzy-vk-Z4i" id="y7G-YT-bK0"/>
+                                                                                    </connections>
                                                                                 </popUpButton>
                                                                             </subviews>
                                                                             <constraints>
@@ -559,6 +563,7 @@
                         <outlet property="appendWordContinouslyButton" destination="pz2-yV-oYX" id="BAb-r6-NhI"/>
                         <outlet property="appendWordSectionView" destination="uZK-li-Mhi" id="xsb-Xb-mCn"/>
                         <outlet property="cancelAppendWordButton" destination="GlR-gy-NHn" id="Vpy-gb-LiU"/>
+                        <outlet property="difficultyPopUpButton" destination="Orp-de-aRB" id="UFl-CT-YOf"/>
                         <outlet property="meanTextField" destination="xjI-vf-H0L" id="lGi-cK-ong"/>
                         <outlet property="presentAppendWordSectionButton" destination="xBN-1G-NBn" id="cxt-Ky-p2T"/>
                         <outlet property="presentAppendWordSectionView" destination="Oty-iq-zE1" id="cOr-7l-242"/>

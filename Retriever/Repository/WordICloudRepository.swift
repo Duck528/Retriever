@@ -51,6 +51,7 @@ class WordICloudRepository: WordRepositoryProtocol {
         wordRecord.setValue(wordItem.mean, forKey: "mean")
         wordRecord.setValue(wordItem.additionalInfo, forKey: "additionalInfo")
         wordRecord.setValue(wordItem.tags.map { $0.title }, forKey: "tags")
+        wordRecord.setValue(wordItem.difficulty.rawValue, forKey: "difficulty")
         
         return Observable.create { observer in
             self.privateDB.save(wordRecord) { record, error in

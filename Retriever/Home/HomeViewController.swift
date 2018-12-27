@@ -27,6 +27,7 @@ class HomeViewController: NSViewController {
     @IBOutlet weak var wordTextField: NSTextField!
     @IBOutlet weak var meanTextField: NSTextField!
     @IBOutlet weak var additionalInfoTextView: NSTextView!
+    @IBOutlet weak var difficultyPopUpButton: NSPopUpButton!
     
     let viewModel: HomeViewModel!
     let disposeBag = DisposeBag()
@@ -35,6 +36,11 @@ class HomeViewController: NSViewController {
         super.viewDidLoad()
         setupViews()
         bindViewModel()
+    }
+    
+    @IBAction func difficultyPopYpButtonItemChanged(_ sender: NSPopUpButton) {
+        let index = sender.indexOfSelectedItem
+        viewModel.difficulty.accept(index)
     }
     
     override init(nibName nibNameOrNil: NSNib.Name?, bundle nibBundleOrNil: Bundle?) {

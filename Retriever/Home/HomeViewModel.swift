@@ -22,6 +22,7 @@ class HomeViewModel {
     let wordText = BehaviorRelay<String>(value: "")
     let meanText = BehaviorRelay<String>(value: "")
     let additionalInfoText = BehaviorRelay<String>(value: "")
+    let difficulty = BehaviorRelay<Int>(value: WordItem.WordDifficulty.easy.rawValue)
     
     var wordAppendable: Observable<Bool> {
         let hasWordObs = wordText.asObservable()
@@ -67,7 +68,7 @@ class HomeViewModel {
             let wordItem = configureWordItem()
         saveWordUsecase.execute(with: wordItem)
             .subscribe(onNext: { savedWordItem in
-                print(savedWordItem)
+                self.printWordItem(savedWordItem)
             }).disposed(by: disposeBag)
     }
     
@@ -75,15 +76,24 @@ class HomeViewModel {
         let wordItem = configureWordItem()
         saveWordUsecase.execute(with: wordItem)
             .subscribe(onNext: { savedWordItem in
-                print(savedWordItem)
+                self.printWordItem(savedWordItem)
             }).disposed(by: disposeBag)
     }
-    
+}
+
+extension HomeViewModel {
     private func configureWordItem() -> WordItem {
         let wordItem = WordItem(
             word: wordText.value,
             mean: meanText.value,
-            additionalInfo: additionalInfoText.value)
+            additionalInfo: additionalInfoText.value,
+            difficulty: difficulty.value)
         return wordItem
+    }
+    
+    private func printWordItem(_ wordItem: WordItem) {
+        print("word: \(wordItem.word)")
+        print("mean: \(wordItem.mean)")
+        print("difficulty: \(wordItem.difficulty)")
     }
 }
