@@ -13,6 +13,7 @@ class HomeViewModel {
     
     enum ViewAction {
         case hideAppendWordSection
+        case showAppendWordSection
     }
     
     let wordToSearch = BehaviorRelay<String>(value: "")
@@ -36,5 +37,9 @@ class HomeViewModel {
     
     func cancelAppendWordButtonTapped() {
         viewAction.onNext(.hideAppendWordSection)
+    }
+    
+    func presentAppendWordButtonTapped() {
+        viewAction.onNext(.showAppendWordSection)
     }
 }

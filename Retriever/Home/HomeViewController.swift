@@ -21,13 +21,15 @@ class HomeViewController: NSViewController {
     @IBOutlet weak var cancelAppendWordButton: NSButton!
     @IBOutlet weak var appendWordButton: NSButton!
     @IBOutlet weak var appendWordContinouslyButton: NSButton!
+    @IBOutlet weak var presentAppendWordSectionView: NSView!
+    @IBOutlet weak var presentAppendWordSectionButton: NSButton!
     
     let viewModel: HomeViewModel!
     let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupCollectionView()
+        setupViews()
         bindViewModel()
     }
     
@@ -45,6 +47,7 @@ class HomeViewController: NSViewController {
 extension HomeViewController {
     private func setupViews() {
         setupCollectionView()
+        hideAppendWordSection()
     }
     
     private func setupCollectionView() {
@@ -141,6 +144,7 @@ extension HomeViewController {
         bindSearchToWord()
         bindCollectionView()
         bindCancelAppendWordButton()
+        bindPresentAppendWordSectionButton()
     }
     
     private func bindViewAction() {
@@ -149,12 +153,22 @@ extension HomeViewController {
                 switch $0 {
                 case .hideAppendWordSection:
                     self.hideAppendWordSection()
+                case .showAppendWordSection:
+                    self.showAppendWordSection()
                 }
             }).disposed(by: disposeBag)
     }
     
     private func hideAppendWordSection() {
-        appendWordSectionView.findConstraint(for: .bottom)?.constant = -appendWordSectionView.bounds.height
+        appendWordSectionView.findConstraint(for: .bottom)?.constant =
+            -appendWordSectionView.bounds.height
+        presentAppendWordSectionView.findConstraint(for: .bottom)?.constant = 0
+    }
+    
+    private func showAppendWordSection() {
+        appendWordSectionView.findConstraint(for: .bottom)?.constant = 0
+        presentAppendWordSectionView.findConstraint(for: .bottom)?.constant =
+            -presentAppendWordSectionView.bounds.height
     }
     
     private func bindSearchToWord() {
@@ -176,6 +190,14 @@ extension HomeViewController {
             .throttle(0.5, latest: true, scheduler: MainScheduler.instance)
             .subscribe(onNext: { 
                 self.viewModel.cancelAppendWordButtonTapped()
+            }).disposed(by: disposeBag)
+    }
+    
+    private func bindPresentAppendWordSectionButton() {
+        presentAppendWordSectionButton.rx.tap
+            .throttle(0.5, latest: true, scheduler: MainScheduler.instance)
+            .subscribe(onNext: {
+                self.viewModel.presentAppendWordButtonTapped()
             }).disposed(by: disposeBag)
     }
 }

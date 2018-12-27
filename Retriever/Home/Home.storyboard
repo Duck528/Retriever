@@ -482,6 +482,26 @@
                                                                         <constraint firstItem="uEC-XU-4AO" firstAttribute="top" secondItem="uZK-li-Mhi" secondAttribute="top" id="yeK-Ib-hLn"/>
                                                                     </constraints>
                                                                 </customView>
+                                                                <customView translatesAutoresizingMaskIntoConstraints="NO" id="Oty-iq-zE1">
+                                                                    <rect key="frame" x="453" y="0.0" width="120" height="120"/>
+                                                                    <subviews>
+                                                                        <button translatesAutoresizingMaskIntoConstraints="NO" id="xBN-1G-NBn">
+                                                                            <rect key="frame" x="0.0" y="0.0" width="120" height="120"/>
+                                                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="plus" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="TZr-uw-Jzb">
+                                                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                                                <font key="font" metaFont="system"/>
+                                                                            </buttonCell>
+                                                                        </button>
+                                                                    </subviews>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" constant="120" id="1Au-xn-6ju"/>
+                                                                        <constraint firstAttribute="height" constant="120" id="1CW-9z-Wke"/>
+                                                                        <constraint firstItem="xBN-1G-NBn" firstAttribute="leading" secondItem="Oty-iq-zE1" secondAttribute="leading" id="1jm-T7-aVd"/>
+                                                                        <constraint firstAttribute="bottom" secondItem="xBN-1G-NBn" secondAttribute="bottom" id="8Wf-DN-SGr"/>
+                                                                        <constraint firstItem="xBN-1G-NBn" firstAttribute="top" secondItem="Oty-iq-zE1" secondAttribute="top" id="OdE-HR-TjS"/>
+                                                                        <constraint firstAttribute="trailing" secondItem="xBN-1G-NBn" secondAttribute="trailing" id="bFG-Bv-bkj"/>
+                                                                    </constraints>
+                                                                </customView>
                                                             </subviews>
                                                             <constraints>
                                                                 <constraint firstAttribute="trailing" secondItem="DV9-tI-iip" secondAttribute="trailing" id="7qb-r8-EMG"/>
@@ -489,7 +509,9 @@
                                                                 <constraint firstAttribute="bottom" secondItem="uZK-li-Mhi" secondAttribute="bottom" id="H1f-Ge-q5Z"/>
                                                                 <constraint firstAttribute="trailing" secondItem="uZK-li-Mhi" secondAttribute="trailing" id="KY4-wg-sf1"/>
                                                                 <constraint firstItem="uZK-li-Mhi" firstAttribute="leading" secondItem="Jxx-11-xG5" secondAttribute="leading" id="kYh-bH-7VK"/>
+                                                                <constraint firstAttribute="bottom" secondItem="Oty-iq-zE1" secondAttribute="bottom" id="kfL-ri-bpc"/>
                                                                 <constraint firstItem="DV9-tI-iip" firstAttribute="top" secondItem="Jxx-11-xG5" secondAttribute="top" id="pbH-NA-xOM"/>
+                                                                <constraint firstAttribute="trailing" secondItem="Oty-iq-zE1" secondAttribute="trailing" id="rhv-xn-83j"/>
                                                                 <constraint firstAttribute="bottom" secondItem="DV9-tI-iip" secondAttribute="bottom" id="v89-Qb-HLh"/>
                                                             </constraints>
                                                         </view>
@@ -536,6 +558,8 @@
                         <outlet property="appendWordContinouslyButton" destination="pz2-yV-oYX" id="BAb-r6-NhI"/>
                         <outlet property="appendWordSectionView" destination="uZK-li-Mhi" id="xsb-Xb-mCn"/>
                         <outlet property="cancelAppendWordButton" destination="GlR-gy-NHn" id="Vpy-gb-LiU"/>
+                        <outlet property="presentAppendWordSectionButton" destination="xBN-1G-NBn" id="cxt-Ky-p2T"/>
+                        <outlet property="presentAppendWordSectionView" destination="Oty-iq-zE1" id="cOr-7l-242"/>
                         <outlet property="searchWordTextField" destination="38n-w0-tiC" id="ClH-Kk-Jqo"/>
                         <outlet property="tagCollectionView" destination="55D-Z0-Usu" id="Yzy-m7-8mk"/>
                         <outlet property="wordCollectionView" destination="MQ8-nL-fUN" id="mbp-3B-d4h"/>
@@ -546,4 +570,7 @@
             <point key="canvasLocation" x="115.5" y="268"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="plus" width="128" height="128"/>
+    </resources>
 </document>
