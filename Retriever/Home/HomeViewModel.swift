@@ -59,17 +59,27 @@ class HomeViewModel {
         viewAction.onNext(.showAppendWordSection)
     }
     
-    func saveWordButtonTapped(with wordItem: WordItem) {
+    func saveWordButtonTapped() {
+            let wordItem = configureWordItem()
         saveWordUsecase.execute(with: wordItem)
             .subscribe(onNext: { savedWordItem in
                 print(savedWordItem)
             }).disposed(by: disposeBag)
     }
     
-    func saveWordContinouslyButtonTapped(with wordItem: WordItem) {
+    func saveWordContinouslyButtonTapped() {
+        let wordItem = configureWordItem()
         saveWordUsecase.execute(with: wordItem)
             .subscribe(onNext: { savedWordItem in
                 print(savedWordItem)
             }).disposed(by: disposeBag)
+    }
+    
+    private func configureWordItem() -> WordItem {
+        let wordItem = WordItem(
+            word: wordText.value,
+            mean: meanText.value,
+            additionalInfo: additionalInfoText.value)
+        return wordItem
     }
 }

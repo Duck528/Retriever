@@ -214,13 +214,13 @@ extension HomeViewController {
         appendWordButton.rx.tap
             .throttle(0.5, latest: true, scheduler: MainScheduler.instance)
             .subscribe(onNext: {
-                
+                self.viewModel.saveWordButtonTapped()
             }).disposed(by: disposeBag)
         
         appendWordContinouslyButton.rx.tap
             .throttle(0.5, latest: true, scheduler: MainScheduler.instance)
             .subscribe(onNext: {
-                
+                self.viewModel.saveWordContinouslyButtonTapped()
             }).disposed(by: disposeBag)
     }
     

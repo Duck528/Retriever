@@ -54,7 +54,7 @@ class WordICloudRepository {
     func save(wordItem: WordItem) -> Observable<WordItem> {
         let wordRecord = CKRecord(recordType: wordType)
         wordRecord.setValue(wordItem.word, forKey: "word")
-        wordRecord.setValue(wordItem.mean, forKey: "men")
+        wordRecord.setValue(wordItem.mean, forKey: "mean")
         wordRecord.setValue(wordItem.additionalInfo, forKey: "additionalInfo")
         wordRecord.setValue(wordItem.tags.map { $0.title }, forKey: "tags")
         
