@@ -84,7 +84,7 @@
                                                             </textField>
                                                             <scrollView identifier="TagCollectionView" wantsLayer="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="QTl-hl-jaq">
                                                                 <rect key="frame" x="10" y="10" width="280" height="428"/>
-                                                                <clipView key="contentView" copiesOnScroll="NO" id="ruM-h8-h4y">
+                                                                <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="ruM-h8-h4y">
                                                                     <rect key="frame" x="0.0" y="0.0" width="280" height="428"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
@@ -94,13 +94,14 @@
                                                                             <collectionViewFlowLayout key="collectionViewLayout" minimumInteritemSpacing="10" minimumLineSpacing="10" id="Lm6-1X-DUy" customClass="LeftAlignFlowLayout" customModule="Retriever" customModuleProvider="target">
                                                                                 <size key="itemSize" width="50" height="50"/>
                                                                             </collectionViewFlowLayout>
-                                                                            <color key="primaryBackgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                            <color key="primaryBackgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             <connections>
                                                                                 <outlet property="dataSource" destination="rzy-vk-Z4i" id="EBj-bg-CxA"/>
                                                                                 <outlet property="delegate" destination="rzy-vk-Z4i" id="yZd-Rb-gTS"/>
                                                                             </connections>
                                                                         </collectionView>
                                                                     </subviews>
+                                                                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 </clipView>
                                                                 <edgeInsets key="contentInsets" left="0.0" right="0.0" top="0.0" bottom="0.0"/>
                                                                 <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="6gQ-Un-SCf">
