@@ -15,7 +15,12 @@ class HomeViewController: NSViewController {
     @IBOutlet weak var searchWordTextField: NSTextField!
     @IBOutlet weak var tagCollectionView: NSCollectionView!
     @IBOutlet weak var wordCollectionView: NSCollectionView!
-    @IBOutlet weak var AppendWordSectionView: NSView!
+    
+    // Append Word Section
+    @IBOutlet weak var appendWordSectionView: NSView!
+    @IBOutlet weak var cancelAppendWordButton: NSButton!
+    @IBOutlet weak var appendWordButton: NSButton!
+    @IBOutlet weak var appendWordContinouslyButton: NSButton!
     
     let viewModel: HomeViewModel!
     let disposeBag = DisposeBag()
@@ -46,7 +51,7 @@ extension HomeViewController {
         tagCollectionView.backgroundColors = [.clear]
         tagCollectionView.register(
             TagItemCell.self,
-            forItemWithIdentifier: NSUserInterfaceItemIdentifier("Cell"))
+            forItemWithIdentifier: NSUserInterfaceItemIdentifier("TagCell"))
         
         wordCollectionView.backgroundColors = [.clear]
         wordCollectionView.register(
@@ -110,7 +115,7 @@ extension HomeViewController: NSCollectionViewDataSource {
     
     private func configureTagItem(_ collectionView: NSCollectionView, at indexPath: IndexPath) -> NSCollectionViewItem {
         guard let item = collectionView.makeItem(
-            withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "Cell"),
+            withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "TagCell"),
             for: indexPath) as? TagItemCell else {
                 return NSCollectionViewItem()
         }
@@ -132,8 +137,24 @@ extension HomeViewController: NSCollectionViewDataSource {
 
 extension HomeViewController {
     func bindViewModel() {
+        bindViewAction()
         bindSearchToWord()
         bindCollectionView()
+        bindCancelAppendWordButton()
+    }
+    
+    private func bindViewAction() {
+        viewModel.viewAction
+            .subscribe(onNext: {
+                switch $0 {
+                case .hideAppendWordSection:
+                    self.hideAppendWordSection()
+                }
+            }).disposed(by: disposeBag)
+    }
+    
+    private func hideAppendWordSection() {
+        appendWordSectionView.findConstraint(for: .bottom)?.constant = -appendWordSectionView.bounds.height
     }
     
     private func bindSearchToWord() {
@@ -147,6 +168,14 @@ extension HomeViewController {
         viewModel.allTags
             .subscribe(onNext: { fetchedTags in
                 self.tagCollectionView.reloadData()
+            }).disposed(by: disposeBag)
+    }
+    
+    private func bindCancelAppendWordButton() {
+        cancelAppendWordButton.rx.tap
+            .throttle(0.5, latest: true, scheduler: MainScheduler.instance)
+            .subscribe(onNext: { 
+                self.viewModel.cancelAppendWordButtonTapped()
             }).disposed(by: disposeBag)
     }
 }

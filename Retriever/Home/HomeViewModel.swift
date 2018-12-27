@@ -10,9 +10,14 @@ import RxSwift
 import RxCocoa
 
 class HomeViewModel {
+    
+    enum ViewAction {
+        case hideAppendWordSection
+    }
+    
     let wordToSearch = BehaviorRelay<String>(value: "")
     let allTags = BehaviorRelay<[TagItemCellViewModel]>(value: [])
-    
+    let viewAction = PublishSubject<ViewAction>()
     
     let fetchTagUsecase: FetchTagUsecase
     let disposeBag = DisposeBag()
@@ -27,5 +32,9 @@ class HomeViewModel {
             .map { $0.map { TagItemCellViewModel(tagItem: $0) } }
             .bind(to: allTags)
             .disposed(by: disposeBag)
+    }
+    
+    func cancelAppendWordButtonTapped() {
+        viewAction.onNext(.hideAppendWordSection)
     }
 }
