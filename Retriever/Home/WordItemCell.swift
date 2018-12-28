@@ -22,7 +22,6 @@ class WordItemCell: NSCollectionViewItem, BindableType {
     func bindViewModel() {
         viewModel.wordItem
             .subscribe(onNext: { wordItem in
-                print("word: \(wordItem.word)")
                 self.wordTextField.stringValue = wordItem.word
                 self.meanTextField.stringValue = wordItem.mean
             }).disposed(by: disposeBag)

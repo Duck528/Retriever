@@ -16,18 +16,28 @@ class HomeViewController: NSViewController {
     @IBOutlet weak var tagCollectionView: NSCollectionView!
     @IBOutlet weak var wordCollectionView: NSCollectionView!
     
+    // 사용자로부터 Word가 입력되는 컨트롤 모음
+    @IBOutlet weak var wordTextField: NSTextField!
+    @IBOutlet weak var meanTextField: NSTextField!
+    @IBOutlet weak var additionalInfoTextView: NSTextView!
+    @IBOutlet weak var difficultyPopUpButton: NSPopUpButton!
+    
     // Append Word Section
     @IBOutlet weak var appendWordSectionView: NSView!
     @IBOutlet weak var cancelAppendWordButton: NSButton!
     @IBOutlet weak var appendWordButton: NSButton!
     @IBOutlet weak var appendWordContinouslyButton: NSButton!
+    @IBOutlet weak var appendWordToolSection: NSView!
+    
+    // Edit Word Section
+    @IBOutlet weak var cancelEditWordButton: NSButton!
+    @IBOutlet weak var updateWordButton: NSButton!
+    @IBOutlet weak var deleteWordButton: NSButton!
+    @IBOutlet weak var editWordToolSection: NSView!
+    
+    // 우측 하단 + 버튼
     @IBOutlet weak var presentAppendWordSectionView: NSView!
     @IBOutlet weak var presentAppendWordSectionButton: NSButton!
-    
-    @IBOutlet weak var wordTextField: NSTextField!
-    @IBOutlet weak var meanTextField: NSTextField!
-    @IBOutlet weak var additionalInfoTextView: NSTextView!
-    @IBOutlet weak var difficultyPopUpButton: NSPopUpButton!
     
     let viewModel: HomeViewModel!
     let disposeBag = DisposeBag()
@@ -58,6 +68,7 @@ extension HomeViewController {
     private func setupViews() {
         setupCollectionView()
         hideAppendWordSection()
+        showAppendWordToolSection()
     }
     
     private func setupCollectionView() {
@@ -82,6 +93,13 @@ extension HomeViewController: NSCollectionViewDelegateFlowLayout {
         } else {
             return .zero
         }
+    }
+    
+    func collectionView(_ collectionView: NSCollectionView, didSelectItemsAt indexPaths: Set<IndexPath>) {
+        guard collectionView == wordCollectionView, let indexPath = indexPaths.first else {
+            return
+        }
+        viewModel.selectWordToEdit(at: indexPath)
     }
     
     private func calculateTagCellSize(at indexPath: IndexPath) -> CGSize {
@@ -164,6 +182,7 @@ extension HomeViewController {
         bindMeanTextField()
         bindAdditionalInfoTextView()
         bindWordAppendableStatus()
+        bindEditWordToolSection()
     }
     
     private func bindViewAction() {
@@ -174,6 +193,10 @@ extension HomeViewController {
                     self.hideAppendWordSection()
                 case .showAppendWordSection:
                     self.showAppendWordSection()
+                case .updateWordAppendMode:
+                    self.showAppendWordToolSection()
+                case .updateWordEditMode:
+                    self.showEditWordToolSection()
                 }
             }).disposed(by: disposeBag)
     }
@@ -188,6 +211,16 @@ extension HomeViewController {
         appendWordSectionView.findConstraint(for: .bottom)?.constant = 0
         presentAppendWordSectionView.findConstraint(for: .bottom)?.constant =
             -presentAppendWordSectionView.bounds.height
+    }
+    
+    private func showAppendWordToolSection() {
+        editWordToolSection.isHidden = true
+        appendWordToolSection.isHidden = false
+    }
+    
+    private func showEditWordToolSection() {
+        editWordToolSection.isHidden = false
+        appendWordToolSection.isHidden = true
     }
     
     private func bindWordCollectionView() {
@@ -208,7 +241,7 @@ extension HomeViewController {
     
     private func bindTagCollectionView() {
         viewModel.allTags
-            .subscribe(onNext: { fetchedTags in
+            .subscribe(onNext: { _ in
                 self.tagCollectionView.reloadData()
             }).disposed(by: disposeBag)
     }
@@ -244,16 +277,26 @@ extension HomeViewController {
     }
     
     private func bindWordTextField() {
+        // Two-Way 바인딩
         wordTextField.rx.text
             .filterOptional()
             .bind(to: viewModel.wordText)
             .disposed(by: disposeBag)
+        
+        viewModel.wordText
+            .bind(to: wordTextField.rx.text)
+            .disposed(by: disposeBag)
     }
     
     private func bindMeanTextField() {
+        // Two-Way Binding
         meanTextField.rx.text
             .filterOptional()
             .bind(to: viewModel.meanText)
+            .disposed(by: disposeBag)
+        
+        viewModel.meanText
+            .bind(to: meanTextField.rx.text)
             .disposed(by: disposeBag)
     }
     
@@ -268,6 +311,26 @@ extension HomeViewController {
             .subscribe(onNext: { appendable in
                 self.appendWordButton.isEnabled = appendable
                 self.appendWordContinouslyButton.isEnabled = appendable
+            }).disposed(by: disposeBag)
+    }
+    
+    private func bindEditWordToolSection() {
+        cancelEditWordButton.rx.tap
+            .throttle(0.5, latest: true, scheduler: MainScheduler.instance)
+            .subscribe(onNext: {
+                self.viewModel.cancelEditWordButtonTapped()
+            }).disposed(by: disposeBag)
+        
+        deleteWordButton.rx.tap
+            .throttle(0.5, latest: true, scheduler: MainScheduler.instance)
+            .subscribe(onNext: {
+                self.viewModel.deleteSelectedWordButtonTapped()
+            }).disposed(by: disposeBag)
+        
+        updateWordButton.rx.tap
+            .throttle(0.5, latest: true, scheduler: MainScheduler.instance)
+            .subscribe(onNext: {
+                self.viewModel.updateSelectedWordButtonTapped()
             }).disposed(by: disposeBag)
     }
 }

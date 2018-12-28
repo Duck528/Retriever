@@ -154,7 +154,7 @@
                                                                         <rect key="frame" x="1" y="1" width="571" height="676"/>
                                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                         <subviews>
-                                                                            <collectionView id="MQ8-nL-fUN">
+                                                                            <collectionView selectable="YES" allowsEmptySelection="NO" id="MQ8-nL-fUN">
                                                                                 <rect key="frame" x="0.0" y="0.0" width="571" height="158"/>
                                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                                                                                 <collectionViewFlowLayout key="collectionViewLayout" minimumInteritemSpacing="10" minimumLineSpacing="10" id="DGy-TH-qFO">
@@ -471,14 +471,52 @@
                                                                                 <constraint firstItem="pz2-yV-oYX" firstAttribute="centerY" secondItem="ofu-d9-zdd" secondAttribute="centerY" id="wdi-KK-fvA"/>
                                                                             </constraints>
                                                                         </customView>
+                                                                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="hgH-36-OyJ">
+                                                                            <rect key="frame" x="0.0" y="0.0" width="573" height="50"/>
+                                                                            <subviews>
+                                                                                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="U6E-Kj-elJ">
+                                                                                    <rect key="frame" x="14" y="8" width="63" height="32"/>
+                                                                                    <buttonCell key="cell" type="push" title="취소" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="EgY-Jp-zYx">
+                                                                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                                                        <font key="font" metaFont="system"/>
+                                                                                    </buttonCell>
+                                                                                </button>
+                                                                                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GbD-cN-omG">
+                                                                                    <rect key="frame" x="474" y="8" width="85" height="32"/>
+                                                                                    <buttonCell key="cell" type="push" title="업데이트" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="c9C-SM-fdw">
+                                                                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                                                        <font key="font" metaFont="system"/>
+                                                                                    </buttonCell>
+                                                                                </button>
+                                                                                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="UI0-MN-ABg">
+                                                                                    <rect key="frame" x="75" y="8" width="85" height="32"/>
+                                                                                    <buttonCell key="cell" type="push" title="단어삭제" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="EUs-SW-PBz">
+                                                                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                                                        <font key="font" metaFont="system"/>
+                                                                                    </buttonCell>
+                                                                                </button>
+                                                                            </subviews>
+                                                                            <constraints>
+                                                                                <constraint firstItem="U6E-Kj-elJ" firstAttribute="leading" secondItem="hgH-36-OyJ" secondAttribute="leading" constant="20" id="3G8-XF-u8n"/>
+                                                                                <constraint firstItem="U6E-Kj-elJ" firstAttribute="centerY" secondItem="hgH-36-OyJ" secondAttribute="centerY" id="WJ1-SP-PQg"/>
+                                                                                <constraint firstItem="UI0-MN-ABg" firstAttribute="centerY" secondItem="hgH-36-OyJ" secondAttribute="centerY" id="d22-b9-ELY"/>
+                                                                                <constraint firstAttribute="trailing" secondItem="GbD-cN-omG" secondAttribute="trailing" constant="20" id="eW0-A7-grK"/>
+                                                                                <constraint firstItem="UI0-MN-ABg" firstAttribute="leading" secondItem="U6E-Kj-elJ" secondAttribute="trailing" constant="10" id="imS-gP-455"/>
+                                                                                <constraint firstAttribute="height" constant="50" id="nLq-jj-wc1"/>
+                                                                                <constraint firstItem="GbD-cN-omG" firstAttribute="centerY" secondItem="hgH-36-OyJ" secondAttribute="centerY" id="zmg-aS-p4R"/>
+                                                                            </constraints>
+                                                                        </customView>
                                                                     </subviews>
                                                                     <constraints>
+                                                                        <constraint firstAttribute="bottom" secondItem="hgH-36-OyJ" secondAttribute="bottom" id="0hm-dQ-eVc"/>
                                                                         <constraint firstAttribute="bottom" secondItem="HpL-wx-yQT" secondAttribute="bottom" id="1aZ-P0-3zr"/>
                                                                         <constraint firstItem="HpL-wx-yQT" firstAttribute="leading" secondItem="uZK-li-Mhi" secondAttribute="leading" constant="1" id="2aZ-0i-Isj"/>
                                                                         <constraint firstAttribute="bottom" secondItem="ofu-d9-zdd" secondAttribute="bottom" id="3Ob-0v-a3d"/>
                                                                         <constraint firstItem="uEC-XU-4AO" firstAttribute="leading" secondItem="jtp-RN-pe8" secondAttribute="trailing" id="AWM-3M-27r"/>
+                                                                        <constraint firstAttribute="trailing" secondItem="hgH-36-OyJ" secondAttribute="trailing" id="Iv8-BU-7Y6"/>
                                                                         <constraint firstItem="HpL-wx-yQT" firstAttribute="top" secondItem="uZK-li-Mhi" secondAttribute="top" id="JaX-9e-BNJ"/>
                                                                         <constraint firstItem="ofu-d9-zdd" firstAttribute="top" secondItem="jtp-RN-pe8" secondAttribute="bottom" id="KzP-Ez-PaN"/>
+                                                                        <constraint firstItem="hgH-36-OyJ" firstAttribute="leading" secondItem="uZK-li-Mhi" secondAttribute="leading" id="N1d-dO-ioW"/>
                                                                         <constraint firstItem="jtp-RN-pe8" firstAttribute="top" secondItem="uZK-li-Mhi" secondAttribute="top" id="Wbz-Am-1yh"/>
                                                                         <constraint firstAttribute="trailing" secondItem="uEC-XU-4AO" secondAttribute="trailing" id="XZX-xE-ySB"/>
                                                                         <constraint firstAttribute="trailing" secondItem="ofu-d9-zdd" secondAttribute="trailing" id="YJL-UD-Ead"/>
@@ -566,13 +604,18 @@
                         <outlet property="appendWordButton" destination="0LM-Wj-ahd" id="093-Vv-6Y8"/>
                         <outlet property="appendWordContinouslyButton" destination="pz2-yV-oYX" id="BAb-r6-NhI"/>
                         <outlet property="appendWordSectionView" destination="uZK-li-Mhi" id="xsb-Xb-mCn"/>
+                        <outlet property="appendWordToolSection" destination="ofu-d9-zdd" id="Cbe-X9-gxz"/>
                         <outlet property="cancelAppendWordButton" destination="GlR-gy-NHn" id="Vpy-gb-LiU"/>
+                        <outlet property="cancelEditWordButton" destination="U6E-Kj-elJ" id="rWN-Bg-che"/>
+                        <outlet property="deleteWordButton" destination="UI0-MN-ABg" id="7wu-oh-3lL"/>
                         <outlet property="difficultyPopUpButton" destination="Orp-de-aRB" id="UFl-CT-YOf"/>
+                        <outlet property="editWordToolSection" destination="hgH-36-OyJ" id="tsU-Rf-X4A"/>
                         <outlet property="meanTextField" destination="xjI-vf-H0L" id="lGi-cK-ong"/>
                         <outlet property="presentAppendWordSectionButton" destination="xBN-1G-NBn" id="cxt-Ky-p2T"/>
                         <outlet property="presentAppendWordSectionView" destination="Oty-iq-zE1" id="cOr-7l-242"/>
                         <outlet property="searchWordTextField" destination="38n-w0-tiC" id="ClH-Kk-Jqo"/>
                         <outlet property="tagCollectionView" destination="55D-Z0-Usu" id="Yzy-m7-8mk"/>
+                        <outlet property="updateWordButton" destination="GbD-cN-omG" id="rcz-bD-PH8"/>
                         <outlet property="wordCollectionView" destination="MQ8-nL-fUN" id="mbp-3B-d4h"/>
                         <outlet property="wordTextField" destination="wBS-Yp-g4p" id="OdT-xm-pHS"/>
                     </connections>

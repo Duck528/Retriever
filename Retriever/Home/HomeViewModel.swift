@@ -14,6 +14,8 @@ class HomeViewModel {
     enum ViewAction {
         case hideAppendWordSection
         case showAppendWordSection
+        case updateWordEditMode
+        case updateWordAppendMode
     }
     
     let wordToSearch = BehaviorRelay<String>(value: "")
@@ -33,6 +35,16 @@ class HomeViewModel {
         return Observable.combineLatest(hasWordObs, hasMeanObs)
             .map { $0 && $1 }
     }
+    var editWordIndex: IndexPath? {
+        didSet {
+            if editWordIndex == nil {
+                viewAction.onNext(.updateWordAppendMode)
+            } else {
+                updateWordItemComponents()
+                viewAction.onNext(.updateWordEditMode)
+            }
+        }
+    }
     
     let fetchWordUsecase: FetchWordUsecase
     let saveWordUsecase: SaveWordUsecase
@@ -48,16 +60,32 @@ class HomeViewModel {
         fetchWordItems()
     }
     
-    private func fetchWordItems() {
-        fetchWordUsecase.execute()
-            .do(onNext: { print($0.count) })
-            .map { $0.map { WordItemCellViewModel(wordItem: $0) } }
-            .bind(to: wordItems)
-            .disposed(by: disposeBag)
+    func selectWordToEdit(at indexPath: IndexPath) {
+        editWordIndex = indexPath
+        viewAction.onNext(.updateWordEditMode)
+        viewAction.onNext(.showAppendWordSection)
+    }
+    
+    func deselectWordToEdit() {
+        editWordIndex = nil
+        viewAction.onNext(.updateWordAppendMode)
     }
     
     func cancelAppendWordButtonTapped() {
         viewAction.onNext(.hideAppendWordSection)
+    }
+    
+    func cancelEditWordButtonTapped() {
+        editWordIndex = nil
+        viewAction.onNext(.hideAppendWordSection)
+    }
+    
+    func deleteSelectedWordButtonTapped() {
+        
+    }
+    
+    func updateSelectedWordButtonTapped() {
+        
     }
     
     func presentAppendWordButtonTapped() {
@@ -82,6 +110,29 @@ class HomeViewModel {
                 let appendedWordItems = self.wordItems.value + [savedWordItem]
                 self.wordItems.accept(appendedWordItems)
             }).disposed(by: disposeBag)
+    }
+    
+    private func fetchWordItems() {
+        fetchWordUsecase.execute()
+            .map { $0.map { WordItemCellViewModel(wordItem: $0) } }
+            .bind(to: wordItems)
+            .disposed(by: disposeBag)
+    }
+    
+    private func updateWordItemComponents() {
+        guard let editWordIndex = editWordIndex else {
+            return
+        }
+        let editWordItem = wordItems.value[editWordIndex.item].wordItem.value
+        wordText.accept(editWordItem.word)
+        meanText.accept(editWordItem.mean)
+        additionalInfoText.accept(editWordItem.additionalInfo)
+    }
+    
+    private func clearWordItemComponents() {
+        wordText.accept("")
+        meanText.accept("")
+        additionalInfoText.accept("")
     }
 }
 
