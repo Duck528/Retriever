@@ -13,13 +13,26 @@ import RxCocoa
 class WordItemCell: NSCollectionViewItem, BindableType {
     typealias ViewModelType = WordItemCellViewModel
     
+    @IBOutlet weak var wordTextField: NSTextField!
+    @IBOutlet weak var meanTextField: NSTextField!
+    
     var viewModel: WordItemCellViewModel!
+    var disposeBag = DisposeBag()
     
     func bindViewModel() {
-        
+        viewModel.wordItem
+            .subscribe(onNext: { wordItem in
+                print("word: \(wordItem.word)")
+                self.wordTextField.stringValue = wordItem.word
+                self.meanTextField.stringValue = wordItem.mean
+            }).disposed(by: disposeBag)
+    }
+    
+    override func prepareForReuse() {
+        disposeBag = DisposeBag()
+        super.prepareForReuse()
     }
 }
-
 
 class WordItemCellViewModel {
     let wordItem: BehaviorRelay<WordItem>

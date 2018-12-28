@@ -7,20 +7,22 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="WordItemCell" customModule="Retriever" customModuleProvider="target">
             <connections>
+                <outlet property="meanTextField" destination="qjc-Np-0gY" id="cb0-7t-NZ9"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
+                <outlet property="wordTextField" destination="tia-Tf-Rhx" id="aeU-d2-Iqe"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="Hz6-mo-xeY">
-            <rect key="frame" x="0.0" y="0.0" width="480" height="272"/>
+            <rect key="frame" x="0.0" y="0.0" width="353" height="77"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="OlO-Ss-8ly">
-                    <rect key="frame" x="0.0" y="0.0" width="480" height="272"/>
+                    <rect key="frame" x="0.0" y="0.0" width="353" height="77"/>
                     <subviews>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tia-Tf-Rhx">
-                            <rect key="frame" x="18" y="230" width="444" height="22"/>
+                            <rect key="frame" x="18" y="43" width="317" height="22"/>
                             <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Overnight" id="syk-kl-UA3">
                                 <font key="font" metaFont="systemBold" size="18"/>
                                 <color key="textColor" name="linkColor" catalog="System" colorSpace="catalog"/>
@@ -28,21 +30,35 @@
                             </textFieldCell>
                         </textField>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qjc-Np-0gY">
-                            <rect key="frame" x="18" y="203" width="444" height="17"/>
+                            <rect key="frame" x="18" y="16" width="317" height="17"/>
                             <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="밤 사이에, 하룻동안" id="aMq-ru-Ip0">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
+                        <box boxType="custom" borderWidth="0.0" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="KGU-wt-55p">
+                            <rect key="frame" x="0.0" y="0.0" width="353" height="1"/>
+                            <view key="contentView" id="GV2-55-SWv">
+                                <rect key="frame" x="0.0" y="0.0" width="353" height="1"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </view>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="1" id="UPP-wk-dGm"/>
+                            </constraints>
+                            <color key="fillColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                        </box>
                     </subviews>
                     <constraints>
+                        <constraint firstItem="KGU-wt-55p" firstAttribute="leading" secondItem="OlO-Ss-8ly" secondAttribute="leading" id="7OQ-uY-EDe"/>
                         <constraint firstItem="qjc-Np-0gY" firstAttribute="leading" secondItem="tia-Tf-Rhx" secondAttribute="leading" id="7pC-kg-wad"/>
+                        <constraint firstItem="tia-Tf-Rhx" firstAttribute="centerY" secondItem="OlO-Ss-8ly" secondAttribute="centerY" constant="-15" id="96c-eh-FIK"/>
+                        <constraint firstAttribute="bottom" secondItem="KGU-wt-55p" secondAttribute="bottom" id="ELL-sR-9kb"/>
                         <constraint firstItem="qjc-Np-0gY" firstAttribute="trailing" secondItem="tia-Tf-Rhx" secondAttribute="trailing" id="QoV-ZW-8An"/>
                         <constraint firstItem="tia-Tf-Rhx" firstAttribute="centerX" secondItem="OlO-Ss-8ly" secondAttribute="centerX" id="Qzk-qK-RJ5"/>
                         <constraint firstItem="qjc-Np-0gY" firstAttribute="top" secondItem="tia-Tf-Rhx" secondAttribute="bottom" constant="10" id="Sml-H7-TWA"/>
                         <constraint firstItem="tia-Tf-Rhx" firstAttribute="leading" secondItem="OlO-Ss-8ly" secondAttribute="leading" constant="20" id="TDa-Cw-dLR"/>
-                        <constraint firstItem="tia-Tf-Rhx" firstAttribute="top" secondItem="OlO-Ss-8ly" secondAttribute="top" constant="20" id="mna-BY-mxL"/>
+                        <constraint firstAttribute="trailing" secondItem="KGU-wt-55p" secondAttribute="trailing" id="cwi-dm-3fo"/>
                         <constraint firstAttribute="trailing" secondItem="tia-Tf-Rhx" secondAttribute="trailing" constant="20" symbolic="YES" id="uYn-fg-nWC"/>
                     </constraints>
                 </customView>
@@ -53,6 +69,7 @@
                 <constraint firstAttribute="bottom" secondItem="OlO-Ss-8ly" secondAttribute="bottom" id="WRV-WK-klV"/>
                 <constraint firstAttribute="trailing" secondItem="OlO-Ss-8ly" secondAttribute="trailing" id="kx8-U8-fy6"/>
             </constraints>
+            <point key="canvasLocation" x="77.5" y="56.5"/>
         </customView>
     </objects>
 </document>

@@ -78,7 +78,7 @@ extension HomeViewController: NSCollectionViewDelegateFlowLayout {
         if collectionView == tagCollectionView {
             return calculateTagCellSize(at: indexPath)
         } else if collectionView == wordCollectionView {
-            return calculateWordCellSize(at: indexPath)
+            return calculateWordCellSize(in: collectionView, at: indexPath)
         } else {
             return .zero
         }
@@ -92,8 +92,9 @@ extension HomeViewController: NSCollectionViewDelegateFlowLayout {
         return CGSize(width: width, height: 20)
     }
     
-    private func calculateWordCellSize(at indexPath: IndexPath) -> CGSize {
-        return .zero
+    private func calculateWordCellSize(in collectionView: NSCollectionView, at indexPath: IndexPath) -> CGSize {
+        let width = collectionView.bounds.width
+        return CGSize(width: width, height: 77)
     }
 }
 
@@ -123,7 +124,7 @@ extension HomeViewController: NSCollectionViewDataSource {
     }
     
     private func numberOfWordItems(in section: Int) -> Int {
-        return 0
+        return viewModel.wordItems.value.count
     }
     
     private func configureTagItem(_ collectionView: NSCollectionView, at indexPath: IndexPath) -> NSCollectionViewItem {
@@ -143,6 +144,8 @@ extension HomeViewController: NSCollectionViewDataSource {
             for: indexPath) as? WordItemCell else {
                 return NSCollectionViewItem()
         }
+        let cellViewModel = viewModel.wordItems.value[indexPath.item]
+        item.bind(to: cellViewModel)
         return item
     }
 }
@@ -152,7 +155,8 @@ extension HomeViewController {
     func bindViewModel() {
         bindViewAction()
         bindSearchToWord()
-        bindCollectionView()
+        bindTagCollectionView()
+        bindWordCollectionView()
         bindCancelAppendWordButton()
         bindPresentAppendWordSectionButton()
         bindSaveWordButton()
@@ -186,6 +190,15 @@ extension HomeViewController {
             -presentAppendWordSectionView.bounds.height
     }
     
+    private func bindWordCollectionView() {
+        viewModel.wordItems
+            .skip(1)
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { _ in
+                self.wordCollectionView.reloadData()
+            }).disposed(by: disposeBag)
+    }
+    
     private func bindSearchToWord() {
         searchWordTextField.rx.text
             .filterOptional()
@@ -193,7 +206,7 @@ extension HomeViewController {
             .disposed(by: disposeBag)
     }
     
-    private func bindCollectionView() {
+    private func bindTagCollectionView() {
         viewModel.allTags
             .subscribe(onNext: { fetchedTags in
                 self.tagCollectionView.reloadData()

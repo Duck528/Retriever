@@ -161,6 +161,10 @@
                                                                                     <size key="itemSize" width="50" height="50"/>
                                                                                 </collectionViewFlowLayout>
                                                                                 <color key="primaryBackgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                                <connections>
+                                                                                    <outlet property="dataSource" destination="rzy-vk-Z4i" id="EPc-eS-ib7"/>
+                                                                                    <outlet property="delegate" destination="rzy-vk-Z4i" id="AU4-Og-wq1"/>
+                                                                                </connections>
                                                                             </collectionView>
                                                                         </subviews>
                                                                     </clipView>

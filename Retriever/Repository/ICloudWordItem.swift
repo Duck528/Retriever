@@ -29,6 +29,7 @@ class ICloudWordItem {
     
     init(userID: String, word: String, mean: String, additionalInfo: String, tags: [String], difficulty: Int) {
         self.userID = userID
+        self.word = word
         self.mean = mean
         self.additionalInfo = additionalInfo
         self.tags = tags
