@@ -48,15 +48,21 @@ class WordICloudRepository: WordRepositoryProtocol {
     }
     
     func save(wordItem: WordItem) -> Observable<WordItem> {
-        let wordRecord = CKRecord(recordType: wordType)
-        wordRecord.setValue(wordItem.word, forKey: "word")
-        wordRecord.setValue(wordItem.mean, forKey: "mean")
-        wordRecord.setValue(wordItem.additionalInfo, forKey: "additionalInfo")
-        wordRecord.setValue(wordItem.tags.map { $0.title }, forKey: "tags")
-        wordRecord.setValue(wordItem.difficulty.rawValue, forKey: "difficulty")
-        
+        return fetchUserICloudID()
+            .flatMapLatest { userId -> Observable<CKRecord> in
+                let record = self.configureWordRecord(userID: userId, wordItem: wordItem)
+                return Observable.of(record)
+            }
+            .flatMapLatest { record -> Observable<WordItem> in
+                self.updateRecord(record)
+            }
+    }
+}
+
+extension WordICloudRepository {
+    private func updateRecord(_ record: CKRecord) -> Observable<WordItem> {
         return Observable.create { observer in
-            self.privateDB.save(wordRecord) { record, error in
+            self.privateDB.save(record) { record, error in
                 if let error = error {
                     observer.onError(error)
                     return
@@ -69,6 +75,17 @@ class WordICloudRepository: WordRepositoryProtocol {
             }
             return Disposables.create()
         }
+    }
+    
+    private func configureWordRecord(userID: String, wordItem: WordItem) -> CKRecord {
+        let wordRecord = CKRecord(recordType: wordType)
+        wordRecord.setValue(userID, forKey: "userID")
+        wordRecord.setValue(wordItem.word, forKey: "word")
+        wordRecord.setValue(wordItem.mean, forKey: "mean")
+        wordRecord.setValue(wordItem.additionalInfo, forKey: "additionalInfo")
+        wordRecord.setValue(wordItem.tags.map { $0.title }, forKey: "tags")
+        wordRecord.setValue(wordItem.difficulty.rawValue, forKey: "difficulty")
+        return wordRecord
     }
     
     private func fetchUserICloudID() -> Observable<String> {
