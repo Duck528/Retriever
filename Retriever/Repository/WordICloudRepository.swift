@@ -14,12 +14,14 @@ class WordICloudRepository: WordRepositoryProtocol {
     
     enum Errors: Error {
         case recordNotFound
+        case recordIDNotFound
     }
     
     private let wordType = "WordItem"
     
     private let container: CKContainer
     private let privateDB: CKDatabase
+    private var cachedRecordID: CKRecord.ID?
     
     init() {
         container = CKContainer.default()
@@ -63,6 +65,30 @@ class WordICloudRepository: WordRepositoryProtocol {
                     observer.onNext(wordItem)
                 } else {
                     observer.onError(Errors.recordNotFound)
+                }
+            }
+            return Disposables.create()
+        }
+    }
+    
+    private func fetchUserICloudID() -> Observable<String> {
+        return Observable.create { observer in
+            if let cachedRecordID = self.cachedRecordID {
+                observer.onNext(cachedRecordID.recordName)
+                observer.onCompleted()
+            } else {
+                self.container.fetchUserRecordID { recordID, error in
+                    if let error = error {
+                        observer.onError(error)
+                        return
+                    }
+                    if let recordID = recordID {
+                        self.cachedRecordID = recordID
+                        observer.onNext(recordID.recordName)
+                        observer.onCompleted()
+                    } else {
+                        observer.onError(Errors.recordIDNotFound)
+                    }
                 }
             }
             return Disposables.create()

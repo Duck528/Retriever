@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import CloudKit
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
