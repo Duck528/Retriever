@@ -45,16 +45,4 @@ class WordItem {
         let wordDifficulty = WordDifficulty.parse(int: difficulty)
         self.init(word: word, mean: mean, additionalInfo: additionalInfo, tags: tags, difficulty: wordDifficulty)
     }
-    
-    convenience init?(record: CKRecord) {
-        guard let word = record["word"] as? String, let mean = record["mean"] as? String else {
-            return nil
-        }
-        let additionalInfo = (record["additionalInfo"] as? String) ?? ""
-        let tags = (record["tags"] as? [String]) ?? []
-        let difficulty = (record["difficulty"] as? Int) ?? WordDifficulty.undefined.rawValue
-        let tagItems = tags
-            .map { TagItem(title: $0) }
-        self.init(word: word, mean: mean, additionalInfo: additionalInfo, tags: tagItems, difficulty: difficulty)
-    }
 }

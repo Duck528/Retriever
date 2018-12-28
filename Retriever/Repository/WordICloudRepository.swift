@@ -39,7 +39,8 @@ class WordICloudRepository: WordRepositoryProtocol {
                     return
                 }
                 let words = (results ?? [])
-                    .compactMap { WordItem(record: $0) }
+                    .compactMap { ICloudWordItem(record: $0) }
+                    .map { $0.toWordItem() }
                 observer.onNext(words)
                 observer.onCompleted()
             }
@@ -67,8 +68,9 @@ extension WordICloudRepository {
                     observer.onError(error)
                     return
                 }
-                if let record = record, let wordItem = WordItem(record: record) {
-                    observer.onNext(wordItem)
+                if let record = record, let iCloudWordItem = ICloudWordItem(record: record) {
+                    observer.onNext(iCloudWordItem.toWordItem())
+                    observer.onCompleted()
                 } else {
                     observer.onError(Errors.recordNotFound)
                 }
