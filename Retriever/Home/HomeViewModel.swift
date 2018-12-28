@@ -65,18 +65,22 @@ class HomeViewModel {
     }
     
     func saveWordButtonTapped() {
-            let wordItem = configureWordItem()
+        let wordItem = configureWordItem()
         saveWordUsecase.execute(with: wordItem)
+            .map { WordItemCellViewModel(wordItem: $0) }
             .subscribe(onNext: { savedWordItem in
-                self.printWordItem(savedWordItem)
+                let appendedWordItems = self.wordItems.value + [savedWordItem]
+                self.wordItems.accept(appendedWordItems)
             }).disposed(by: disposeBag)
     }
     
     func saveWordContinouslyButtonTapped() {
         let wordItem = configureWordItem()
         saveWordUsecase.execute(with: wordItem)
+            .map { WordItemCellViewModel(wordItem: $0) }
             .subscribe(onNext: { savedWordItem in
-                self.printWordItem(savedWordItem)
+                let appendedWordItems = self.wordItems.value + [savedWordItem]
+                self.wordItems.accept(appendedWordItems)
             }).disposed(by: disposeBag)
     }
 }
@@ -89,11 +93,5 @@ extension HomeViewModel {
             additionalInfo: additionalInfoText.value,
             difficulty: difficulty.value)
         return wordItem
-    }
-    
-    private func printWordItem(_ wordItem: WordItem) {
-        print("word: \(wordItem.word)")
-        print("mean: \(wordItem.mean)")
-        print("difficulty: \(wordItem.difficulty)")
     }
 }
