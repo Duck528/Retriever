@@ -290,7 +290,7 @@ extension HomeViewController {
     }
     
     private func bindMeanTextField() {
-        // Two-Way Binding
+        // Two-Way 바인딩
         meanTextField.rx.text
             .filterOptional()
             .bind(to: viewModel.meanText)
@@ -302,8 +302,13 @@ extension HomeViewController {
     }
     
     private func bindAdditionalInfoTextView() {
+        // Two-Way 바인딩
         additionalInfoTextView.rx.string
             .bind(to: viewModel.additionalInfoText)
+            .disposed(by: disposeBag)
+        
+        viewModel.additionalInfoText
+            .bind(to: additionalInfoTextView.rx.string)
             .disposed(by: disposeBag)
     }
     
