@@ -38,6 +38,7 @@ class HomeViewModel {
     var editWordIndex: IndexPath? {
         didSet {
             if editWordIndex == nil {
+                clearWordItemComponents()
                 viewAction.onNext(.updateWordAppendMode)
             } else {
                 updateWordItemComponents()

@@ -15,6 +15,7 @@ class HomeViewController: NSViewController {
     @IBOutlet weak var searchWordTextField: NSTextField!
     @IBOutlet weak var tagCollectionView: NSCollectionView!
     @IBOutlet weak var wordCollectionView: NSCollectionView!
+    @IBOutlet weak var wordCollectionScrollView: NSScrollView!
     
     // 사용자로부터 Word가 입력되는 컨트롤 모음
     @IBOutlet weak var wordTextField: NSTextField!
@@ -202,15 +203,15 @@ extension HomeViewController {
     }
     
     private func hideAppendWordSection() {
-        appendWordSectionView.findConstraint(for: .bottom)?.constant =
-            -appendWordSectionView.bounds.height
+        wordCollectionScrollView.contentInsets.bottom = 0
+        appendWordSectionView.findConstraint(for: .bottom)?.constant = -appendWordSectionView.bounds.height
         presentAppendWordSectionView.findConstraint(for: .bottom)?.constant = 0
     }
     
     private func showAppendWordSection() {
+        wordCollectionScrollView.contentInsets.bottom = 300
         appendWordSectionView.findConstraint(for: .bottom)?.constant = 0
-        presentAppendWordSectionView.findConstraint(for: .bottom)?.constant =
-            -presentAppendWordSectionView.bounds.height
+        presentAppendWordSectionView.findConstraint(for: .bottom)?.constant = -presentAppendWordSectionView.bounds.height
     }
     
     private func showAppendWordToolSection() {
@@ -311,6 +312,7 @@ extension HomeViewController {
             .subscribe(onNext: { appendable in
                 self.appendWordButton.isEnabled = appendable
                 self.appendWordContinouslyButton.isEnabled = appendable
+                self.updateWordButton.isEnabled = appendable
             }).disposed(by: disposeBag)
     }
     

@@ -148,14 +148,14 @@
                                                             <rect key="frame" x="0.0" y="0.0" width="573" height="678"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
-                                                                <scrollView wantsLayer="YES" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DV9-tI-iip">
+                                                                <scrollView wantsLayer="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DV9-tI-iip">
                                                                     <rect key="frame" x="0.0" y="0.0" width="573" height="678"/>
                                                                     <clipView key="contentView" id="Kru-UW-bJa">
-                                                                        <rect key="frame" x="1" y="1" width="571" height="676"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="573" height="678"/>
                                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                         <subviews>
                                                                             <collectionView selectable="YES" allowsEmptySelection="NO" id="MQ8-nL-fUN">
-                                                                                <rect key="frame" x="0.0" y="0.0" width="571" height="158"/>
+                                                                                <rect key="frame" x="0.0" y="0.0" width="573" height="678"/>
                                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                                                                                 <collectionViewFlowLayout key="collectionViewLayout" minimumInteritemSpacing="10" minimumLineSpacing="10" id="DGy-TH-qFO">
                                                                                     <size key="itemSize" width="50" height="50"/>
@@ -169,7 +169,7 @@
                                                                         </subviews>
                                                                     </clipView>
                                                                     <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="bGc-7B-7e1">
-                                                                        <rect key="frame" x="1" y="144" width="233" height="15"/>
+                                                                        <rect key="frame" x="-100" y="-100" width="233" height="15"/>
                                                                         <autoresizingMask key="autoresizingMask"/>
                                                                     </scroller>
                                                                     <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="AGt-AP-TEW">
@@ -616,6 +616,7 @@
                         <outlet property="searchWordTextField" destination="38n-w0-tiC" id="ClH-Kk-Jqo"/>
                         <outlet property="tagCollectionView" destination="55D-Z0-Usu" id="Yzy-m7-8mk"/>
                         <outlet property="updateWordButton" destination="GbD-cN-omG" id="rcz-bD-PH8"/>
+                        <outlet property="wordCollectionScrollView" destination="DV9-tI-iip" id="TKT-4h-53T"/>
                         <outlet property="wordCollectionView" destination="MQ8-nL-fUN" id="mbp-3B-d4h"/>
                         <outlet property="wordTextField" destination="wBS-Yp-g4p" id="OdT-xm-pHS"/>
                     </connections>
