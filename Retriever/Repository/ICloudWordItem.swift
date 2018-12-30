@@ -11,42 +11,34 @@ import CloudKit
 
 class ICloudWordItem {
     let userID: String
+    let recordName: String
+    let lastModified: Date
     var word: String = ""
     var mean: String = ""
     var additionalInfo: String = ""
     var tags: [String] = []
     var difficulty: Int
     
-    init(userID: String, wordItem: WordItem) {
-        self.userID = userID
-        self.word = wordItem.word
-        self.mean = wordItem.mean
-        self.additionalInfo = wordItem.additionalInfo
-        self.tags = wordItem.tags
-            .map { $0.title }
-        self.difficulty = wordItem.difficulty.rawValue
-    }
-    
-    init(userID: String, word: String, mean: String, additionalInfo: String, tags: [String], difficulty: Int) {
-        self.userID = userID
-        self.word = word
-        self.mean = mean
-        self.additionalInfo = additionalInfo
-        self.tags = tags
-        self.difficulty = difficulty
-    }
-    
-    convenience init?(record: CKRecord) {
+    init?(record: CKRecord) {
         guard
             let userID = record["userID"] as? String,
             let word = record["word"] as? String,
+            let lastModified = record.modificationDate,
             let mean = record["mean"] as? String else {
                 return nil
         }
         let additionalInfo = (record["additionalInfo"] as? String) ?? ""
         let tags = (record["tags"] as? [String]) ?? []
         let difficulty = (record["difficulty"] as? Int) ?? 3
-        self.init(userID: userID, word: word, mean: mean, additionalInfo: additionalInfo, tags: tags, difficulty: difficulty)
+        
+        self.userID = userID
+        self.recordName = record.recordID.recordName
+        self.lastModified = lastModified
+        self.word = word
+        self.mean = mean
+        self.additionalInfo = additionalInfo
+        self.tags = tags
+        self.difficulty = difficulty
     }
     
     func toWordItem() -> WordItem {

@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		930FA1AF21D92DC300CE24A4 /* Storable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930FA1AE21D92DC300CE24A4 /* Storable.swift */; };
+		930FA1B121D9321E00CE24A4 /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 930FA1B021D9321E00CE24A4 /* RealmSwift.framework */; };
+		930FA1B321D9322D00CE24A4 /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 930FA1B221D9322D00CE24A4 /* Realm.framework */; };
+		930FA1B521D9323800CE24A4 /* BaseDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930FA1B421D9323800CE24A4 /* BaseDAO.swift */; };
+		930FA1B721D9325C00CE24A4 /* RMConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930FA1B621D9325C00CE24A4 /* RMConfiguration.swift */; };
+		930FA1B921D9330E00CE24A4 /* RMWordItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930FA1B821D9330E00CE24A4 /* RMWordItem.swift */; };
 		932896A421D677BF00C7CE5C /* ICloudWordItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932896A321D677BF00C7CE5C /* ICloudWordItem.swift */; };
 		932896A621D73E6800C7CE5C /* TKTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932896A521D73E6800C7CE5C /* TKTextField.swift */; };
 		932896AC21D7603900C7CE5C /* TKTagTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932896AB21D7603900C7CE5C /* TKTagTextView.swift */; };
@@ -43,6 +49,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		930FA1AE21D92DC300CE24A4 /* Storable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storable.swift; sourceTree = "<group>"; };
+		930FA1B021D9321E00CE24A4 /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealmSwift.framework; path = Carthage/Build/Mac/RealmSwift.framework; sourceTree = "<group>"; };
+		930FA1B221D9322D00CE24A4 /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Realm.framework; path = Carthage/Build/Mac/Realm.framework; sourceTree = "<group>"; };
+		930FA1B421D9323800CE24A4 /* BaseDAO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseDAO.swift; sourceTree = "<group>"; };
+		930FA1B621D9325C00CE24A4 /* RMConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMConfiguration.swift; sourceTree = "<group>"; };
+		930FA1B821D9330E00CE24A4 /* RMWordItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMWordItem.swift; sourceTree = "<group>"; };
 		932896A321D677BF00C7CE5C /* ICloudWordItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICloudWordItem.swift; sourceTree = "<group>"; };
 		932896A521D73E6800C7CE5C /* TKTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKTextField.swift; sourceTree = "<group>"; };
 		932896AB21D7603900C7CE5C /* TKTagTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKTagTextView.swift; sourceTree = "<group>"; };
@@ -86,6 +98,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				930FA1B321D9322D00CE24A4 /* Realm.framework in Frameworks */,
+				930FA1B121D9321E00CE24A4 /* RealmSwift.framework in Frameworks */,
 				938CEC4D21CEB0FD0035B80A /* RxAtomic.framework in Frameworks */,
 				93EE702621D354A700728013 /* CloudKit.framework in Frameworks */,
 				938CEC3A21CE5E840035B80A /* RxCocoa.framework in Frameworks */,
@@ -96,6 +110,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		930FA1AB21D92D9E00CE24A4 /* Database */ = {
+			isa = PBXGroup;
+			children = (
+				930FA1AE21D92DC300CE24A4 /* Storable.swift */,
+				930FA1B421D9323800CE24A4 /* BaseDAO.swift */,
+				930FA1B621D9325C00CE24A4 /* RMConfiguration.swift */,
+				930FA1B821D9330E00CE24A4 /* RMWordItem.swift */,
+			);
+			path = Database;
+			sourceTree = "<group>";
+		};
 		938CEC1A21CE5B940035B80A = {
 			isa = PBXGroup;
 			children = (
@@ -135,6 +160,8 @@
 		938CEC3621CE5E790035B80A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				930FA1B221D9322D00CE24A4 /* Realm.framework */,
+				930FA1B021D9321E00CE24A4 /* RealmSwift.framework */,
 				93EE702521D354A700728013 /* CloudKit.framework */,
 				938CEC3C21CE5FFE0035B80A /* RxAtomic.framework */,
 				938CEC3921CE5E840035B80A /* RxCocoa.framework */,
@@ -156,6 +183,7 @@
 		938CEC4721CE89350035B80A /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				930FA1AB21D92D9E00CE24A4 /* Database */,
 				938CEC4821CE89660035B80A /* IocContainer.swift */,
 				9352D9E921D0018E0031FF15 /* BindableType.swift */,
 			);
@@ -315,6 +343,8 @@
 				"$(SRCROOT)/Carthage/Build/Mac/RxSwift.framework",
 				"$(SRCROOT)/Carthage/Build/Mac/RxCocoa.framework",
 				"$(SRCROOT)/Carthage/Build/Mac/RxAtomic.framework",
+				"$(SRCROOT)/Carthage/Build/Mac/RealmSwift.framework",
+				"$(SRCROOT)/Carthage/Build/Mac/Realm.framework",
 			);
 			name = Carthage;
 			outputFileListPaths = (
@@ -332,6 +362,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				930FA1AF21D92DC300CE24A4 /* Storable.swift in Sources */,
+				930FA1B521D9323800CE24A4 /* BaseDAO.swift in Sources */,
 				93EE702821D3577F00728013 /* FetchWordUsecase.swift in Sources */,
 				938CEC2721CE5B940035B80A /* AppDelegate.swift in Sources */,
 				93EE702421D3440700728013 /* ObservableType+Extension.swift in Sources */,
@@ -347,6 +379,7 @@
 				93EE702E21D3599300728013 /* WordICloudRepository.swift in Sources */,
 				9352D9EA21D0018E0031FF15 /* BindableType.swift in Sources */,
 				938CEC4C21CEB01D0035B80A /* NSColor+Extension.swift in Sources */,
+				930FA1B721D9325C00CE24A4 /* RMConfiguration.swift in Sources */,
 				938CEC4921CE89660035B80A /* IocContainer.swift in Sources */,
 				932896AE21D7698300C7CE5C /* TKTagView.swift in Sources */,
 				93EE703421D5336B00728013 /* SaveWordUsecase.swift in Sources */,
@@ -354,6 +387,7 @@
 				93EE703621D540E000728013 /* WordRepositoryProtocol.swift in Sources */,
 				938CEC4221CE63510035B80A /* RootViewModel.swift in Sources */,
 				938CEC5421CFF0790035B80A /* HomeViewController.swift in Sources */,
+				930FA1B921D9330E00CE24A4 /* RMWordItem.swift in Sources */,
 				9352D9E521CFFE460031FF15 /* TagItemCell.swift in Sources */,
 				932896A621D73E6800C7CE5C /* TKTextField.swift in Sources */,
 			);
