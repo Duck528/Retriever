@@ -120,6 +120,8 @@ class HomeViewModel {
                     .flatMap { $0.tags }
                     .map { TagItemCellViewModel(tagItem: $0) }
                 self.allTags.accept(allTags)
+            }, onError: { error in
+                print(error.localizedDescription)
             })
             .map { $0.map { WordItemCellViewModel(wordItem: $0) } }
             .bind(to: wordItems)
