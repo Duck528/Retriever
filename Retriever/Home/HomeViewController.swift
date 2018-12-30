@@ -242,6 +242,7 @@ extension HomeViewController {
     
     private func bindTagCollectionView() {
         viewModel.allTags
+            .observeOn(MainScheduler.instance)
             .subscribe(onNext: { _ in
                 self.tagCollectionView.reloadData()
             }).disposed(by: disposeBag)

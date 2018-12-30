@@ -288,7 +288,7 @@
                                                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                                             </textFieldCell>
                                                                                         </textField>
-                                                                                        <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="s6O-Wv-IhT">
+                                                                                        <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="s6O-Wv-IhT" customClass="TKBackspaceDetectingTextField" customModule="Retriever" customModuleProvider="target">
                                                                                             <rect key="frame" x="43" y="9" width="282" height="18"/>
                                                                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" focusRingType="none" id="7aK-dd-jJ5">
                                                                                                 <font key="font" metaFont="system" size="14"/>

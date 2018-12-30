@@ -115,6 +115,12 @@ class HomeViewModel {
     
     private func fetchWordItems() {
         fetchWordUsecase.execute()
+            .do(onNext: { wordItems in
+                let allTags = wordItems
+                    .flatMap { $0.tags }
+                    .map { TagItemCellViewModel(tagItem: $0) }
+                self.allTags.accept(allTags)
+            })
             .map { $0.map { WordItemCellViewModel(wordItem: $0) } }
             .bind(to: wordItems)
             .disposed(by: disposeBag)
