@@ -30,6 +30,17 @@ class RMWordItem: Object, Storable {
         return "id"
     }
     
+    convenience init(iCloudWordItem: ICloudWordItem) {
+        self.init()
+        recordName = iCloudWordItem.recordName
+        word = iCloudWordItem.word
+        mean = iCloudWordItem.mean
+        tags = convertTagsToCSVFormatString(iCloudWordItem.tags)
+        lastModified = iCloudWordItem.lastModified
+        additionalInfo = iCloudWordItem.additionalInfo
+        difficulty = iCloudWordItem.difficulty
+    }
+    
     func convert() -> WordItem {
         let wordItem = WordItem(
             word: word,
@@ -45,5 +56,9 @@ class RMWordItem: Object, Storable {
 extension RMWordItem {
     private func parseTags(_ tags: String) -> [TagItem] {
         return []
+    }
+    
+    private func convertTagsToCSVFormatString(_ tags: [String]) -> String {
+        return ""
     }
 }

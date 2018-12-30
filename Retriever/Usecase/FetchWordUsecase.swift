@@ -18,5 +18,6 @@ class FetchWordUsecase {
     
     func execute() -> Observable<[WordItem]> {
         return wordRepository.fetchWords()
+            .map { $0.map { $0.toWordItem() } }
     }
 }

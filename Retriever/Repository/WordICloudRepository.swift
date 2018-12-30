@@ -28,7 +28,7 @@ class WordICloudRepository: WordRepositoryProtocol {
         privateDB = container.privateCloudDatabase
     }
     
-    func fetchWords() -> Observable<[WordItem]> {
+    func fetchWords() -> Observable<[ICloudWordItem]> {
         let allPredicate = NSPredicate(value: true)
         let query = CKQuery(recordType: wordType, predicate: allPredicate)
 
@@ -40,7 +40,6 @@ class WordICloudRepository: WordRepositoryProtocol {
                 }
                 let words = (results ?? [])
                     .compactMap { ICloudWordItem(record: $0) }
-                    .map { $0.toWordItem() }
                 observer.onNext(words)
                 observer.onCompleted()
             }

@@ -9,6 +9,6 @@
 import RxSwift
 
 protocol WordRepositoryProtocol {
-    func fetchWords() -> Observable<[WordItem]>
+    func fetchWords() -> Observable<[ICloudWordItem]>
     func save(wordItem: WordItem) -> Observable<WordItem>
 }
