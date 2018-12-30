@@ -150,6 +150,7 @@ extension HomeViewModel {
         let wordItem = WordItem(
             word: wordText.value,
             mean: meanText.value,
+            lastModified: Date(),
             additionalInfo: additionalInfoText.value,
             difficulty: difficulty.value)
         return wordItem

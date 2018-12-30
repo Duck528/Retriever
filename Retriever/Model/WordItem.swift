@@ -29,20 +29,23 @@ class WordItem {
     
     var word: String = ""
     var mean: String = ""
+    let lastModified: Date
     var additionalInfo: String = ""
     var tags: [TagItem] = []
     var difficulty: WordDifficulty = .undefined
     
-    init(word: String, mean: String, additionalInfo: String = "", tags: [TagItem] = [], difficulty: WordDifficulty = .undefined) {
+    init(word: String, mean: String, lastModified: Date, additionalInfo: String = "", tags: [TagItem] = [], difficulty: WordDifficulty = .undefined) {
         self.word = word
         self.mean = mean
+        self.lastModified = lastModified
         self.additionalInfo = additionalInfo
         self.tags = tags
         self.difficulty = difficulty
     }
     
-    convenience init(word: String, mean: String, additionalInfo: String = "", tags: [TagItem] = [], difficulty: Int = WordDifficulty.undefined.rawValue) {
+    convenience init(word: String, mean: String, lastModified: Date, additionalInfo: String = "", tags: [TagItem] = [],
+                     difficulty: Int = WordDifficulty.undefined.rawValue) {
         let wordDifficulty = WordDifficulty.parse(int: difficulty)
-        self.init(word: word, mean: mean, additionalInfo: additionalInfo, tags: tags, difficulty: wordDifficulty)
+        self.init(word: word, mean: mean, lastModified: lastModified, additionalInfo: additionalInfo, tags: tags, difficulty: wordDifficulty)
     }
 }

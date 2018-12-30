@@ -46,6 +46,7 @@ class ICloudWordItem {
         let wordItem = WordItem(
             word: word,
             mean: mean,
+            lastModified: lastModified,
             additionalInfo: additionalInfo,
             tags: tagItems,
             difficulty: difficulty)
