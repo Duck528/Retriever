@@ -85,7 +85,6 @@
                         <constraint firstItem="qjc-Np-0gY" firstAttribute="top" secondItem="tia-Tf-Rhx" secondAttribute="bottom" constant="10" id="Sml-H7-TWA"/>
                         <constraint firstItem="tia-Tf-Rhx" firstAttribute="leading" secondItem="OlO-Ss-8ly" secondAttribute="leading" constant="20" id="TDa-Cw-dLR"/>
                         <constraint firstAttribute="trailing" secondItem="KGU-wt-55p" secondAttribute="trailing" id="cwi-dm-3fo"/>
-                        <constraint firstAttribute="trailing" secondItem="tia-Tf-Rhx" secondAttribute="trailing" constant="20" symbolic="YES" id="uYn-fg-nWC"/>
                     </constraints>
                 </customView>
             </subviews>

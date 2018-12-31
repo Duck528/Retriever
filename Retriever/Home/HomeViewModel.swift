@@ -61,7 +61,7 @@ class HomeViewModel {
         fetchLocalWordUsecase = Assembler().resolve()
         saveWordUsecase = Assembler().resolve()
         bindReachability()
-        fetchWordItems()
+        fetchWordItemsAfterSync()
     }
     
     func selectWordToEdit(at indexPath: IndexPath) {
@@ -116,8 +116,8 @@ class HomeViewModel {
             }).disposed(by: disposeBag)
     }
     
-    private func fetchWordItems() {
-        let fetchWordItemsObs = fetchLocalWordUsecase.execute()
+    private func fetchWordItemsWithoutSync() {
+        fetchLocalWordUsecase.execute()
             .do(onNext: { wordItems in
                 print(wordItems)
                 let allTags = wordItems
@@ -128,9 +128,25 @@ class HomeViewModel {
                 print(error.localizedDescription)
             })
             .map { $0.map { WordItemCellViewModel(wordItem: $0) } }
+            .bind(to: wordItems)
+            .disposed(by: disposeBag)
+    }
+    
+    private func fetchWordItemsAfterSync() {
+        let fetchWordItemsObs = fetchLocalWordUsecase.execute()
+            .map { $0.map { WordItemCellViewModel(wordItem: $0) } }
         
         syncDatabaseUsecase.execute()
             .andThen(fetchWordItemsObs)
+            .do(onNext: { wordItems in
+                print(wordItems)
+                let allTags = wordItems
+                    .flatMap { $0.wordItem.value.tags }
+                    .map { TagItemCellViewModel(tagItem: $0) }
+                self.allTags.accept(allTags)
+            }, onError: { error in
+                print(error.localizedDescription)
+            })
             .bind(to: wordItems)
             .disposed(by: disposeBag)
     }
@@ -154,7 +170,11 @@ class HomeViewModel {
     private func bindReachability() {
         Reachability.reachable
             .subscribe(onNext: { reachable in
-                
+                if reachable {
+                    self.fetchWordItemsAfterSync()
+                } else {
+                    self.fetchWordItemsWithoutSync()
+                }
             }).disposed(by: disposeBag)
     }
 }
