@@ -32,6 +32,7 @@ extension BaseDAO {
         }).subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
     }
     
+    // 확인이 필요 함
     func insert(_ modelArray: [ModelType]) -> Observable<Void> {
         return Observable.deferred({ () -> Observable<Void> in
             do {
@@ -49,8 +50,8 @@ extension BaseDAO {
         }).subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
     }
     
-    func insert(_ model: ModelType) -> Observable<Void> {
-        return Observable.deferred({ () -> Observable<Void> in
+    func insert(_ model: ModelType) -> Observable<ModelType.ConvertType> {
+        return Observable.deferred({ () -> Observable<ModelType.ConvertType> in
             do {
                 let realm = try Realm(configuration: RMConfiguration.realmConfig)
                 if realm.object(ofType: ModelType.self, forPrimaryKey: model.primaryKey) != nil {
@@ -62,7 +63,7 @@ extension BaseDAO {
             } catch {
                 return .error(error)
             }
-            return Observable.just(())
+            return Observable.just(model.convert())
         }).subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
     }
     

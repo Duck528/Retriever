@@ -26,9 +26,14 @@ extension ViewModelAssembler where Self: Assembler {
 }
 
 extension UsecaseAssembler where Self: Assembler {
-    func resolve() -> SaveWordUsecase {
+    func resolve() -> SaveRemoteWordUsecase {
         let repository = WordICloudRepository()
-        return SaveWordUsecase(repository)
+        return SaveRemoteWordUsecase(repository)
+    }
+    
+    func resolve() -> SaveLocalWordUsecase {
+        let wordItemDAO = RMWordItemDAO()
+        return SaveLocalWordUsecase(wordItemDAO: wordItemDAO)
     }
     
     func resolve() -> FetchRemoteWordUsecase {

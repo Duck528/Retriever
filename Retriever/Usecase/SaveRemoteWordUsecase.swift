@@ -1,5 +1,5 @@
 //
-//  SaveWordUsecase.swift
+//  SaveRemoteWordUsecase.swift
 //  Retriever
 //
 //  Created by thekan on 28/12/2018.
@@ -8,7 +8,7 @@
 
 import RxSwift
 
-class SaveWordUsecase {
+class SaveRemoteWordUsecase {
     let wordRepository: WordRepositoryProtocol
     
     init(_ wordRepository: WordRepositoryProtocol) {

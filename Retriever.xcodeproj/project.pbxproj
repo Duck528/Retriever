@@ -18,6 +18,7 @@
 		930FA1C121D9FC5200CE24A4 /* FetchLocalWordUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930FA1C021D9FC5200CE24A4 /* FetchLocalWordUsecase.swift */; };
 		930FA1C321DA039600CE24A4 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930FA1C221DA039600CE24A4 /* Reachability.swift */; };
 		930FA1C521DA03AE00CE24A4 /* RxReachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930FA1C421DA03AE00CE24A4 /* RxReachability.swift */; };
+		930FA1C721DA7EA900CE24A4 /* SaveLocalWordUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930FA1C621DA7EA900CE24A4 /* SaveLocalWordUsecase.swift */; };
 		932896A421D677BF00C7CE5C /* ICloudWordItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932896A321D677BF00C7CE5C /* ICloudWordItem.swift */; };
 		932896A621D73E6800C7CE5C /* TKTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932896A521D73E6800C7CE5C /* TKTextField.swift */; };
 		932896AC21D7603900C7CE5C /* TKTagTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932896AB21D7603900C7CE5C /* TKTagTextView.swift */; };
@@ -49,7 +50,7 @@
 		93EE702E21D3599300728013 /* WordICloudRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EE702D21D3599300728013 /* WordICloudRepository.swift */; };
 		93EE703121D3867700728013 /* WordItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EE702F21D3867700728013 /* WordItemCell.swift */; };
 		93EE703221D3867700728013 /* WordItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93EE703021D3867700728013 /* WordItemCell.xib */; };
-		93EE703421D5336B00728013 /* SaveWordUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EE703321D5336B00728013 /* SaveWordUsecase.swift */; };
+		93EE703421D5336B00728013 /* SaveRemoteWordUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EE703321D5336B00728013 /* SaveRemoteWordUsecase.swift */; };
 		93EE703621D540E000728013 /* WordRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EE703521D540E000728013 /* WordRepositoryProtocol.swift */; };
 /* End PBXBuildFile section */
 
@@ -65,6 +66,7 @@
 		930FA1C021D9FC5200CE24A4 /* FetchLocalWordUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchLocalWordUsecase.swift; sourceTree = "<group>"; };
 		930FA1C221DA039600CE24A4 /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		930FA1C421DA03AE00CE24A4 /* RxReachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxReachability.swift; sourceTree = "<group>"; };
+		930FA1C621DA7EA900CE24A4 /* SaveLocalWordUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveLocalWordUsecase.swift; sourceTree = "<group>"; };
 		932896A321D677BF00C7CE5C /* ICloudWordItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICloudWordItem.swift; sourceTree = "<group>"; };
 		932896A521D73E6800C7CE5C /* TKTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKTextField.swift; sourceTree = "<group>"; };
 		932896AB21D7603900C7CE5C /* TKTagTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKTagTextView.swift; sourceTree = "<group>"; };
@@ -99,7 +101,7 @@
 		93EE702D21D3599300728013 /* WordICloudRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordICloudRepository.swift; sourceTree = "<group>"; };
 		93EE702F21D3867700728013 /* WordItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordItemCell.swift; sourceTree = "<group>"; };
 		93EE703021D3867700728013 /* WordItemCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WordItemCell.xib; sourceTree = "<group>"; };
-		93EE703321D5336B00728013 /* SaveWordUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveWordUsecase.swift; sourceTree = "<group>"; };
+		93EE703321D5336B00728013 /* SaveRemoteWordUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveRemoteWordUsecase.swift; sourceTree = "<group>"; };
 		93EE703521D540E000728013 /* WordRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordRepositoryProtocol.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -252,7 +254,8 @@
 			children = (
 				93EE702721D3577F00728013 /* FetchRemoteWordUsecase.swift */,
 				930FA1C021D9FC5200CE24A4 /* FetchLocalWordUsecase.swift */,
-				93EE703321D5336B00728013 /* SaveWordUsecase.swift */,
+				93EE703321D5336B00728013 /* SaveRemoteWordUsecase.swift */,
+				930FA1C621DA7EA900CE24A4 /* SaveLocalWordUsecase.swift */,
 				930FA1BC21D93CC900CE24A4 /* SyncDatabaseUsecase.swift */,
 			);
 			path = Usecase;
@@ -395,6 +398,7 @@
 				93EE702B21D357BE00728013 /* WordItem.swift in Sources */,
 				93EE701B21D116CB00728013 /* LeftAlignFlowLayout.swift in Sources */,
 				93EE703121D3867700728013 /* WordItemCell.swift in Sources */,
+				930FA1C721DA7EA900CE24A4 /* SaveLocalWordUsecase.swift in Sources */,
 				93EE702021D1272800728013 /* NSFont+Extension.swift in Sources */,
 				932896AC21D7603900C7CE5C /* TKTagTextView.swift in Sources */,
 				930FA1C121D9FC5200CE24A4 /* FetchLocalWordUsecase.swift in Sources */,
@@ -407,7 +411,7 @@
 				930FA1B721D9325C00CE24A4 /* RMConfiguration.swift in Sources */,
 				938CEC4921CE89660035B80A /* IocContainer.swift in Sources */,
 				932896AE21D7698300C7CE5C /* TKTagView.swift in Sources */,
-				93EE703421D5336B00728013 /* SaveWordUsecase.swift in Sources */,
+				93EE703421D5336B00728013 /* SaveRemoteWordUsecase.swift in Sources */,
 				932896A421D677BF00C7CE5C /* ICloudWordItem.swift in Sources */,
 				93EE703621D540E000728013 /* WordRepositoryProtocol.swift in Sources */,
 				930FA1BB21D93B8700CE24A4 /* RMWordItemDAO.swift in Sources */,

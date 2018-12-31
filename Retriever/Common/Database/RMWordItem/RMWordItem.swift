@@ -42,6 +42,17 @@ class RMWordItem: Object, Storable {
         difficulty = iCloudWordItem.difficulty
     }
     
+    convenience init(wordItem: WordItem, wordStatus: WordItem.WordStatus) {
+        self.init()
+        word = wordItem.word
+        mean = wordItem.mean
+        tags = convertTagsToCSVFormatString(wordItem.tags.map { $0.title })
+        lastModified = wordItem.lastModified
+        additionalInfo = wordItem.additionalInfo
+        difficulty = wordItem.difficulty.rawValue
+        status = wordStatus.rawValue
+    }
+    
     convenience init(recordName: String, word: String, mean: String, tags: String, lastModified: Date,
                      additionalInfo: String, difficulty: Int, status: Int = WordItem.WordStatus.stable.rawValue) {
         self.init()

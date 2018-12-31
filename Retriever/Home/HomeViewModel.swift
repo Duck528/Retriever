@@ -26,6 +26,8 @@ class HomeViewModel {
     let additionalInfoText = BehaviorRelay<String>(value: "")
     let difficulty = BehaviorRelay<Int>(value: WordItem.WordDifficulty.easy.rawValue)
     
+    let internetConnected = BehaviorRelay<Bool>(value: false)
+    
     var wordAppendable: Observable<Bool> {
         let hasWordObs = wordText.asObservable()
             .map { !$0.isEmpty }
@@ -49,7 +51,8 @@ class HomeViewModel {
     
     let syncDatabaseUsecase: SyncDatabaseUsecase
     let fetchLocalWordUsecase: FetchLocalWordUsecase
-    let saveWordUsecase: SaveWordUsecase
+    let saveRemoteWordUsecase: SaveRemoteWordUsecase
+    let saveLocalWordUsecase: SaveLocalWordUsecase
     
     let wordItems = BehaviorRelay<[WordItemCellViewModel]>(value: [])
     let allTags = BehaviorRelay<[TagItemCellViewModel]>(value: [])
@@ -59,7 +62,8 @@ class HomeViewModel {
     init() {
         syncDatabaseUsecase = Assembler().resolve()
         fetchLocalWordUsecase = Assembler().resolve()
-        saveWordUsecase = Assembler().resolve()
+        saveRemoteWordUsecase = Assembler().resolve()
+        saveLocalWordUsecase = Assembler().resolve()
         bindReachability()
         fetchWordItemsAfterSync()
     }
@@ -98,7 +102,11 @@ class HomeViewModel {
     
     func saveWordButtonTapped() {
         let wordItem = configureWordItem()
-        saveWordUsecase.execute(with: wordItem)
+        saveWordToLocal(wordItem)
+    }
+    
+    private func saveWordToLocal(_ wordItem: WordItem) {
+        saveLocalWordUsecase.execute(wordItem: wordItem)
             .map { WordItemCellViewModel(wordItem: $0) }
             .subscribe(onNext: { savedWordItem in
                 let appendedWordItems = self.wordItems.value + [savedWordItem]
@@ -108,7 +116,7 @@ class HomeViewModel {
     
     func saveWordContinouslyButtonTapped() {
         let wordItem = configureWordItem()
-        saveWordUsecase.execute(with: wordItem)
+        saveRemoteWordUsecase.execute(with: wordItem)
             .map { WordItemCellViewModel(wordItem: $0) }
             .subscribe(onNext: { savedWordItem in
                 let appendedWordItems = self.wordItems.value + [savedWordItem]
@@ -169,8 +177,13 @@ class HomeViewModel {
     
     private func bindReachability() {
         Reachability.reachable
-            .subscribe(onNext: { reachable in
-                if reachable {
+            .bind(to: internetConnected)
+            .disposed(by: disposeBag)
+        
+        internetConnected
+            .skip(1)
+            .subscribe(onNext: { connected in
+                if connected {
                     self.fetchWordItemsAfterSync()
                 } else {
                     self.fetchWordItemsWithoutSync()
