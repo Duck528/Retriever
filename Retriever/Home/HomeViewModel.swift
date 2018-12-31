@@ -100,28 +100,45 @@ class HomeViewModel {
         viewAction.onNext(.showAppendWordSection)
     }
     
+    // 추가하기 버튼이 눌린 경우
     func saveWordButtonTapped() {
         let wordItem = configureWordItem()
         saveWordToLocal(wordItem)
+            .observeOn(MainScheduler.instance)
+            .subscribe { event in
+                switch event {
+                case .completed:
+                    self.clearWordItemComponents()
+                    self.viewAction.onNext(.hideAppendWordSection)
+                case .error(let error):
+                    print(error.localizedDescription)
+                }
+            }.disposed(by: disposeBag)
     }
     
-    private func saveWordToLocal(_ wordItem: WordItem) {
-        saveLocalWordUsecase.execute(wordItem: wordItem)
-            .map { WordItemCellViewModel(wordItem: $0) }
-            .subscribe(onNext: { savedWordItem in
-                let appendedWordItems = self.wordItems.value + [savedWordItem]
-                self.wordItems.accept(appendedWordItems)
-            }).disposed(by: disposeBag)
-    }
-    
+    // 계속해서 더하기 버튼이 눌린 경우
     func saveWordContinouslyButtonTapped() {
         let wordItem = configureWordItem()
-        saveRemoteWordUsecase.execute(with: wordItem)
+        saveWordToLocal(wordItem)
+            .observeOn(MainScheduler.instance)
+            .subscribe { event in
+                switch event {
+                case .completed:
+                    self.clearWordItemComponents()
+                case .error(let error):
+                    print(error.localizedDescription)
+                }
+            }.disposed(by: disposeBag)
+    }
+    
+    private func saveWordToLocal(_ wordItem: WordItem) -> Completable {
+        return saveLocalWordUsecase.execute(wordItem: wordItem)
             .map { WordItemCellViewModel(wordItem: $0) }
-            .subscribe(onNext: { savedWordItem in
+            .flatMapLatest { savedWordItem -> Observable<WordItemCellViewModel> in
                 let appendedWordItems = self.wordItems.value + [savedWordItem]
                 self.wordItems.accept(appendedWordItems)
-            }).disposed(by: disposeBag)
+                return .just(savedWordItem)
+            }.ignoreElements()
     }
     
     private func fetchWordItemsWithoutSync() {
@@ -147,7 +164,6 @@ class HomeViewModel {
         syncDatabaseUsecase.execute()
             .andThen(fetchWordItemsObs)
             .do(onNext: { wordItems in
-                print(wordItems)
                 let allTags = wordItems
                     .flatMap { $0.wordItem.value.tags }
                     .map { TagItemCellViewModel(tagItem: $0) }
