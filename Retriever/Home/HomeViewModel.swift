@@ -60,6 +60,7 @@ class HomeViewModel {
         syncDatabaseUsecase = Assembler().resolve()
         fetchLocalWordUsecase = Assembler().resolve()
         saveWordUsecase = Assembler().resolve()
+        bindReachability()
         fetchWordItems()
     }
     
@@ -148,6 +149,13 @@ class HomeViewModel {
         wordText.accept("")
         meanText.accept("")
         additionalInfoText.accept("")
+    }
+    
+    private func bindReachability() {
+        Reachability.reachable
+            .subscribe(onNext: { reachable in
+                
+            }).disposed(by: disposeBag)
     }
 }
 

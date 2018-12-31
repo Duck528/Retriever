@@ -8,6 +8,8 @@
         <customObject id="-2" userLabel="File's Owner" customClass="WordItemCell" customModule="Retriever" customModuleProvider="target">
             <connections>
                 <outlet property="meanTextField" destination="qjc-Np-0gY" id="cb0-7t-NZ9"/>
+                <outlet property="syncStatusView" destination="Rw9-dx-YsJ" id="YQY-qP-EPf"/>
+                <outlet property="syncWordButton" destination="dJY-Gm-b6u" id="JtE-6b-DMg"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
                 <outlet property="wordTextField" destination="tia-Tf-Rhx" id="aeU-d2-Iqe"/>
             </connections>
@@ -48,11 +50,35 @@
                             </constraints>
                             <color key="fillColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                         </box>
+                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="Rw9-dx-YsJ">
+                            <rect key="frame" x="293" y="0.0" width="60" height="77"/>
+                            <subviews>
+                                <button translatesAutoresizingMaskIntoConstraints="NO" id="dJY-Gm-b6u">
+                                    <rect key="frame" x="16" y="25" width="28" height="28"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="28" id="WoW-ND-0l9"/>
+                                        <constraint firstAttribute="height" constant="28" id="bLL-VC-dfN"/>
+                                    </constraints>
+                                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="cloudNotSynced" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="CHP-hh-MzR">
+                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                        <font key="font" metaFont="system"/>
+                                    </buttonCell>
+                                </button>
+                            </subviews>
+                            <constraints>
+                                <constraint firstItem="dJY-Gm-b6u" firstAttribute="centerX" secondItem="Rw9-dx-YsJ" secondAttribute="centerX" id="3VD-2B-iZP"/>
+                                <constraint firstItem="dJY-Gm-b6u" firstAttribute="centerY" secondItem="Rw9-dx-YsJ" secondAttribute="centerY" id="Cd5-nW-5zg"/>
+                                <constraint firstAttribute="width" constant="60" id="qG9-jG-SGx"/>
+                            </constraints>
+                        </customView>
                     </subviews>
                     <constraints>
+                        <constraint firstAttribute="bottom" secondItem="Rw9-dx-YsJ" secondAttribute="bottom" id="1VG-Im-DeR"/>
+                        <constraint firstAttribute="trailing" secondItem="Rw9-dx-YsJ" secondAttribute="trailing" id="6BH-Hb-0dF"/>
                         <constraint firstItem="KGU-wt-55p" firstAttribute="leading" secondItem="OlO-Ss-8ly" secondAttribute="leading" id="7OQ-uY-EDe"/>
                         <constraint firstItem="qjc-Np-0gY" firstAttribute="leading" secondItem="tia-Tf-Rhx" secondAttribute="leading" id="7pC-kg-wad"/>
                         <constraint firstItem="tia-Tf-Rhx" firstAttribute="centerY" secondItem="OlO-Ss-8ly" secondAttribute="centerY" constant="-15" id="96c-eh-FIK"/>
+                        <constraint firstItem="Rw9-dx-YsJ" firstAttribute="top" secondItem="OlO-Ss-8ly" secondAttribute="top" id="BNo-qy-eXg"/>
                         <constraint firstAttribute="bottom" secondItem="KGU-wt-55p" secondAttribute="bottom" id="ELL-sR-9kb"/>
                         <constraint firstItem="qjc-Np-0gY" firstAttribute="trailing" secondItem="tia-Tf-Rhx" secondAttribute="trailing" id="QoV-ZW-8An"/>
                         <constraint firstItem="tia-Tf-Rhx" firstAttribute="centerX" secondItem="OlO-Ss-8ly" secondAttribute="centerX" id="Qzk-qK-RJ5"/>
@@ -72,4 +98,7 @@
             <point key="canvasLocation" x="77.5" y="56.5"/>
         </customView>
     </objects>
+    <resources>
+        <image name="cloudNotSynced" width="64" height="64"/>
+    </resources>
 </document>

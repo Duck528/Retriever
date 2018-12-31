@@ -15,6 +15,8 @@ class WordItemCell: NSCollectionViewItem, BindableType {
     
     @IBOutlet weak var wordTextField: NSTextField!
     @IBOutlet weak var meanTextField: NSTextField!
+    @IBOutlet weak var syncStatusView: NSView!
+    @IBOutlet weak var syncWordButton: NSButton!
     
     var viewModel: WordItemCellViewModel!
     var disposeBag = DisposeBag()
@@ -24,6 +26,7 @@ class WordItemCell: NSCollectionViewItem, BindableType {
             .subscribe(onNext: { wordItem in
                 self.wordTextField.stringValue = wordItem.word
                 self.meanTextField.stringValue = wordItem.mean
+                self.syncStatusView.isHidden = wordItem.status == .stable
             }).disposed(by: disposeBag)
     }
     
