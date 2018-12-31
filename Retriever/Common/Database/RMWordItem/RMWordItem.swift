@@ -11,7 +11,7 @@ import RealmSwift
 
 class RMWordItem: Object, Storable {
     typealias PrimaryKeyType = String
-    typealias ConvertType = WordItem
+    typealias ConvertType = RMWordItem
     
     @objc dynamic var id: String = UUID().uuidString
     @objc dynamic var recordName: String = ""
@@ -20,7 +20,8 @@ class RMWordItem: Object, Storable {
     @objc dynamic var tags: String = ""
     @objc dynamic var lastModified: Date = Date()
     @objc dynamic var additionalInfo: String = ""
-    @objc dynamic var difficulty: Int = 3
+    @objc dynamic var difficulty: Int = WordItem.WordDifficulty.undefined.rawValue
+    @objc dynamic var status: Int = WordItem.WordStatus.stable.rawValue
     
     var primaryKey: String {
         return id
@@ -41,14 +42,29 @@ class RMWordItem: Object, Storable {
         difficulty = iCloudWordItem.difficulty
     }
     
-    func convert() -> WordItem {
-        let wordItem = WordItem(
+    convenience init(recordName: String, word: String, mean: String, tags: String, lastModified: Date,
+                     additionalInfo: String, difficulty: Int, status: Int = WordItem.WordStatus.stable.rawValue) {
+        self.init()
+        self.recordName = recordName
+        self.word = word
+        self.mean = mean
+        self.tags = tags
+        self.lastModified = lastModified
+        self.additionalInfo = additionalInfo
+        self.difficulty = difficulty
+        self.status = status
+    }
+    
+    func convert() -> RMWordItem {
+        let wordItem = RMWordItem(
+            recordName: recordName,
             word: word,
             mean: mean,
+            tags: tags,
             lastModified: lastModified,
             additionalInfo: additionalInfo,
-            tags: parseTags(tags),
-            difficulty: difficulty)
+            difficulty: difficulty,
+            status: status)
         return wordItem
     }
 }

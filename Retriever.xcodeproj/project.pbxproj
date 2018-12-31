@@ -117,13 +117,21 @@
 		930FA1AB21D92D9E00CE24A4 /* Database */ = {
 			isa = PBXGroup;
 			children = (
+				930FA1BE21D9F4A400CE24A4 /* RMWordItem */,
 				930FA1AE21D92DC300CE24A4 /* Storable.swift */,
 				930FA1B421D9323800CE24A4 /* BaseDAO.swift */,
 				930FA1B621D9325C00CE24A4 /* RMConfiguration.swift */,
+			);
+			path = Database;
+			sourceTree = "<group>";
+		};
+		930FA1BE21D9F4A400CE24A4 /* RMWordItem */ = {
+			isa = PBXGroup;
+			children = (
 				930FA1B821D9330E00CE24A4 /* RMWordItem.swift */,
 				930FA1BA21D93B8700CE24A4 /* RMWordItemDAO.swift */,
 			);
-			path = Database;
+			path = RMWordItem;
 			sourceTree = "<group>";
 		};
 		938CEC1A21CE5B940035B80A = {

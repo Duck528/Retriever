@@ -23,11 +23,18 @@ class SyncDatabaseUsecase {
         let fetchRemoteWordItemsObs = wordRepository.fetchWords()
         let fetchLocalWordItemsObs = wordDAO.findAll()
         
-        Observable.zip(fetchRemoteWordItemsObs, fetchLocalWordItemsObs)
-            .subscribe(onNext: { iCloudWordItems, rmWordItems in
-                
-            }).disposed(by: disposeBag)
-        
-        
+        return Observable.zip(fetchRemoteWordItemsObs, fetchLocalWordItemsObs)
+            .flatMapLatest { remoteWordItems, localWordItems -> Observable<[ICloudWordItem]> in
+                var notSyncedWordItems: [ICloudWordItem] = remoteWordItems
+                for localWordItem in localWordItems {
+                    if let index = notSyncedWordItems.firstIndex(where: { $0.recordName == localWordItem.recordName }) {
+                        notSyncedWordItems.remove(at: index)
+                    }
+                }
+                return .just(notSyncedWordItems)
+            }
+            .map { $0.map { RMWordItem(iCloudWordItem: $0) } }
+            .flatMapLatest { self.wordDAO.insert($0) }
+            .ignoreElements()
     }
 }
