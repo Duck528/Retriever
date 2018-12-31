@@ -47,7 +47,8 @@ class HomeViewModel {
         }
     }
     
-    let fetchWordUsecase: FetchWordUsecase
+    let syncDatabaseUsecase: SyncDatabaseUsecase
+    let fetchLocalWordUsecase: FetchLocalWordUsecase
     let saveWordUsecase: SaveWordUsecase
     
     let wordItems = BehaviorRelay<[WordItemCellViewModel]>(value: [])
@@ -56,7 +57,8 @@ class HomeViewModel {
     let disposeBag = DisposeBag()
     
     init() {
-        fetchWordUsecase = Assembler().resolve()
+        syncDatabaseUsecase = Assembler().resolve()
+        fetchLocalWordUsecase = Assembler().resolve()
         saveWordUsecase = Assembler().resolve()
         fetchWordItems()
     }
@@ -114,8 +116,9 @@ class HomeViewModel {
     }
     
     private func fetchWordItems() {
-        fetchWordUsecase.execute()
+        let fetchWordItemsObs = fetchLocalWordUsecase.execute()
             .do(onNext: { wordItems in
+                print(wordItems)
                 let allTags = wordItems
                     .flatMap { $0.tags }
                     .map { TagItemCellViewModel(tagItem: $0) }
@@ -124,6 +127,9 @@ class HomeViewModel {
                 print(error.localizedDescription)
             })
             .map { $0.map { WordItemCellViewModel(wordItem: $0) } }
+        
+        syncDatabaseUsecase.execute()
+            .andThen(fetchWordItemsObs)
             .bind(to: wordItems)
             .disposed(by: disposeBag)
     }

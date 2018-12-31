@@ -1,5 +1,5 @@
 //
-//  FetchWordUsecase.swift
+//  FetchRemoteWordUsecase.swift
 //  Retriever
 //
 //  Created by thekan on 26/12/2018.
@@ -8,8 +8,7 @@
 
 import RxSwift
 
-class FetchWordUsecase {
-    
+class FetchRemoteWordUsecase {
     let wordRepository: WordRepositoryProtocol
     
     init(_ wordRepository: WordRepositoryProtocol) {

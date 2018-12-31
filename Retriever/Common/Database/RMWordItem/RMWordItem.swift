@@ -67,6 +67,18 @@ class RMWordItem: Object, Storable {
             status: status)
         return wordItem
     }
+    
+    func toWordItem() -> WordItem {
+        let wordItem = WordItem(
+            word: word,
+            mean: mean,
+            lastModified: lastModified,
+            additionalInfo: additionalInfo,
+            tags: parseTags(tags),
+            difficulty: WordItem.WordDifficulty.parse(int: difficulty),
+            status: WordItem.WordStatus.parse(int: status))
+        return wordItem
+    }
 }
 
 extension RMWordItem {

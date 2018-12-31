@@ -31,8 +31,19 @@ extension UsecaseAssembler where Self: Assembler {
         return SaveWordUsecase(repository)
     }
     
-    func resolve() -> FetchWordUsecase {
+    func resolve() -> FetchRemoteWordUsecase {
         let repository = WordICloudRepository()
-        return FetchWordUsecase(repository)
+        return FetchRemoteWordUsecase(repository)
+    }
+    
+    func resolve() -> FetchLocalWordUsecase {
+        let wordItemDAO = RMWordItemDAO()
+        return FetchLocalWordUsecase(wordDAO: wordItemDAO)
+    }
+    
+    func resolve() -> SyncDatabaseUsecase {
+        let wordRepository = WordICloudRepository()
+        let wordItemDAO = RMWordItemDAO()
+        return SyncDatabaseUsecase(wordRepository: wordRepository, wordDAO: wordItemDAO)
     }
 }
