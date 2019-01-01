@@ -16,6 +16,13 @@ class HomeViewModel {
         case showAppendWordSection
         case updateWordEditMode
         case updateWordAppendMode
+        case reloadWordAtIndex(IndexPath)
+    }
+    
+    enum SyncStatus {
+        case unSynced
+        case progress
+        case stable
     }
     
     let wordToSearch = BehaviorRelay<String>(value: "")
@@ -26,7 +33,11 @@ class HomeViewModel {
     let additionalInfoText = BehaviorRelay<String>(value: "")
     let difficulty = BehaviorRelay<Int>(value: WordItem.WordDifficulty.easy.rawValue)
     
+    let syncStatus = BehaviorRelay<SyncStatus>(value: .stable)
     let internetConnected = BehaviorRelay<Bool>(value: false)
+    
+    let numberOfUpdatedWords = BehaviorRelay<Int>(value: 0)
+    let numberOfDeletedWords = BehaviorRelay<Int>(value: 0)
     
     var wordAppendable: Observable<Bool> {
         let hasWordObs = wordText.asObservable()
@@ -53,6 +64,10 @@ class HomeViewModel {
     let fetchLocalWordUsecase: FetchLocalWordUsecase
     let saveRemoteWordUsecase: SaveRemoteWordUsecase
     let saveLocalWordUsecase: SaveLocalWordUsecase
+    let updateLocalWordUsecase: UpdateLocalWordUsecase
+    let deleteLocalWordUsecase: DeleteLocalWordUsecase
+    let fetchNumberOfUpdatedWordUsecase: FetchNumberOfUpdatedWordUsecase
+    let fetchNumberOfDeletedWordUsecase: FetchNumberOfDeletedWordUsecase
     
     let wordItems = BehaviorRelay<[WordItemCellViewModel]>(value: [])
     let allTags = BehaviorRelay<[TagItemCellViewModel]>(value: [])
@@ -64,7 +79,14 @@ class HomeViewModel {
         fetchLocalWordUsecase = Assembler().resolve()
         saveRemoteWordUsecase = Assembler().resolve()
         saveLocalWordUsecase = Assembler().resolve()
+        updateLocalWordUsecase = Assembler().resolve()
+        deleteLocalWordUsecase = Assembler().resolve()
+        fetchNumberOfUpdatedWordUsecase = Assembler().resolve()
+        fetchNumberOfDeletedWordUsecase = Assembler().resolve()
+        
         bindReachability()
+        bindSyncStatus()
+        bindNumberOfWords()
         fetchWordItemsAfterSync()
     }
     
@@ -88,12 +110,51 @@ class HomeViewModel {
         viewAction.onNext(.hideAppendWordSection)
     }
     
+    // 삭제 버튼이 눌린 경우
     func deleteSelectedWordButtonTapped() {
+        guard let editWordIndex = editWordIndex else {
+            return
+        }
+        let wordItem = wordItems.value[editWordIndex.item].wordItem.value
         
+        deleteLocalWordUsecase.execute(wordItem: wordItem)
+            .observeOn(MainScheduler.instance)
+            .subscribe { event in
+                switch event {
+                case .completed:
+                    var deletedWordItems = self.wordItems.value
+                    deletedWordItems.remove(at: editWordIndex.item)
+                    self.wordItems.accept(deletedWordItems)
+                    self.viewAction.onNext(.hideAppendWordSection)
+                    self.clearWordItemComponents()
+                case .error(let error):
+                    print(error.localizedDescription)
+                }
+            }.disposed(by: disposeBag)
     }
     
+    // 업데이트 버튼이 눌린 경우
     func updateSelectedWordButtonTapped() {
+        guard let editWordIndex = editWordIndex else {
+            return
+        }
+        let wordItem = wordItems.value[editWordIndex.item].wordItem.value
+        wordItem.word = wordText.value
+        wordItem.mean = meanText.value
+        wordItem.tags = []
+        wordItem.additionalInfo = additionalInfoText.value
+        wordItem.difficulty = WordItem.WordDifficulty.parse(int: difficulty.value)
         
+        updateLocalWordUsecase.execute(wordItem: wordItem)
+            .map { WordItemCellViewModel(wordItem: $0) }
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { updatedWordItem in
+                var updatedWordItems = self.wordItems.value
+                updatedWordItems[editWordIndex.item] = updatedWordItem
+                self.wordItems.accept(updatedWordItems)
+                self.clearWordItemComponents()
+                self.viewAction.onNext(.hideAppendWordSection)
+            }).disposed(by: disposeBag)
     }
     
     func presentAppendWordButtonTapped() {
@@ -190,7 +251,21 @@ class HomeViewModel {
         meanText.accept("")
         additionalInfoText.accept("")
     }
-    
+}
+
+extension HomeViewModel {
+    private func configureWordItem() -> WordItem {
+        let wordItem = WordItem(
+            word: wordText.value,
+            mean: meanText.value,
+            lastModified: Date(),
+            additionalInfo: additionalInfoText.value,
+            difficulty: difficulty.value)
+        return wordItem
+    }
+}
+
+extension HomeViewModel {
     private func bindReachability() {
         Reachability.reachable
             .bind(to: internetConnected)
@@ -206,16 +281,30 @@ class HomeViewModel {
                 }
             }).disposed(by: disposeBag)
     }
-}
-
-extension HomeViewModel {
-    private func configureWordItem() -> WordItem {
-        let wordItem = WordItem(
-            word: wordText.value,
-            mean: meanText.value,
-            lastModified: Date(),
-            additionalInfo: additionalInfoText.value,
-            difficulty: difficulty.value)
-        return wordItem
+    
+    private func bindSyncStatus() {
+        wordItems
+            .skip(1)
+            .map { $0.map { $0.wordItem.value.status } }
+            .map { $0.filter { $0 != .stable } }
+            .map { $0.count > 0 ? SyncStatus.unSynced : SyncStatus.stable }
+            .bind(to: syncStatus)
+            .disposed(by: disposeBag)
+    }
+    
+    private func bindNumberOfWords() {
+        wordItems
+            .skip(1)
+            .flatMapLatest { _ -> Observable<Int> in
+                return self.fetchNumberOfUpdatedWordUsecase.execute()
+            }.bind(to: numberOfUpdatedWords)
+            .disposed(by: disposeBag)
+        
+        wordItems
+            .skip(1)
+            .flatMapLatest { _ -> Observable<Int> in
+                return self.fetchNumberOfDeletedWordUsecase.execute()
+            }.bind(to: numberOfDeletedWords)
+            .disposed(by: disposeBag)
     }
 }

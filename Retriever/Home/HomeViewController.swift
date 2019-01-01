@@ -40,6 +40,14 @@ class HomeViewController: NSViewController {
     @IBOutlet weak var presentAppendWordSectionView: NSView!
     @IBOutlet weak var presentAppendWordSectionButton: NSButton!
     
+    // 하단 상태 대시보드
+    @IBOutlet weak var statusDashboardView: NSView!
+    @IBOutlet weak var needSyncronizeView: NSView!
+    @IBOutlet weak var synchronizeWordButton: NSButton!
+    @IBOutlet weak var syncProgressView: NSView!
+    @IBOutlet weak var offlineStatusView: NSView!
+    @IBOutlet weak var syncCompletedView: NSView!
+    
     let viewModel: HomeViewModel!
     let disposeBag = DisposeBag()
     
@@ -184,6 +192,7 @@ extension HomeViewController {
         bindAdditionalInfoTextView()
         bindWordAppendableStatus()
         bindEditWordToolSection()
+        bindBottomStatusDashboardSection()
     }
     
     private func bindViewAction() {
@@ -198,6 +207,8 @@ extension HomeViewController {
                     self.showAppendWordToolSection()
                 case .updateWordEditMode:
                     self.showEditWordToolSection()
+                case .reloadWordAtIndex(let indexPath):
+                    self.wordCollectionView.reloadItems(at: [indexPath])
                 }
             }).disposed(by: disposeBag)
     }
@@ -340,5 +351,86 @@ extension HomeViewController {
             .subscribe(onNext: {
                 self.viewModel.updateSelectedWordButtonTapped()
             }).disposed(by: disposeBag)
+    }
+    
+    private func bindBottomStatusDashboardSection() {
+        synchronizeWordButton.rx.tap
+            .throttle(0.5, latest: true, scheduler: MainScheduler.instance)
+            .subscribe(onNext: {
+                
+            }).disposed(by: disposeBag)
+        
+        Observable
+            .combineLatest(
+                viewModel.internetConnected.skip(1),
+                viewModel.syncStatus.skip(1))
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { internetConnected, syncStatus in
+                guard internetConnected else {
+                    self.showOfflineStatusToDashboard()
+                    return
+                }
+                
+                switch syncStatus {
+                case .stable:
+                    self.showSyncCompletedStatusToDashboard()
+                    self.hideStatusDashboard()
+                case .progress:
+                    self.showSyncProgressStatusToDashboard()
+                case .unSynced:
+                    self.showUnSyncedStatusToDashboard()
+                }
+            }).disposed(by: disposeBag)
+        
+        Observable
+            .combineLatest(
+                viewModel.numberOfUpdatedWords.skip(1),
+                viewModel.numberOfDeletedWords.skip(1))
+            .distinctUntilChanged({ before, after -> Bool in
+                if before.0 == after.0 && before.1 == after.1 {
+                    return true
+                } else {
+                    return false
+                }
+            }).map { numberOfUpdated, numberOfDeleted in
+                "동기화 하시려면 여기를 눌러주세요 (업데이트: \(numberOfUpdated), 삭제: \(numberOfDeleted))"
+            }.observeOn(MainScheduler.instance)
+            .subscribe(onNext: { buttonTitle in
+                self.synchronizeWordButton.title = buttonTitle
+            }).disposed(by: disposeBag)
+    }
+    
+    private func hideStatusDashboard() {
+        statusDashboardView.findConstraint(for: .bottom)?.constant = -30
+    }
+    
+    private func showOfflineStatusToDashboard() {
+        offlineStatusView.isHidden = false
+        needSyncronizeView.isHidden = true
+        syncProgressView.isHidden = true
+        syncCompletedView.isHidden = true
+    }
+    
+    private func showUnSyncedStatusToDashboard() {
+        needSyncronizeView.isHidden = false
+        offlineStatusView.isHidden = true
+        syncProgressView.isHidden = true
+        syncCompletedView.isHidden = true
+        
+        
+    }
+    
+    private func showSyncProgressStatusToDashboard() {
+        syncProgressView.isHidden = false
+        needSyncronizeView.isHidden = true
+        offlineStatusView.isHidden = true
+        syncCompletedView.isHidden = true
+    }
+    
+    private func showSyncCompletedStatusToDashboard() {
+        syncCompletedView.isHidden = false
+        syncProgressView.isHidden = true
+        needSyncronizeView.isHidden = true
+        offlineStatusView.isHidden = true
     }
 }

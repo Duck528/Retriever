@@ -57,6 +57,11 @@ class WordICloudRepository: WordRepositoryProtocol {
                 self.updateRecord(record)
             }
     }
+    
+    func delete(recordID: String) -> Observable<String> {
+        let ckRecordID = CKRecord.ID(recordName: recordID)
+        return deleteRecord(ckRecordID)
+    }
 }
 
 extension WordICloudRepository {
@@ -72,6 +77,24 @@ extension WordICloudRepository {
                     observer.onCompleted()
                 } else {
                     observer.onError(Errors.recordNotFound)
+                }
+            }
+            return Disposables.create()
+        }
+    }
+    
+    private func deleteRecord(_ id: CKRecord.ID) -> Observable<String> {
+        return Observable.create { observer in
+            self.privateDB.delete(withRecordID: id) { recordID, error in
+                if let error = error {
+                    observer.onError(error)
+                    return
+                }
+                if let recordID = recordID {
+                    observer.onNext(recordID.recordName)
+                    observer.onCompleted()
+                } else {
+                    observer.onError(Errors.recordIDNotFound)
                 }
             }
             return Disposables.create()

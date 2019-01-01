@@ -44,6 +44,7 @@ class RMWordItem: Object, Storable {
     
     convenience init(wordItem: WordItem, wordStatus: WordItem.WordStatus) {
         self.init()
+        id = wordItem.id
         word = wordItem.word
         mean = wordItem.mean
         tags = convertTagsToCSVFormatString(wordItem.tags.map { $0.title })
@@ -53,9 +54,11 @@ class RMWordItem: Object, Storable {
         status = wordStatus.rawValue
     }
     
-    convenience init(recordName: String, word: String, mean: String, tags: String, lastModified: Date,
+    convenience init(id: String = UUID().uuidString, recordName: String, word: String,
+                     mean: String, tags: String, lastModified: Date,
                      additionalInfo: String, difficulty: Int, status: Int = WordItem.WordStatus.stable.rawValue) {
         self.init()
+        self.id = id
         self.recordName = recordName
         self.word = word
         self.mean = mean
@@ -68,6 +71,7 @@ class RMWordItem: Object, Storable {
     
     func convert() -> RMWordItem {
         let wordItem = RMWordItem(
+            id: id,
             recordName: recordName,
             word: word,
             mean: mean,
@@ -81,6 +85,7 @@ class RMWordItem: Object, Storable {
     
     func toWordItem() -> WordItem {
         let wordItem = WordItem(
+            id: id,
             word: word,
             mean: mean,
             lastModified: lastModified,

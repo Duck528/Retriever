@@ -51,4 +51,24 @@ extension UsecaseAssembler where Self: Assembler {
         let wordItemDAO = RMWordItemDAO()
         return SyncDatabaseUsecase(wordRepository: wordRepository, wordDAO: wordItemDAO)
     }
+    
+    func resolve() -> UpdateLocalWordUsecase {
+        let wordItemDAO = RMWordItemDAO()
+        return UpdateLocalWordUsecase(wordDAO: wordItemDAO)
+    }
+    
+    func resolve() -> DeleteLocalWordUsecase {
+        let wordItemDAO = RMWordItemDAO()
+        return DeleteLocalWordUsecase(wordItemDAO: wordItemDAO)
+    }
+    
+    func resolve() -> FetchNumberOfUpdatedWordUsecase {
+        let wordItemDAO = RMWordItemDAO()
+        return FetchNumberOfUpdatedWordUsecase(wordItemDAO: wordItemDAO)
+    }
+    
+    func resolve() -> FetchNumberOfDeletedWordUsecase {
+        let wordItemDAO = RMWordItemDAO()
+        return FetchNumberOfDeletedWordUsecase(wordItemDAO: wordItemDAO)
+    }
 }

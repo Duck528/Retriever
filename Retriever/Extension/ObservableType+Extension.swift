@@ -42,3 +42,16 @@ extension SharedSequenceConvertibleType where E: OptionalType {
         }
     }
 }
+
+extension ObservableType where E: Equatable {
+    // 값이 다르거나, 값이 같아도 시간이 time보다 많이 지난 후라면 emit한다.
+    func distinctUntilChanged(orTimepass time: RxTimeInterval) -> Observable<E> {
+        return self
+            .map { ($0, Date()) }
+            .distinctUntilChanged {
+                let (prevValue, prevDate) = $0
+                let (currValue, currDate) = $1
+                return (prevValue == currValue && currDate.timeIntervalSince(prevDate) < time)
+            }.map { $0.0 }
+    }
+}

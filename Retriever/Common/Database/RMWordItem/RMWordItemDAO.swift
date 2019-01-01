@@ -7,7 +7,14 @@
 //
 
 import Foundation
+import RxSwift
 
 class RMWordItemDAO: BaseDAO {
     typealias ModelType = RMWordItem
+    
+    func retriveRecordID(by wordItemID: String) -> Observable<String> {
+        return find(by: wordItemID)
+            .filterOptional()
+            .map { $0.recordName }
+    }
 }

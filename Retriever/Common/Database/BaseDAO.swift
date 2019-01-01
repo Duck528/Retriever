@@ -139,8 +139,8 @@ extension BaseDAO {
         }).subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
     }
     
-    func update(_ model: ModelType) -> Observable<Void> {
-        return Observable.deferred({ () -> Observable<Void> in
+    func update(_ model: ModelType) -> Observable<ModelType.ConvertType> {
+        return Observable.deferred({ () -> Observable<ModelType.ConvertType> in
             do {
                 let realm = try Realm(configuration: RMConfiguration.realmConfig)
                 if realm.object(ofType: ModelType.self, forPrimaryKey: model.primaryKey) != nil {
@@ -150,7 +150,7 @@ extension BaseDAO {
                 } else {
                     throw DBErrors.notFounded
                 }
-                return .just(())
+                return .just(model.convert())
             } catch {
                 return .error(error)
             }
