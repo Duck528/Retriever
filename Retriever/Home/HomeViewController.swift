@@ -48,6 +48,8 @@ class HomeViewController: NSViewController {
     @IBOutlet weak var offlineStatusView: NSView!
     @IBOutlet weak var syncCompletedView: NSView!
     
+    let statusDashboardHeight: CGFloat = 30
+    
     let viewModel: HomeViewModel!
     let disposeBag = DisposeBag()
     
@@ -377,8 +379,10 @@ extension HomeViewController {
                     self.hideStatusDashboard()
                 case .progress:
                     self.showSyncProgressStatusToDashboard()
+                    self.showStatusDashboard()
                 case .unSynced:
                     self.showUnSyncedStatusToDashboard()
+                    self.showStatusDashboard()
                 }
             }).disposed(by: disposeBag)
         
@@ -401,7 +405,11 @@ extension HomeViewController {
     }
     
     private func hideStatusDashboard() {
-        statusDashboardView.findConstraint(for: .bottom)?.constant = -30
+        statusDashboardView.findConstraint(for: .height)?.constant = 0
+    }
+    
+    private func showStatusDashboard() {
+        statusDashboardView.findConstraint(for: .height)?.constant = statusDashboardHeight
     }
     
     private func showOfflineStatusToDashboard() {
@@ -416,8 +424,6 @@ extension HomeViewController {
         offlineStatusView.isHidden = true
         syncProgressView.isHidden = true
         syncCompletedView.isHidden = true
-        
-        
     }
     
     private func showSyncProgressStatusToDashboard() {
