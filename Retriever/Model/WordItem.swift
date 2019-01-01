@@ -43,6 +43,7 @@ class WordItem {
         }
     }
     
+    let id: String
     var word: String = ""
     var mean: String = ""
     let lastModified: Date
@@ -51,8 +52,9 @@ class WordItem {
     var difficulty: WordDifficulty = .undefined
     var status: WordStatus = .stable
     
-    init(word: String, mean: String, lastModified: Date, additionalInfo: String = "",
+    init(id: String = UUID().uuidString, word: String, mean: String, lastModified: Date, additionalInfo: String = "",
          tags: [TagItem] = [], difficulty: WordDifficulty = .undefined, status: WordStatus = .stable) {
+        self.id = id
         self.word = word
         self.mean = mean
         self.lastModified = lastModified
@@ -62,10 +64,12 @@ class WordItem {
         self.status = status
     }
     
-    convenience init(word: String, mean: String, lastModified: Date, additionalInfo: String = "", tags: [TagItem] = [],
+    convenience init(id: String = UUID().uuidString, word: String, mean: String,
+                     lastModified: Date, additionalInfo: String = "", tags: [TagItem] = [],
                      difficulty: Int = WordDifficulty.undefined.rawValue) {
         let wordDifficulty = WordDifficulty.parse(int: difficulty)
         self.init(
+            id: id,
             word: word,
             mean: mean,
             lastModified: lastModified,

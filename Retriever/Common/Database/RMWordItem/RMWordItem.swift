@@ -81,6 +81,7 @@ class RMWordItem: Object, Storable {
     
     func toWordItem() -> WordItem {
         let wordItem = WordItem(
+            id: id,
             word: word,
             mean: mean,
             lastModified: lastModified,

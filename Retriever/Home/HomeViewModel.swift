@@ -18,6 +18,12 @@ class HomeViewModel {
         case updateWordAppendMode
     }
     
+    enum SyncStatus {
+        case unSynced
+        case progress
+        case stable
+    }
+    
     let wordToSearch = BehaviorRelay<String>(value: "")
     let viewAction = PublishSubject<ViewAction>()
     
@@ -26,6 +32,7 @@ class HomeViewModel {
     let additionalInfoText = BehaviorRelay<String>(value: "")
     let difficulty = BehaviorRelay<Int>(value: WordItem.WordDifficulty.easy.rawValue)
     
+    let syncStatus = BehaviorRelay<SyncStatus>(value: .stable)
     let internetConnected = BehaviorRelay<Bool>(value: false)
     
     var wordAppendable: Observable<Bool> {
@@ -65,6 +72,7 @@ class HomeViewModel {
         saveRemoteWordUsecase = Assembler().resolve()
         saveLocalWordUsecase = Assembler().resolve()
         bindReachability()
+        bindSyncStatus()
         fetchWordItemsAfterSync()
     }
     
@@ -88,10 +96,12 @@ class HomeViewModel {
         viewAction.onNext(.hideAppendWordSection)
     }
     
+    // 삭제 버튼이 눌린 경우
     func deleteSelectedWordButtonTapped() {
         
     }
     
+    // 업데이트 버튼이 눌린 경우
     func updateSelectedWordButtonTapped() {
         
     }
@@ -205,6 +215,15 @@ class HomeViewModel {
                     self.fetchWordItemsWithoutSync()
                 }
             }).disposed(by: disposeBag)
+    }
+    
+    private func bindSyncStatus() {
+        wordItems
+            .map { $0.map { $0.wordItem.value.status } }
+            .map { $0.filter { $0 != .stable } }
+            .map { $0.count > 0 ? SyncStatus.unSynced : SyncStatus.stable }
+            .bind(to: syncStatus)
+            .disposed(by: disposeBag)
     }
 }
 
