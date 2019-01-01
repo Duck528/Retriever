@@ -62,6 +62,7 @@ class HomeViewModel {
     let saveRemoteWordUsecase: SaveRemoteWordUsecase
     let saveLocalWordUsecase: SaveLocalWordUsecase
     let updateLocalWordUsecase: UpdateLocalWordUsecase
+    let deleteLocalWordUsecase: DeleteLocalWordUsecase
     
     let wordItems = BehaviorRelay<[WordItemCellViewModel]>(value: [])
     let allTags = BehaviorRelay<[TagItemCellViewModel]>(value: [])
@@ -74,6 +75,8 @@ class HomeViewModel {
         saveRemoteWordUsecase = Assembler().resolve()
         saveLocalWordUsecase = Assembler().resolve()
         updateLocalWordUsecase = Assembler().resolve()
+        deleteLocalWordUsecase = Assembler().resolve()
+        
         bindReachability()
         bindSyncStatus()
         fetchWordItemsAfterSync()
@@ -101,7 +104,25 @@ class HomeViewModel {
     
     // 삭제 버튼이 눌린 경우
     func deleteSelectedWordButtonTapped() {
+        guard let editWordIndex = editWordIndex else {
+            return
+        }
+        let wordItem = wordItems.value[editWordIndex.item].wordItem.value
         
+        deleteLocalWordUsecase.execute(wordItem: wordItem)
+            .observeOn(MainScheduler.instance)
+            .subscribe { event in
+                switch event {
+                case .completed:
+                    var deletedWordItems = self.wordItems.value
+                    deletedWordItems.remove(at: editWordIndex.item)
+                    self.wordItems.accept(deletedWordItems)
+                    self.viewAction.onNext(.hideAppendWordSection)
+                    self.clearWordItemComponents()
+                case .error(let error):
+                    print(error.localizedDescription)
+                }
+            }.disposed(by: disposeBag)
     }
     
     // 업데이트 버튼이 눌린 경우
