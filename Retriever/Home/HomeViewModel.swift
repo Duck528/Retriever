@@ -205,7 +205,6 @@ class HomeViewModel {
     private func fetchWordItemsWithoutSync() {
         fetchLocalWordUsecase.execute()
             .do(onNext: { wordItems in
-                print(wordItems)
                 let allTags = wordItems
                     .flatMap { $0.tags }
                     .map { TagItemCellViewModel(tagItem: $0) }
@@ -283,11 +282,17 @@ extension HomeViewModel {
     }
     
     private func bindSyncStatus() {
-        wordItems
-            .skip(1)
-            .map { $0.map { $0.wordItem.value.status } }
-            .map { $0.filter { $0 != .stable } }
-            .map { $0.count > 0 ? SyncStatus.unSynced : SyncStatus.stable }
+        Observable
+            .combineLatest(numberOfUpdatedWords.skip(1), numberOfDeletedWords.skip(1))
+            .skip(2)
+            .distinctUntilChanged { before, after in
+                if before.0 == after.0 && before.1 == after.1 {
+                    return true
+                } else {
+                    return false
+                }
+            }.map { $0 == 0 && $1 == 0 ? SyncStatus.stable : SyncStatus.unSynced }
+            .do(onNext: { syncStatus in print(syncStatus) })
             .bind(to: syncStatus)
             .disposed(by: disposeBag)
     }

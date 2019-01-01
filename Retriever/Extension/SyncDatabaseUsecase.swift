@@ -35,6 +35,7 @@ class SyncDatabaseUsecase {
             }
             .map { $0.map { RMWordItem(iCloudWordItem: $0) } }
             .flatMapLatest { self.wordDAO.insert($0) }
+//            .flatMapLatest { self.wordDAO.deleteAll() }
             .ignoreElements()
     }
 }

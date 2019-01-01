@@ -17,4 +17,8 @@ class RMWordItemDAO: BaseDAO {
             .filterOptional()
             .map { $0.recordName }
     }
+    
+    func fetchDeletedWords() -> Observable<[RMWordItem]> {
+        return finds(filter: { $0.status != WordItem.WordStatus.deleted.rawValue })
+    }
 }
