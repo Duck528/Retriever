@@ -17,9 +17,14 @@ class UpdateLocalWordUsecase {
     }
     
     func execute(wordItem: WordItem) -> Observable<WordItem> {
-        let rmWordItem = RMWordItem(wordItem: wordItem, wordStatus: .updated)
-        rmWordItem.lastModified = Date()
-        return wordDAO.update(rmWordItem)
-            .map { $0.toWordItem() }
+        return wordDAO.retriveRecordID(by: wordItem.id)
+            .flatMapLatest { recordID -> Observable<RMWordItem> in
+                let rmWordItem = RMWordItem(wordItem: wordItem, wordStatus: .updated)
+                rmWordItem.recordName = recordID
+                rmWordItem.lastModified = Date()
+                return .just(rmWordItem)
+            }.flatMapLatest { rmWordItem -> Observable<RMWordItem> in
+                return self.wordDAO.update(rmWordItem)
+            }.map { $0.toWordItem() }
     }
 }
