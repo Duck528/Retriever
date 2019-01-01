@@ -382,6 +382,22 @@ extension HomeViewController {
                 }
             }).disposed(by: disposeBag)
         
+        Observable
+            .combineLatest(
+                viewModel.numberOfUpdatedWords.skip(1),
+                viewModel.numberOfDeletedWords.skip(1))
+            .distinctUntilChanged({ before, after -> Bool in
+                if before.0 == after.0 && before.1 == after.1 {
+                    return true
+                } else {
+                    return false
+                }
+            }).map { numberOfUpdated, numberOfDeleted in
+                "동기화 하시려면 여기를 눌러주세요 (업데이트: \(numberOfUpdated), 삭제: \(numberOfDeleted))"
+            }.observeOn(MainScheduler.instance)
+            .subscribe(onNext: { buttonTitle in
+                self.synchronizeWordButton.title = buttonTitle
+            }).disposed(by: disposeBag)
     }
     
     private func hideStatusDashboard() {
@@ -400,6 +416,8 @@ extension HomeViewController {
         offlineStatusView.isHidden = true
         syncProgressView.isHidden = true
         syncCompletedView.isHidden = true
+        
+        
     }
     
     private func showSyncProgressStatusToDashboard() {

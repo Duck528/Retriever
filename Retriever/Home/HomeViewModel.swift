@@ -36,6 +36,9 @@ class HomeViewModel {
     let syncStatus = BehaviorRelay<SyncStatus>(value: .stable)
     let internetConnected = BehaviorRelay<Bool>(value: false)
     
+    let numberOfUpdatedWords = BehaviorRelay<Int>(value: 0)
+    let numberOfDeletedWords = BehaviorRelay<Int>(value: 0)
+    
     var wordAppendable: Observable<Bool> {
         let hasWordObs = wordText.asObservable()
             .map { !$0.isEmpty }
@@ -63,6 +66,8 @@ class HomeViewModel {
     let saveLocalWordUsecase: SaveLocalWordUsecase
     let updateLocalWordUsecase: UpdateLocalWordUsecase
     let deleteLocalWordUsecase: DeleteLocalWordUsecase
+    let fetchNumberOfUpdatedWordUsecase: FetchNumberOfUpdatedWordUsecase
+    let fetchNumberOfDeletedWordUsecase: FetchNumberOfDeletedWordUsecase
     
     let wordItems = BehaviorRelay<[WordItemCellViewModel]>(value: [])
     let allTags = BehaviorRelay<[TagItemCellViewModel]>(value: [])
@@ -76,9 +81,12 @@ class HomeViewModel {
         saveLocalWordUsecase = Assembler().resolve()
         updateLocalWordUsecase = Assembler().resolve()
         deleteLocalWordUsecase = Assembler().resolve()
+        fetchNumberOfUpdatedWordUsecase = Assembler().resolve()
+        fetchNumberOfDeletedWordUsecase = Assembler().resolve()
         
         bindReachability()
         bindSyncStatus()
+        bindNumberOfWords()
         fetchWordItemsAfterSync()
     }
     
@@ -243,7 +251,21 @@ class HomeViewModel {
         meanText.accept("")
         additionalInfoText.accept("")
     }
-    
+}
+
+extension HomeViewModel {
+    private func configureWordItem() -> WordItem {
+        let wordItem = WordItem(
+            word: wordText.value,
+            mean: meanText.value,
+            lastModified: Date(),
+            additionalInfo: additionalInfoText.value,
+            difficulty: difficulty.value)
+        return wordItem
+    }
+}
+
+extension HomeViewModel {
     private func bindReachability() {
         Reachability.reachable
             .bind(to: internetConnected)
@@ -269,16 +291,20 @@ class HomeViewModel {
             .bind(to: syncStatus)
             .disposed(by: disposeBag)
     }
-}
-
-extension HomeViewModel {
-    private func configureWordItem() -> WordItem {
-        let wordItem = WordItem(
-            word: wordText.value,
-            mean: meanText.value,
-            lastModified: Date(),
-            additionalInfo: additionalInfoText.value,
-            difficulty: difficulty.value)
-        return wordItem
+    
+    private func bindNumberOfWords() {
+        wordItems
+            .skip(1)
+            .flatMapLatest { _ -> Observable<Int> in
+                return self.fetchNumberOfUpdatedWordUsecase.execute()
+            }.bind(to: numberOfUpdatedWords)
+            .disposed(by: disposeBag)
+        
+        wordItems
+            .skip(1)
+            .flatMapLatest { _ -> Observable<Int> in
+                return self.fetchNumberOfDeletedWordUsecase.execute()
+            }.bind(to: numberOfDeletedWords)
+            .disposed(by: disposeBag)
     }
 }

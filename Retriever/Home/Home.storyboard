@@ -586,35 +586,6 @@
                                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="hIk-w9-JjH">
                                         <rect key="frame" x="0.0" y="0.0" width="873" height="30"/>
                                         <subviews>
-                                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="U7R-1N-saG">
-                                                <rect key="frame" x="0.0" y="0.0" width="873" height="30"/>
-                                                <subviews>
-                                                    <box fixedFrame="YES" boxType="custom" borderType="none" borderWidth="0.0" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="jIp-UJ-u8Y">
-                                                        <rect key="frame" x="0.0" y="0.0" width="873" height="30"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                        <view key="contentView" ambiguous="YES" id="6hK-Ny-Fe2">
-                                                            <rect key="frame" x="0.0" y="0.0" width="873" height="30"/>
-                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                        </view>
-                                                        <color key="borderColor" red="1" green="0.41176470588235292" blue="0.27450980392156865" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        <color key="fillColor" red="1" green="0.41176470588235292" blue="0.27450980392156865" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    </box>
-                                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8A2-Lv-vxj">
-                                                        <rect key="frame" x="0.0" y="0.0" width="873" height="30"/>
-                                                        <buttonCell key="cell" type="bevel" title="동기화 하시려면 여기를 눌러주세요" bezelStyle="regularSquare" alignment="center" imageScaling="proportionallyDown" inset="2" id="qg5-9t-1tM">
-                                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                            <font key="font" metaFont="system"/>
-                                                        </buttonCell>
-                                                        <color key="contentTintColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                    </button>
-                                                </subviews>
-                                                <constraints>
-                                                    <constraint firstItem="8A2-Lv-vxj" firstAttribute="leading" secondItem="U7R-1N-saG" secondAttribute="leading" id="343-ia-9n1"/>
-                                                    <constraint firstAttribute="bottom" secondItem="8A2-Lv-vxj" secondAttribute="bottom" id="Fl8-sD-V03"/>
-                                                    <constraint firstAttribute="trailing" secondItem="8A2-Lv-vxj" secondAttribute="trailing" id="SSO-7x-0L2"/>
-                                                    <constraint firstItem="8A2-Lv-vxj" firstAttribute="top" secondItem="U7R-1N-saG" secondAttribute="top" id="uJn-iP-2Ft"/>
-                                                </constraints>
-                                            </customView>
                                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="xXV-t3-Fel">
                                                 <rect key="frame" x="0.0" y="0.0" width="873" height="30"/>
                                                 <subviews>
@@ -712,6 +683,35 @@
                                                     <constraint firstItem="RlA-RA-I71" firstAttribute="leading" secondItem="HMQ-hO-CE9" secondAttribute="leading" id="J8O-aC-NwW"/>
                                                     <constraint firstItem="RlA-RA-I71" firstAttribute="top" secondItem="HMQ-hO-CE9" secondAttribute="top" id="Ldt-ZE-jbe"/>
                                                     <constraint firstAttribute="trailing" secondItem="RlA-RA-I71" secondAttribute="trailing" id="R2W-L9-TRo"/>
+                                                </constraints>
+                                            </customView>
+                                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="U7R-1N-saG">
+                                                <rect key="frame" x="0.0" y="0.0" width="873" height="30"/>
+                                                <subviews>
+                                                    <box fixedFrame="YES" boxType="custom" borderType="none" borderWidth="0.0" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="jIp-UJ-u8Y">
+                                                        <rect key="frame" x="0.0" y="0.0" width="873" height="30"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                        <view key="contentView" ambiguous="YES" id="6hK-Ny-Fe2">
+                                                            <rect key="frame" x="0.0" y="0.0" width="873" height="30"/>
+                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                        </view>
+                                                        <color key="borderColor" red="1" green="0.41176470588235292" blue="0.27450980392156865" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="fillColor" red="1" green="0.41176470588235292" blue="0.27450980392156865" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    </box>
+                                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8A2-Lv-vxj">
+                                                        <rect key="frame" x="0.0" y="0.0" width="873" height="30"/>
+                                                        <buttonCell key="cell" type="bevel" title="동기화 하시려면 여기를 눌러주세요 (업데이트: 5, 삭제: 3)" bezelStyle="regularSquare" alignment="center" imageScaling="proportionallyDown" inset="2" id="qg5-9t-1tM">
+                                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                            <font key="font" metaFont="system"/>
+                                                        </buttonCell>
+                                                        <color key="contentTintColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                    </button>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstItem="8A2-Lv-vxj" firstAttribute="leading" secondItem="U7R-1N-saG" secondAttribute="leading" id="343-ia-9n1"/>
+                                                    <constraint firstAttribute="bottom" secondItem="8A2-Lv-vxj" secondAttribute="bottom" id="Fl8-sD-V03"/>
+                                                    <constraint firstAttribute="trailing" secondItem="8A2-Lv-vxj" secondAttribute="trailing" id="SSO-7x-0L2"/>
+                                                    <constraint firstItem="8A2-Lv-vxj" firstAttribute="top" secondItem="U7R-1N-saG" secondAttribute="top" id="uJn-iP-2Ft"/>
                                                 </constraints>
                                             </customView>
                                         </subviews>
