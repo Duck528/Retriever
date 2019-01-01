@@ -16,6 +16,7 @@ class HomeViewModel {
         case showAppendWordSection
         case updateWordEditMode
         case updateWordAppendMode
+        case reloadWordAtIndex(IndexPath)
     }
     
     enum SyncStatus {
@@ -60,6 +61,7 @@ class HomeViewModel {
     let fetchLocalWordUsecase: FetchLocalWordUsecase
     let saveRemoteWordUsecase: SaveRemoteWordUsecase
     let saveLocalWordUsecase: SaveLocalWordUsecase
+    let updateLocalWordUsecase: UpdateLocalWordUsecase
     
     let wordItems = BehaviorRelay<[WordItemCellViewModel]>(value: [])
     let allTags = BehaviorRelay<[TagItemCellViewModel]>(value: [])
@@ -71,6 +73,7 @@ class HomeViewModel {
         fetchLocalWordUsecase = Assembler().resolve()
         saveRemoteWordUsecase = Assembler().resolve()
         saveLocalWordUsecase = Assembler().resolve()
+        updateLocalWordUsecase = Assembler().resolve()
         bindReachability()
         bindSyncStatus()
         fetchWordItemsAfterSync()
@@ -103,7 +106,26 @@ class HomeViewModel {
     
     // 업데이트 버튼이 눌린 경우
     func updateSelectedWordButtonTapped() {
+        guard let editWordIndex = editWordIndex else {
+            return
+        }
+        let wordItem = wordItems.value[editWordIndex.item].wordItem.value
+        wordItem.word = wordText.value
+        wordItem.mean = meanText.value
+        wordItem.tags = []
+        wordItem.additionalInfo = additionalInfoText.value
+        wordItem.difficulty = WordItem.WordDifficulty.parse(int: difficulty.value)
         
+        updateLocalWordUsecase.execute(wordItem: wordItem)
+            .map { WordItemCellViewModel(wordItem: $0) }
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { updatedWordItem in
+                var updatedWordItems = self.wordItems.value
+                updatedWordItems[editWordIndex.item] = updatedWordItem
+                self.wordItems.accept(updatedWordItems)
+                self.clearWordItemComponents()
+                self.viewAction.onNext(.hideAppendWordSection)
+            }).disposed(by: disposeBag)
     }
     
     func presentAppendWordButtonTapped() {
@@ -219,6 +241,7 @@ class HomeViewModel {
     
     private func bindSyncStatus() {
         wordItems
+            .skip(1)
             .map { $0.map { $0.wordItem.value.status } }
             .map { $0.filter { $0 != .stable } }
             .map { $0.count > 0 ? SyncStatus.unSynced : SyncStatus.stable }

@@ -207,6 +207,8 @@ extension HomeViewController {
                     self.showAppendWordToolSection()
                 case .updateWordEditMode:
                     self.showEditWordToolSection()
+                case .reloadWordAtIndex(let indexPath):
+                    self.wordCollectionView.reloadItems(at: [indexPath])
                 }
             }).disposed(by: disposeBag)
     }
