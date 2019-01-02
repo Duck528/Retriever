@@ -10,6 +10,16 @@ import RxSwift
 import RxCocoa
 import CloudKit
 
+class OperationResults {
+    let updatedRecords: [CKRecord]
+    let deletedRecordIDs: [CKRecord.ID]
+    
+    init(updatedRecords: [CKRecord]?, deletedRecordIDs: [CKRecord.ID]?) {
+        self.updatedRecords = updatedRecords ?? []
+        self.deletedRecordIDs = deletedRecordIDs ?? []
+    }
+}
+
 class WordICloudRepository: WordRepositoryProtocol {
     
     enum Errors: Error {
@@ -54,8 +64,53 @@ class WordICloudRepository: WordRepositoryProtocol {
                 return Observable.of(record)
             }
             .flatMapLatest { record -> Observable<WordItem> in
-                self.updateRecord(record)
+                self.uploadRecord(record)
             }
+    }
+    
+    func updateMultiple(wordsToSave: [WordItem], wordsToDelete: [WordItem]) -> Observable<OperationResults> {
+        let mapRecordsToSaveObs = fetchUserICloudID()
+            .flatMapLatest { userID -> Observable<[CKRecord]> in
+                let recordsToSave = wordsToSave
+                    .map { self.configureWordRecord(userID: userID, wordItem: $0) }
+                return .just(recordsToSave)
+            }
+        let mapRecordsToDeleteObs = fetchUserICloudID()
+            .flatMapLatest { userID -> Observable<[CKRecord.ID]> in
+                let recordIDsToDelete = wordsToDelete
+                    .map { self.configureWordRecord(userID: userID, wordItem: $0) }
+                    .map { $0.recordID }
+                return .just(recordIDsToDelete)
+            }
+        
+        return Observable.zip(mapRecordsToSaveObs, mapRecordsToDeleteObs)
+            .flatMapLatest { recordsToSave, recordIDsToDelete -> Observable<OperationResults> in
+                self.executeModifyOperation(recordsToSave: recordsToSave, recordIDsToDelete: recordIDsToDelete)
+            }
+    }
+    
+    private func executeModifyOperation(recordsToSave: [CKRecord], recordIDsToDelete: [CKRecord.ID]) -> Observable<OperationResults> {
+        return Observable.create { observer in
+            let operation = CKModifyRecordsOperation(recordsToSave: recordsToSave, recordIDsToDelete: recordIDsToDelete)
+            operation.savePolicy = .allKeys
+            operation.modifyRecordsCompletionBlock = { savedRecords, deletedRecordIDs, error in
+                if let error = error {
+                    print(error.localizedDescription)
+                    observer.onError(error)
+                    return
+                }
+                let operationResults = OperationResults(updatedRecords: savedRecords, deletedRecordIDs: deletedRecordIDs)
+                observer.onNext(operationResults)
+                observer.onCompleted()
+            }
+            self.privateDB.add(operation)
+            return Disposables.create()
+        }
+    }
+    
+    func updateMultiples() {
+        let modifyOperation = CKModifyRecordsOperation(recordsToSave: nil, recordIDsToDelete: nil)
+        privateDB.add(modifyOperation)
     }
     
     func delete(recordID: String) -> Observable<String> {
@@ -65,7 +120,7 @@ class WordICloudRepository: WordRepositoryProtocol {
 }
 
 extension WordICloudRepository {
-    private func updateRecord(_ record: CKRecord) -> Observable<WordItem> {
+    private func uploadRecord(_ record: CKRecord) -> Observable<WordItem> {
         return Observable.create { observer in
             self.privateDB.save(record) { record, error in
                 if let error = error {
@@ -102,7 +157,12 @@ extension WordICloudRepository {
     }
     
     private func configureWordRecord(userID: String, wordItem: WordItem) -> CKRecord {
-        let wordRecord = CKRecord(recordType: wordType)
+        let wordRecord: CKRecord
+        if let recordName = wordItem.recordName {
+            wordRecord = CKRecord(recordType: wordType, recordID: CKRecord.ID(recordName: recordName))
+        } else {
+            wordRecord = CKRecord(recordType: wordType)
+        }
         wordRecord.setValue(userID, forKey: "userID")
         wordRecord.setValue(wordItem.word, forKey: "word")
         wordRecord.setValue(wordItem.mean, forKey: "mean")

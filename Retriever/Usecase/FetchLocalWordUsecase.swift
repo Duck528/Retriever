@@ -16,7 +16,7 @@ class FetchLocalWordUsecase {
     }
     
     func execute() -> Observable<[WordItem]> {
-        return wordDAO.findAll()
+        return wordDAO.fetchDeletedWords()
             .map { $0.map { $0.toWordItem() } }
     }
 }

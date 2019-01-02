@@ -44,6 +44,7 @@ class ICloudWordItem {
     func toWordItem() -> WordItem {
         let tagItems = tags.map { TagItem(title: $0) }
         let wordItem = WordItem(
+            recordName: recordName,
             word: word,
             mean: mean,
             lastModified: lastModified,
