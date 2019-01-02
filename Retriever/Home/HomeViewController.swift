@@ -369,6 +369,7 @@ extension HomeViewController {
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { internetConnected, syncStatus in
                 guard internetConnected else {
+                    self.showStatusDashboard()
                     self.showOfflineStatusToDashboard()
                     return
                 }
