@@ -155,6 +155,20 @@ extension BaseDAO {
         }).subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
     }
     
+    func deletes(_ array: [ModelType]) -> Observable<Void> {
+        return Observable.deferred({ () -> Observable<Void> in
+            do {
+                let realm = try Realm(configuration: RMConfiguration.realmConfig)
+                try realm.write {
+                    realm.delete(array)
+                }
+                return .just(())
+            } catch {
+                return .error(error)
+            }
+        }).subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
+    }
+    
     func update(_ model: ModelType) -> Observable<ModelType.ConvertType> {
         return Observable.deferred({ () -> Observable<ModelType.ConvertType> in
             do {

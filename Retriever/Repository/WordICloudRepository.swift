@@ -10,6 +10,16 @@ import RxSwift
 import RxCocoa
 import CloudKit
 
+class OperationResults {
+    let updatedRecords: [CKRecord]
+    let deletedRecordIDs: [CKRecord.ID]
+    
+    init(updatedRecords: [CKRecord]?, deletedRecordIDs: [CKRecord.ID]?) {
+        self.updatedRecords = updatedRecords ?? []
+        self.deletedRecordIDs = deletedRecordIDs ?? []
+    }
+}
+
 class WordICloudRepository: WordRepositoryProtocol {
     
     enum Errors: Error {
@@ -58,8 +68,7 @@ class WordICloudRepository: WordRepositoryProtocol {
             }
     }
     
-    func updateMultiple(wordsToSave: [WordItem], wordsToDelete: [WordItem]) -> Observable<Void> {
-        print("called")
+    func updateMultiple(wordsToSave: [WordItem], wordsToDelete: [WordItem]) -> Observable<OperationResults> {
         let mapRecordsToSaveObs = fetchUserICloudID()
             .flatMapLatest { userID -> Observable<[CKRecord]> in
                 let recordsToSave = wordsToSave
@@ -75,25 +84,24 @@ class WordICloudRepository: WordRepositoryProtocol {
             }
         
         return Observable.zip(mapRecordsToSaveObs, mapRecordsToDeleteObs)
-            .flatMapLatest { recordsToSave, recordIDsToDelete -> Observable<Void> in
+            .flatMapLatest { recordsToSave, recordIDsToDelete -> Observable<OperationResults> in
                 self.executeModifyOperation(recordsToSave: recordsToSave, recordIDsToDelete: recordIDsToDelete)
             }
     }
     
-    private func executeModifyOperation(recordsToSave: [CKRecord], recordIDsToDelete: [CKRecord.ID]) -> Observable<Void> {
+    private func executeModifyOperation(recordsToSave: [CKRecord], recordIDsToDelete: [CKRecord.ID]) -> Observable<OperationResults> {
         return Observable.create { observer in
             let operation = CKModifyRecordsOperation(recordsToSave: recordsToSave, recordIDsToDelete: recordIDsToDelete)
-            operation.savePolicy = .changedKeys
+            operation.savePolicy = .allKeys
             operation.modifyRecordsCompletionBlock = { savedRecords, deletedRecordIDs, error in
                 if let error = error {
                     print(error.localizedDescription)
                     observer.onError(error)
                     return
-                } else {
-                    print("saved: \(savedRecords?.count), deleted: \(deletedRecordIDs?.count)")
-                    observer.onNext(())
-                    observer.onCompleted()
                 }
+                let operationResults = OperationResults(updatedRecords: savedRecords, deletedRecordIDs: deletedRecordIDs)
+                observer.onNext(operationResults)
+                observer.onCompleted()
             }
             self.privateDB.add(operation)
             return Disposables.create()

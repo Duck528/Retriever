@@ -221,6 +221,7 @@ class HomeViewModel {
             }, onError: { error in
                 print(error.localizedDescription)
             })
+            .do(onNext: { print("LocalFetchCount Without Sync: \($0.count)") })
             .map { $0.map { WordItemCellViewModel(wordItem: $0) } }
             .bind(to: wordItems)
             .disposed(by: disposeBag)
@@ -228,6 +229,7 @@ class HomeViewModel {
     
     private func fetchWordItemsAfterSync() {
         let fetchWordItemsObs = fetchLocalWordUsecase.execute()
+            .do(onNext: { print("LocalFetchCount With Sync: \($0.count)") })
             .map { $0.map { WordItemCellViewModel(wordItem: $0) } }
         
         syncDatabaseUsecase.execute()
