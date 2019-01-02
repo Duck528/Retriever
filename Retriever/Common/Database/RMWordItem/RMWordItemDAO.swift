@@ -21,4 +21,13 @@ class RMWordItemDAO: BaseDAO {
     func fetchDeletedWords() -> Observable<[RMWordItem]> {
         return finds(filter: { $0.status != WordItem.WordStatus.deleted.rawValue })
     }
+    
+    func updateAllWordsToStableStatus() -> Observable<Void> {
+        return findAll()
+            .flatMapLatest { rmWordItems -> Observable<[RMWordItem]> in
+                rmWordItems
+                    .forEach { $0.status = WordItem.WordStatus.stable.rawValue }
+                return .just(rmWordItems)
+            }.flatMapLatest { self.updates(array: $0) }
+    }
 }

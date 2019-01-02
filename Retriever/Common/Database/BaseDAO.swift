@@ -139,6 +139,22 @@ extension BaseDAO {
         }).subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
     }
     
+    func deletes(filter: @escaping ((ModelType) -> Bool)) -> Observable<Void> {
+        return Observable.deferred({ () -> Observable<Void> in
+            do {
+                let realm = try Realm(configuration: RMConfiguration.realmConfig)
+                let findedModels = realm.objects(ModelType.self)
+                    .filter { filter($0) }
+                try realm.write {
+                    realm.delete(findedModels)
+                }
+                return .just(())
+            } catch {
+                return .error(error)
+            }
+        }).subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
+    }
+    
     func update(_ model: ModelType) -> Observable<ModelType.ConvertType> {
         return Observable.deferred({ () -> Observable<ModelType.ConvertType> in
             do {
@@ -157,14 +173,45 @@ extension BaseDAO {
         }).subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
     }
     
-    func updateOrCreate(_ model: ModelType) -> Observable<Void> {
+    func updates(array: [ModelType]) -> Observable<Void> {
+        return Observable.deferred({ () -> Observable<Void> in
+            do {
+                let realm = try Realm(configuration: RMConfiguration.realmConfig)
+                try realm.write {
+                    for model in array {
+                        realm.create(ModelType.self, value: model, update: true)
+                    }
+                }
+                return .just(())
+            } catch {
+                return .error(error)
+            }
+        }).subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
+    }
+    
+    func updateOrCreate(model: ModelType) -> Observable<Void> {
         return Observable.deferred({ () -> Observable<Void> in
             do {
                 let realm = try Realm(configuration: RMConfiguration.realmConfig)
                 try realm.write {
                     realm.create(ModelType.self, value: model, update: true)
                 }
-                
+                return .just(())
+            } catch {
+                return .error(error)
+            }
+        }).subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
+    }
+    
+    func updateOrCreate(array: [ModelType]) -> Observable<Void> {
+        return Observable.deferred({ () -> Observable<Void> in
+            do {
+                let realm = try Realm(configuration: RMConfiguration.realmConfig)
+                try realm.write {
+                    for model in array {
+                        realm.create(ModelType.self, value: model, update: true)
+                    }
+                }
                 return .just(())
             } catch {
                 return .error(error)

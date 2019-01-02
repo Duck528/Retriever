@@ -359,7 +359,7 @@ extension HomeViewController {
         synchronizeWordButton.rx.tap
             .throttle(0.5, latest: true, scheduler: MainScheduler.instance)
             .subscribe(onNext: {
-                
+                self.viewModel.syncButtonTapped()
             }).disposed(by: disposeBag)
         
         Observable

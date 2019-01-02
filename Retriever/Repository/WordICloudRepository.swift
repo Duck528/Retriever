@@ -54,8 +54,55 @@ class WordICloudRepository: WordRepositoryProtocol {
                 return Observable.of(record)
             }
             .flatMapLatest { record -> Observable<WordItem> in
-                self.updateRecord(record)
+                self.uploadRecord(record)
             }
+    }
+    
+    func updateMultiple(wordsToSave: [WordItem], wordsToDelete: [WordItem]) -> Observable<Void> {
+        print("called")
+        let mapRecordsToSaveObs = fetchUserICloudID()
+            .flatMapLatest { userID -> Observable<[CKRecord]> in
+                let recordsToSave = wordsToSave
+                    .map { self.configureWordRecord(userID: userID, wordItem: $0) }
+                return .just(recordsToSave)
+            }
+        let mapRecordsToDeleteObs = fetchUserICloudID()
+            .flatMapLatest { userID -> Observable<[CKRecord.ID]> in
+                let recordIDsToDelete = wordsToDelete
+                    .map { self.configureWordRecord(userID: userID, wordItem: $0) }
+                    .map { $0.recordID }
+                return .just(recordIDsToDelete)
+            }
+        
+        return Observable.zip(mapRecordsToSaveObs, mapRecordsToDeleteObs)
+            .flatMapLatest { recordsToSave, recordIDsToDelete -> Observable<Void> in
+                self.executeModifyOperation(recordsToSave: recordsToSave, recordIDsToDelete: recordIDsToDelete)
+            }
+    }
+    
+    private func executeModifyOperation(recordsToSave: [CKRecord], recordIDsToDelete: [CKRecord.ID]) -> Observable<Void> {
+        return Observable.create { observer in
+            let operation = CKModifyRecordsOperation(recordsToSave: recordsToSave, recordIDsToDelete: recordIDsToDelete)
+            operation.savePolicy = .changedKeys
+            operation.modifyRecordsCompletionBlock = { savedRecords, deletedRecordIDs, error in
+                if let error = error {
+                    print(error.localizedDescription)
+                    observer.onError(error)
+                    return
+                } else {
+                    print("saved: \(savedRecords?.count), deleted: \(deletedRecordIDs?.count)")
+                    observer.onNext(())
+                    observer.onCompleted()
+                }
+            }
+            self.privateDB.add(operation)
+            return Disposables.create()
+        }
+    }
+    
+    func updateMultiples() {
+        let modifyOperation = CKModifyRecordsOperation(recordsToSave: nil, recordIDsToDelete: nil)
+        privateDB.add(modifyOperation)
     }
     
     func delete(recordID: String) -> Observable<String> {
@@ -65,7 +112,7 @@ class WordICloudRepository: WordRepositoryProtocol {
 }
 
 extension WordICloudRepository {
-    private func updateRecord(_ record: CKRecord) -> Observable<WordItem> {
+    private func uploadRecord(_ record: CKRecord) -> Observable<WordItem> {
         return Observable.create { observer in
             self.privateDB.save(record) { record, error in
                 if let error = error {
@@ -102,7 +149,12 @@ extension WordICloudRepository {
     }
     
     private func configureWordRecord(userID: String, wordItem: WordItem) -> CKRecord {
-        let wordRecord = CKRecord(recordType: wordType)
+        let wordRecord: CKRecord
+        if let recordName = wordItem.recordName {
+            wordRecord = CKRecord(recordType: wordType, recordID: CKRecord.ID(recordName: recordName))
+        } else {
+            wordRecord = CKRecord(recordType: wordType)
+        }
         wordRecord.setValue(userID, forKey: "userID")
         wordRecord.setValue(wordItem.word, forKey: "word")
         wordRecord.setValue(wordItem.mean, forKey: "mean")

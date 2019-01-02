@@ -31,8 +31,11 @@ class RMWordItem: Object, Storable {
         return "id"
     }
     
-    convenience init(iCloudWordItem: ICloudWordItem) {
+    convenience init(iCloudWordItem: ICloudWordItem, localID: String? = nil) {
         self.init()
+        if let localID = localID {
+            id = localID
+        }
         recordName = iCloudWordItem.recordName
         word = iCloudWordItem.word
         mean = iCloudWordItem.mean
@@ -86,6 +89,7 @@ class RMWordItem: Object, Storable {
     func toWordItem() -> WordItem {
         let wordItem = WordItem(
             id: id,
+            recordName: recordName.isEmpty ? nil : recordName,
             word: word,
             mean: mean,
             lastModified: lastModified,

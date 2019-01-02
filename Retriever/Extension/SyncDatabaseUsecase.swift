@@ -20,22 +20,44 @@ class SyncDatabaseUsecase {
     }
     
     func execute() -> Completable {
-        let fetchRemoteWordItemsObs = wordRepository.fetchWords()
-        let fetchLocalWordItemsObs = wordDAO.findAll()
+        let fetchAllLocalWordsObs = wordDAO.findAll()
+            .share()
         
-        return Observable.zip(fetchRemoteWordItemsObs, fetchLocalWordItemsObs)
-            .flatMapLatest { remoteWordItems, localWordItems -> Observable<[ICloudWordItem]> in
-                var notSyncedWordItems: [ICloudWordItem] = remoteWordItems
-                for localWordItem in localWordItems {
-                    if let index = notSyncedWordItems.firstIndex(where: { $0.recordName == localWordItem.recordName }) {
-                        notSyncedWordItems.remove(at: index)
+        let fetchRemoteWordsToSaveLocal = Observable
+            .zip(wordRepository.fetchWords(), fetchAllLocalWordsObs)
+            .flatMapLatest { remoteWords, localWords -> Observable<[RMWordItem]> in
+                var wordsToSaveLocal: [RMWordItem] = []
+                for remoteWord in remoteWords {
+                    if let index = localWords.firstIndex(where: { $0.recordName == remoteWord.recordName }) {
+                        let localID = localWords[index].id
+                        wordsToSaveLocal.append(RMWordItem(iCloudWordItem: remoteWord, localID: localID))
+                    } else {
+                        wordsToSaveLocal.append(RMWordItem(iCloudWordItem: remoteWord))
                     }
                 }
-                return .just(notSyncedWordItems)
+                return .just(wordsToSaveLocal)
             }
-            .map { $0.map { RMWordItem(iCloudWordItem: $0) } }
-            .flatMapLatest { self.wordDAO.insert($0) }
-//            .flatMapLatest { self.wordDAO.deleteAll() }
-            .ignoreElements()
+            .flatMapLatest { self.wordDAO.updateOrCreate(array: $0) }
+        
+        let fetchLocalWordsToSaveRemote = fetchAllLocalWordsObs
+            .map { $0.filter { $0.recordName.isEmpty || $0.status == WordItem.WordStatus.updated.rawValue  } }
+            .map { $0.map { $0.toWordItem() } }
+        let fetchLocalWordsToDeleteRemote = fetchAllLocalWordsObs
+            .map { $0.filter { $0.status == WordItem.WordStatus.deleted.rawValue} }
+            .map { $0.map { $0.toWordItem() } }
+            
+        return Observable.zip(fetchLocalWordsToSaveRemote, fetchLocalWordsToDeleteRemote)
+            .flatMapLatest { localWordsToSaveRemote, localWordsToDeleteRemote -> Observable<Void> in
+                self.wordRepository
+                    .updateMultiple(wordsToSave: localWordsToSaveRemote, wordsToDelete: localWordsToDeleteRemote)
+            }.flatMapLatest { _ -> Observable<Void> in
+                self.wordDAO
+                    .deletes(filter: { $0.status == WordItem.WordStatus.deleted.rawValue })
+            }.flatMapLatest { _ -> Observable<Void> in
+                self.wordDAO
+                    .updateAllWordsToStableStatus()
+            }.flatMapLatest { _ -> Observable<Void> in
+                fetchRemoteWordsToSaveLocal
+            }.ignoreElements()
     }
 }

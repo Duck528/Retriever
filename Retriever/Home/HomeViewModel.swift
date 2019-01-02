@@ -87,7 +87,8 @@ class HomeViewModel {
         bindReachability()
         bindSyncStatus()
         bindNumberOfWords()
-        fetchWordItemsAfterSync()
+        
+        fetchWordItemsWithoutSync()
     }
     
     func selectWordToEdit(at indexPath: IndexPath) {
@@ -108,6 +109,14 @@ class HomeViewModel {
     func cancelEditWordButtonTapped() {
         editWordIndex = nil
         viewAction.onNext(.hideAppendWordSection)
+    }
+    
+    func syncButtonTapped() {
+        guard internetConnected.value else {
+            return
+        }
+        syncStatus.accept(.progress)
+        fetchWordItemsAfterSync()
     }
     
     // 삭제 버튼이 눌린 경우
@@ -228,6 +237,7 @@ class HomeViewModel {
                     .flatMap { $0.wordItem.value.tags }
                     .map { TagItemCellViewModel(tagItem: $0) }
                 self.allTags.accept(allTags)
+                self.syncStatus.accept(.stable)
             }, onError: { error in
                 print(error.localizedDescription)
             })
@@ -273,18 +283,14 @@ extension HomeViewModel {
         internetConnected
             .skip(1)
             .subscribe(onNext: { connected in
-                if connected {
-                    self.fetchWordItemsAfterSync()
-                } else {
-                    self.fetchWordItemsWithoutSync()
-                }
+                print("internet connected: \(connected)")
             }).disposed(by: disposeBag)
     }
     
     private func bindSyncStatus() {
         Observable
             .combineLatest(numberOfUpdatedWords.skip(1), numberOfDeletedWords.skip(1))
-            .skip(2)
+            .skip(1)
             .distinctUntilChanged { before, after in
                 if before.0 == after.0 && before.1 == after.1 {
                     return true
@@ -292,21 +298,18 @@ extension HomeViewModel {
                     return false
                 }
             }.map { $0 == 0 && $1 == 0 ? SyncStatus.stable : SyncStatus.unSynced }
-            .do(onNext: { syncStatus in print(syncStatus) })
             .bind(to: syncStatus)
             .disposed(by: disposeBag)
     }
     
     private func bindNumberOfWords() {
         wordItems
-            .skip(1)
             .flatMapLatest { _ -> Observable<Int> in
                 return self.fetchNumberOfUpdatedWordUsecase.execute()
             }.bind(to: numberOfUpdatedWords)
             .disposed(by: disposeBag)
         
         wordItems
-            .skip(1)
             .flatMapLatest { _ -> Observable<Int> in
                 return self.fetchNumberOfDeletedWordUsecase.execute()
             }.bind(to: numberOfDeletedWords)
