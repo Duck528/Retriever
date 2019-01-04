@@ -48,6 +48,10 @@ class HomeViewController: NSViewController {
     @IBOutlet weak var offlineStatusView: NSView!
     @IBOutlet weak var syncCompletedView: NSView!
     
+    // 최근 동기화 상태 표시 섹션
+    @IBOutlet weak var syncAnimationView: NSView!
+    @IBOutlet weak var latestSyncTimeLabel: NSTextField!
+    
     let statusDashboardHeight: CGFloat = 30
     
     let viewModel: HomeViewModel!
@@ -193,6 +197,7 @@ extension HomeViewController {
         bindMeanTextField()
         bindAdditionalInfoTextView()
         bindWordAppendableStatus()
+        bindLatestSyncTime()
         bindEditWordToolSection()
         bindBottomStatusDashboardSection()
     }
@@ -353,6 +358,13 @@ extension HomeViewController {
             .subscribe(onNext: {
                 self.viewModel.updateSelectedWordButtonTapped()
             }).disposed(by: disposeBag)
+    }
+    
+    private func bindLatestSyncTime() {
+        viewModel.latestSyncTime
+            .map { $0?.offsetFromCurrentDate() ?? "기록없음" }
+            .bind(to: latestSyncTimeLabel.rx.text)
+            .disposed(by: disposeBag)
     }
     
     private func bindBottomStatusDashboardSection() {

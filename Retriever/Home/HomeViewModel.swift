@@ -39,6 +39,8 @@ class HomeViewModel {
     let numberOfUpdatedWords = BehaviorRelay<Int>(value: 0)
     let numberOfDeletedWords = BehaviorRelay<Int>(value: 0)
     
+    let latestSyncTime = BehaviorRelay<Date?>(value: nil)
+    
     var wordAppendable: Observable<Bool> {
         let hasWordObs = wordText.asObservable()
             .map { !$0.isEmpty }
@@ -69,6 +71,9 @@ class HomeViewModel {
     let fetchNumberOfUpdatedWordUsecase: FetchNumberOfUpdatedWordUsecase
     let fetchNumberOfDeletedWordUsecase: FetchNumberOfDeletedWordUsecase
     
+    let fetchLatestSyncTimeUsecase: FetchLatestSyncTimeUsecase
+    let updateLatestSyncTimeUsecase: UpdateLatestSyncTimeUsecase
+    
     let wordItems = BehaviorRelay<[WordItemCellViewModel]>(value: [])
     let allTags = BehaviorRelay<[TagItemCellViewModel]>(value: [])
     
@@ -83,12 +88,15 @@ class HomeViewModel {
         deleteLocalWordUsecase = Assembler().resolve()
         fetchNumberOfUpdatedWordUsecase = Assembler().resolve()
         fetchNumberOfDeletedWordUsecase = Assembler().resolve()
+        fetchLatestSyncTimeUsecase = Assembler().resolve()
+        updateLatestSyncTimeUsecase = Assembler().resolve()
         
         bindReachability()
         bindSyncStatus()
         bindNumberOfWords()
         
         fetchWordItemsWithoutSync()
+        fetchLatestSyncTime()
     }
     
     func selectWordToEdit(at indexPath: IndexPath) {
@@ -220,8 +228,7 @@ class HomeViewModel {
                 self.allTags.accept(allTags)
             }, onError: { error in
                 print(error.localizedDescription)
-            })
-            .do(onNext: { print("LocalFetchCount Without Sync: \($0.count)") })
+            }).do(onNext: { print("LocalFetchCount Without Sync: \($0.count)") })
             .map { $0.map { WordItemCellViewModel(wordItem: $0) } }
             .bind(to: wordItems)
             .disposed(by: disposeBag)
@@ -242,8 +249,23 @@ class HomeViewModel {
                 self.syncStatus.accept(.stable)
             }, onError: { error in
                 print(error.localizedDescription)
-            })
-            .bind(to: wordItems)
+            }).flatMapLatest { wordItems -> Observable<[WordItemCellViewModel]> in
+                return self.updateLatestSyncTimeUsecase
+                    .execute()
+                    .map { _ in wordItems }
+            }.flatMapLatest { wordItems -> Observable<[WordItemCellViewModel]> in
+                return self.fetchLatestSyncTimeUsecase
+                    .execute()
+                    .do(onNext: { latestSyncTime in
+                        self.latestSyncTime.accept(latestSyncTime)
+                    }).map { _ in wordItems }
+            }.bind(to: wordItems)
+            .disposed(by: disposeBag)
+    }
+    
+    private func fetchLatestSyncTime() {
+        fetchLatestSyncTimeUsecase.execute()
+            .bind(to: latestSyncTime)
             .disposed(by: disposeBag)
     }
     
