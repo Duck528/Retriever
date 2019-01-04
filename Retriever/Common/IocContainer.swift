@@ -71,4 +71,12 @@ extension UsecaseAssembler where Self: Assembler {
         let wordItemDAO = RMWordItemDAO()
         return FetchNumberOfDeletedWordUsecase(wordItemDAO: wordItemDAO)
     }
+    
+    func resolve() -> FetchLatestSyncTimeUsecase {
+        return FetchLatestSyncTimeUsecase()
+    }
+    
+    func resolve() -> UpdateLatestSyncTimeUsecase {
+        return UpdateLatestSyncTimeUsecase()
+    }
 }
