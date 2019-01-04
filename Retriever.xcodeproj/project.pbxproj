@@ -23,6 +23,7 @@
 		930FA1CB21DB4BFB00CE24A4 /* UpdateLocalWordUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930FA1CA21DB4BFB00CE24A4 /* UpdateLocalWordUsecase.swift */; };
 		930FA1CD21DB862500CE24A4 /* FetchNumberOfUpdatedWordUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930FA1CC21DB862500CE24A4 /* FetchNumberOfUpdatedWordUsecase.swift */; };
 		930FA1CF21DB87F100CE24A4 /* FetchNumberOfDeletedWordUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930FA1CE21DB87F100CE24A4 /* FetchNumberOfDeletedWordUsecase.swift */; };
+		930FA1E021DF821A00CE24A4 /* Lottie.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 930FA1DF21DF821A00CE24A4 /* Lottie.framework */; };
 		932896A421D677BF00C7CE5C /* ICloudWordItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932896A321D677BF00C7CE5C /* ICloudWordItem.swift */; };
 		932896A621D73E6800C7CE5C /* TKTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932896A521D73E6800C7CE5C /* TKTextField.swift */; };
 		932896AC21D7603900C7CE5C /* TKTagTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932896AB21D7603900C7CE5C /* TKTagTextView.swift */; };
@@ -75,6 +76,7 @@
 		930FA1CA21DB4BFB00CE24A4 /* UpdateLocalWordUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateLocalWordUsecase.swift; sourceTree = "<group>"; };
 		930FA1CC21DB862500CE24A4 /* FetchNumberOfUpdatedWordUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchNumberOfUpdatedWordUsecase.swift; sourceTree = "<group>"; };
 		930FA1CE21DB87F100CE24A4 /* FetchNumberOfDeletedWordUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchNumberOfDeletedWordUsecase.swift; sourceTree = "<group>"; };
+		930FA1DF21DF821A00CE24A4 /* Lottie.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Lottie.framework; path = Carthage/Build/Mac/Lottie.framework; sourceTree = "<group>"; };
 		932896A321D677BF00C7CE5C /* ICloudWordItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICloudWordItem.swift; sourceTree = "<group>"; };
 		932896A521D73E6800C7CE5C /* TKTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKTextField.swift; sourceTree = "<group>"; };
 		932896AB21D7603900C7CE5C /* TKTagTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKTagTextView.swift; sourceTree = "<group>"; };
@@ -118,6 +120,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				930FA1E021DF821A00CE24A4 /* Lottie.framework in Frameworks */,
 				930FA1B321D9322D00CE24A4 /* Realm.framework in Frameworks */,
 				930FA1B121D9321E00CE24A4 /* RealmSwift.framework in Frameworks */,
 				938CEC4D21CEB0FD0035B80A /* RxAtomic.framework in Frameworks */,
@@ -189,6 +192,7 @@
 		938CEC3621CE5E790035B80A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				930FA1DF21DF821A00CE24A4 /* Lottie.framework */,
 				930FA1B221D9322D00CE24A4 /* Realm.framework */,
 				930FA1B021D9321E00CE24A4 /* RealmSwift.framework */,
 				93EE702521D354A700728013 /* CloudKit.framework */,
@@ -383,6 +387,7 @@
 				"$(SRCROOT)/Carthage/Build/Mac/RxAtomic.framework",
 				"$(SRCROOT)/Carthage/Build/Mac/RealmSwift.framework",
 				"$(SRCROOT)/Carthage/Build/Mac/Realm.framework",
+				"$(SRCROOT)/Carthage/Build/Mac/Lottie.framework",
 			);
 			name = Carthage;
 			outputFileListPaths = (
