@@ -128,7 +128,7 @@ extension HomeViewController: NSCollectionViewDelegateFlowLayout {
     
     private func calculateWordCellSize(in collectionView: NSCollectionView, at indexPath: IndexPath) -> CGSize {
         let width = collectionView.bounds.width
-        return CGSize(width: width, height: 77)
+        return CGSize(width: width, height: 90)
     }
 }
 
