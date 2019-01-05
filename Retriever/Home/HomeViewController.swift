@@ -128,7 +128,7 @@ extension HomeViewController: NSCollectionViewDelegateFlowLayout {
     
     private func calculateWordCellSize(in collectionView: NSCollectionView, at indexPath: IndexPath) -> CGSize {
         let width = collectionView.bounds.width
-        return CGSize(width: width, height: 77)
+        return CGSize(width: width, height: 90)
     }
 }
 
@@ -205,6 +205,7 @@ extension HomeViewController {
     
     private func bindViewAction() {
         viewModel.viewAction
+            .observeOn(MainScheduler.instance)
             .subscribe(onNext: {
                 switch $0 {
                 case .hideAppendWordSection:
@@ -217,6 +218,8 @@ extension HomeViewController {
                     self.showEditWordToolSection()
                 case .reloadWordAtIndex(let indexPath):
                     self.wordCollectionView.reloadItems(at: [indexPath])
+                case .updateDiffculty(let difficulty):
+                    self.difficultyPopUpButton.title = difficulty.title
                 }
             }).disposed(by: disposeBag)
     }
@@ -225,6 +228,7 @@ extension HomeViewController {
         wordCollectionScrollView.contentInsets.bottom = 0
         appendWordSectionView.findConstraint(for: .bottom)?.constant = -appendWordSectionView.bounds.height
         presentAppendWordSectionView.findConstraint(for: .bottom)?.constant = 0
+        difficultyPopUpButton.selectItem(at: 0)
     }
     
     private func showAppendWordSection() {
