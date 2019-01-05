@@ -25,6 +25,15 @@ class WordItem {
                 return .undefined
             }
         }
+        
+        var title: String {
+            switch self {
+            case .easy: return "쉬움"
+            case .medium: return "보통"
+            case .hard: return "어려움"
+            case .undefined: return "정의되지 않음"
+            }
+        }
     }
     
     enum WordStatus: Int {

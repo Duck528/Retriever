@@ -7,6 +7,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="WordItemCell" customModule="Retriever" customModuleProvider="target">
             <connections>
+                <outlet property="diffcultyLabel" destination="ddR-3K-np1" id="RGj-GF-e59"/>
                 <outlet property="meanTextField" destination="qjc-Np-0gY" id="cb0-7t-NZ9"/>
                 <outlet property="syncStatusView" destination="Rw9-dx-YsJ" id="YQY-qP-EPf"/>
                 <outlet property="syncWordButton" destination="dJY-Gm-b6u" id="JtE-6b-DMg"/>
