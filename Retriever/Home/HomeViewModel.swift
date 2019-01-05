@@ -263,7 +263,6 @@ class HomeViewModel {
         let fetchWordItemsObs = fetchLocalWordUsecase.execute()
             .do(onNext: { print("LocalFetchCount With Sync: \($0.count)") })
             .map { $0.filter { self.filterWordsMap.value[$0.difficulty] ?? false } }
-            .map { $0.filter { $0.word == self.wordToSearch.value } }
             .map { $0.filter {
                 let filterWord = self.wordToSearch.value.lowercased()
                 if filterWord.isEmpty {
