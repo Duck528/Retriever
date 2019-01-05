@@ -17,6 +17,7 @@ class HomeViewModel {
         case updateWordEditMode
         case updateWordAppendMode
         case reloadWordAtIndex(IndexPath)
+        case updateDiffculty(WordItem.WordDifficulty)
     }
     
     enum SyncStatus {
@@ -101,22 +102,27 @@ class HomeViewModel {
     
     func selectWordToEdit(at indexPath: IndexPath) {
         editWordIndex = indexPath
+        let wordItem = wordItems.value[indexPath.item].wordItem.value
         viewAction.onNext(.updateWordEditMode)
         viewAction.onNext(.showAppendWordSection)
+        viewAction.onNext(.updateDiffculty(wordItem.difficulty))
     }
     
     func deselectWordToEdit() {
         editWordIndex = nil
         viewAction.onNext(.updateWordAppendMode)
+        viewAction.onNext(.updateDiffculty(WordItem.WordDifficulty.easy))
     }
     
     func cancelAppendWordButtonTapped() {
         viewAction.onNext(.hideAppendWordSection)
+        viewAction.onNext(.updateDiffculty(WordItem.WordDifficulty.easy))
     }
     
     func cancelEditWordButtonTapped() {
         editWordIndex = nil
         viewAction.onNext(.hideAppendWordSection)
+        viewAction.onNext(.updateDiffculty(WordItem.WordDifficulty.easy))
     }
     
     func syncButtonTapped() {
@@ -155,6 +161,7 @@ class HomeViewModel {
         guard let editWordIndex = editWordIndex else {
             return
         }
+        self.editWordIndex = nil
         let wordItem = wordItems.value[editWordIndex.item].wordItem.value
         wordItem.word = wordText.value
         wordItem.mean = meanText.value
