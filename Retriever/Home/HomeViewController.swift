@@ -11,7 +11,7 @@ import RxCocoa
 import RxSwift
 
 class HomeViewController: NSViewController {
-    
+    // 좌측 필터링 섹션
     @IBOutlet weak var searchWordTextField: NSTextField!
     @IBOutlet weak var tagCollectionView: NSCollectionView!
     @IBOutlet weak var wordCollectionView: NSCollectionView!

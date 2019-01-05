@@ -102,6 +102,7 @@ class HomeViewModel {
         bindSyncStatus()
         bindNumberOfWords()
         bindFilterWordsByDifficultyOptions()
+        bindFilterWordsBySearchedText()
         
         fetchWordItemsWithoutSync()
         fetchLatestSyncTime()
@@ -246,7 +247,14 @@ class HomeViewModel {
                 print(error.localizedDescription)
             }).do(onNext: { print("LocalFetchCount Without Sync: \($0.count)") })
             .map { $0.filter { self.filterWordsMap.value[$0.difficulty] ?? false } }
-            .map { $0.map { WordItemCellViewModel(wordItem: $0) } }
+            .map { $0.filter {
+                let filterWord = self.wordToSearch.value.lowercased()
+                if filterWord.isEmpty {
+                    return true
+                } else {
+                    return $0.word.lowercased().starts(with: filterWord)
+                }
+            }}.map { $0.map { WordItemCellViewModel(wordItem: $0) } }
             .bind(to: wordItems)
             .disposed(by: disposeBag)
     }
@@ -255,7 +263,15 @@ class HomeViewModel {
         let fetchWordItemsObs = fetchLocalWordUsecase.execute()
             .do(onNext: { print("LocalFetchCount With Sync: \($0.count)") })
             .map { $0.filter { self.filterWordsMap.value[$0.difficulty] ?? false } }
-            .map { $0.map { WordItemCellViewModel(wordItem: $0) } }
+            .map { $0.filter { $0.word == self.wordToSearch.value } }
+            .map { $0.filter {
+                let filterWord = self.wordToSearch.value.lowercased()
+                if filterWord.isEmpty {
+                    return true
+                } else {
+                    return $0.word.lowercased().starts(with: filterWord)
+                }
+            }}.map { $0.map { WordItemCellViewModel(wordItem: $0) } }
         
         syncDatabaseUsecase.execute()
             .andThen(fetchWordItemsObs)
@@ -385,6 +401,13 @@ extension HomeViewModel {
             .disposed(by: disposeBag)
         
         filterWordsMap
+            .subscribe(onNext: { _ in
+                self.fetchWordItemsWithoutSync()
+            }).disposed(by: disposeBag)
+    }
+    
+    private func bindFilterWordsBySearchedText() {
+        wordToSearch
             .subscribe(onNext: { _ in
                 self.fetchWordItemsWithoutSync()
             }).disposed(by: disposeBag)
