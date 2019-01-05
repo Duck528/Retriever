@@ -132,6 +132,7 @@ class HomeViewModel {
         viewAction.onNext(.updateDiffculty(WordItem.WordDifficulty.easy))
     }
     
+    // 동기화 버튼이 눌린 경우
     func syncButtonTapped() {
         guard internetConnected.value else {
             return
@@ -168,13 +169,14 @@ class HomeViewModel {
         guard let editWordIndex = editWordIndex else {
             return
         }
-        self.editWordIndex = nil
         let wordItem = wordItems.value[editWordIndex.item].wordItem.value
         wordItem.word = wordText.value
         wordItem.mean = meanText.value
         wordItem.tags = []
         wordItem.additionalInfo = additionalInfoText.value
         wordItem.difficulty = WordItem.WordDifficulty.parse(int: difficulty.value)
+        
+        self.editWordIndex = nil
         
         updateLocalWordUsecase.execute(wordItem: wordItem)
             .map { WordItemCellViewModel(wordItem: $0) }
