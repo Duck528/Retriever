@@ -51,6 +51,7 @@ class HomeViewController: NSViewController {
     // 최근 동기화 상태 표시 섹션
     @IBOutlet weak var syncAnimationView: NSView!
     @IBOutlet weak var latestSyncTimeLabel: NSTextField!
+    @IBOutlet weak var updateLatestSyncTimeButton: NSButton!
     
     let statusDashboardHeight: CGFloat = 30
     
@@ -365,6 +366,12 @@ extension HomeViewController {
             .map { $0?.offsetFromCurrentDate() ?? "기록없음" }
             .bind(to: latestSyncTimeLabel.rx.text)
             .disposed(by: disposeBag)
+        
+        updateLatestSyncTimeButton.rx.tap
+            .throttle(0.5, latest: true, scheduler: MainScheduler.instance)
+            .subscribe(onNext: {
+                self.viewModel.syncButtonTapped()
+            }).disposed(by: disposeBag)
     }
     
     private func bindBottomStatusDashboardSection() {
