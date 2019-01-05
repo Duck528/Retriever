@@ -48,6 +48,8 @@ class HomeViewModel {
     let undefinedDifficultyChecked = BehaviorRelay<Bool>(value: false)
     let filterWordsMap = BehaviorRelay<[WordItem.WordDifficulty: Bool]>(value: [:])
     
+    let intervalMinTimer = Observable<Int>.interval(60, scheduler: ConcurrentDispatchQueueScheduler(qos: .default))
+    
     var wordAppendable: Observable<Bool> {
         let hasWordObs = wordText.asObservable()
             .map { !$0.isEmpty }
@@ -103,6 +105,7 @@ class HomeViewModel {
         bindNumberOfWords()
         bindFilterWordsByDifficultyOptions()
         bindFilterWordsBySearchedText()
+        bindMinIntervalTimer()
         
         fetchWordItemsWithoutSync()
         fetchLatestSyncTime()
@@ -409,6 +412,13 @@ extension HomeViewModel {
         wordToSearch
             .subscribe(onNext: { _ in
                 self.fetchWordItemsWithoutSync()
+            }).disposed(by: disposeBag)
+    }
+    
+    private func bindMinIntervalTimer() {
+        intervalMinTimer
+            .subscribe(onNext: { _ in
+                self.fetchLatestSyncTime()
             }).disposed(by: disposeBag)
     }
 }
