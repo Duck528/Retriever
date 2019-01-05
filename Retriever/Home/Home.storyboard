@@ -63,12 +63,48 @@
                                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                 </textFieldCell>
                                                             </textField>
+                                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="OPv-3O-UcI">
+                                                                <rect key="frame" x="8" y="39" width="45" height="18"/>
+                                                                <buttonCell key="cell" type="check" title="쉬움" bezelStyle="regularSquare" imagePosition="left" inset="2" id="8qy-AV-1zL">
+                                                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                                    <font key="font" metaFont="system"/>
+                                                                </buttonCell>
+                                                            </button>
+                                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="63y-H6-suq">
+                                                                <rect key="frame" x="8" y="18" width="56" height="18"/>
+                                                                <buttonCell key="cell" type="check" title="어려움" bezelStyle="regularSquare" imagePosition="left" inset="2" id="8mO-6h-Tp7">
+                                                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                                    <font key="font" metaFont="system"/>
+                                                                </buttonCell>
+                                                            </button>
+                                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="BhE-qd-oSP">
+                                                                <rect key="frame" x="84" y="18" width="94" height="18"/>
+                                                                <buttonCell key="cell" type="check" title="정의되지 않음" bezelStyle="regularSquare" imagePosition="left" inset="2" id="ZEX-z9-EQA">
+                                                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                                    <font key="font" metaFont="system"/>
+                                                                </buttonCell>
+                                                            </button>
+                                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="TZQ-3M-ZVp">
+                                                                <rect key="frame" x="84" y="39" width="45" height="18"/>
+                                                                <buttonCell key="cell" type="check" title="보통" bezelStyle="regularSquare" imagePosition="left" inset="2" id="VuS-KB-Di8">
+                                                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                                    <font key="font" metaFont="system"/>
+                                                                </buttonCell>
+                                                            </button>
                                                         </subviews>
                                                         <constraints>
+                                                            <constraint firstItem="OPv-3O-UcI" firstAttribute="top" secondItem="ctV-PJ-GoM" secondAttribute="bottom" constant="14" id="2XW-uI-DD9"/>
+                                                            <constraint firstItem="63y-H6-suq" firstAttribute="top" secondItem="OPv-3O-UcI" secondAttribute="bottom" constant="7" id="3fu-Ww-ycs"/>
+                                                            <constraint firstItem="BhE-qd-oSP" firstAttribute="leading" secondItem="TZQ-3M-ZVp" secondAttribute="leading" id="61m-0g-ZHS"/>
                                                             <constraint firstAttribute="trailing" secondItem="ctV-PJ-GoM" secondAttribute="trailing" constant="20" id="DVQ-QG-eIf"/>
                                                             <constraint firstItem="ctV-PJ-GoM" firstAttribute="top" secondItem="Mfi-fV-0Hu" secondAttribute="top" constant="20" id="M5Z-es-3ZQ"/>
                                                             <constraint firstItem="ctV-PJ-GoM" firstAttribute="leading" secondItem="Mfi-fV-0Hu" secondAttribute="leading" constant="10" id="Sb5-8L-UN5"/>
+                                                            <constraint firstItem="63y-H6-suq" firstAttribute="leading" secondItem="Mfi-fV-0Hu" secondAttribute="leading" constant="10" id="abN-rG-o7F"/>
+                                                            <constraint firstItem="TZQ-3M-ZVp" firstAttribute="leading" secondItem="OPv-3O-UcI" secondAttribute="trailing" constant="35" id="bjD-qv-dpn"/>
+                                                            <constraint firstItem="BhE-qd-oSP" firstAttribute="top" secondItem="TZQ-3M-ZVp" secondAttribute="bottom" constant="7" id="c2D-C8-grQ"/>
+                                                            <constraint firstItem="OPv-3O-UcI" firstAttribute="leading" secondItem="Mfi-fV-0Hu" secondAttribute="leading" constant="10" id="dIg-FK-VKm"/>
                                                             <constraint firstAttribute="height" constant="110" id="ifg-5G-9eS"/>
+                                                            <constraint firstItem="TZQ-3M-ZVp" firstAttribute="top" secondItem="OPv-3O-UcI" secondAttribute="top" id="rcW-tq-ZNp"/>
                                                         </constraints>
                                                     </customView>
                                                     <customView autoresizesSubviews="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wGj-8j-SiM" userLabel="Tag Section View">
@@ -831,9 +867,12 @@
                         <outlet property="cancelEditWordButton" destination="U6E-Kj-elJ" id="rWN-Bg-che"/>
                         <outlet property="deleteWordButton" destination="UI0-MN-ABg" id="7wu-oh-3lL"/>
                         <outlet property="difficultyPopUpButton" destination="Orp-de-aRB" id="UFl-CT-YOf"/>
+                        <outlet property="easyDifficultyCheckBox" destination="OPv-3O-UcI" id="26x-FB-3fP"/>
                         <outlet property="editWordToolSection" destination="hgH-36-OyJ" id="tsU-Rf-X4A"/>
+                        <outlet property="hardDifficultyCheckBox" destination="63y-H6-suq" id="Nc2-gH-L7B"/>
                         <outlet property="latestSyncTimeLabel" destination="0TY-NV-7bz" id="9Di-Jl-Jfy"/>
                         <outlet property="meanTextField" destination="xjI-vf-H0L" id="lGi-cK-ong"/>
+                        <outlet property="mediumDifficultyCheckBox" destination="TZQ-3M-ZVp" id="EPU-RR-X33"/>
                         <outlet property="needSyncronizeView" destination="U7R-1N-saG" id="RkG-3X-cla"/>
                         <outlet property="offlineStatusView" destination="IUx-qa-oIs" id="pqt-LB-peP"/>
                         <outlet property="presentAppendWordSectionButton" destination="xBN-1G-NBn" id="cxt-Ky-p2T"/>
@@ -845,6 +884,7 @@
                         <outlet property="syncProgressView" destination="xXV-t3-Fel" id="SjV-Hu-nem"/>
                         <outlet property="synchronizeWordButton" destination="8A2-Lv-vxj" id="y6K-eZ-vS8"/>
                         <outlet property="tagCollectionView" destination="55D-Z0-Usu" id="Yzy-m7-8mk"/>
+                        <outlet property="undefinedDifficultyCheckBox" destination="BhE-qd-oSP" id="fab-zy-INi"/>
                         <outlet property="updateLatestSyncTimeButton" destination="bSX-gQ-mrF" id="fkt-OM-UI1"/>
                         <outlet property="updateWordButton" destination="GbD-cN-omG" id="rcz-bD-PH8"/>
                         <outlet property="wordCollectionScrollView" destination="DV9-tI-iip" id="TKT-4h-53T"/>

@@ -53,6 +53,12 @@ class HomeViewController: NSViewController {
     @IBOutlet weak var latestSyncTimeLabel: NSTextField!
     @IBOutlet weak var updateLatestSyncTimeButton: NSButton!
     
+    // 난이도 필터 옵션
+    @IBOutlet weak var easyDifficultyCheckBox: NSButton!
+    @IBOutlet weak var mediumDifficultyCheckBox: NSButton!
+    @IBOutlet weak var hardDifficultyCheckBox: NSButton!
+    @IBOutlet weak var undefinedDifficultyCheckBox: NSButton!
+    
     let statusDashboardHeight: CGFloat = 30
     
     let viewModel: HomeViewModel!
@@ -188,6 +194,7 @@ extension HomeViewController: NSCollectionViewDataSource {
 extension HomeViewController {
     func bindViewModel() {
         bindViewAction()
+        bindDifficultyFilterOptions()
         bindSearchToWord()
         bindTagCollectionView()
         bindWordCollectionView()
@@ -299,6 +306,48 @@ extension HomeViewController {
             .subscribe(onNext: {
                 self.viewModel.saveWordContinouslyButtonTapped()
             }).disposed(by: disposeBag)
+    }
+    
+    private func bindDifficultyFilterOptions() {
+        easyDifficultyCheckBox.rx.state
+            .map { $0.rawValue == 1 ? true : false  }
+            .bind(to: viewModel.easyDifficultyChecked)
+            .disposed(by: disposeBag)
+        
+        mediumDifficultyCheckBox.rx.state
+            .map { $0.rawValue == 1 ? true : false  }
+            .bind(to: viewModel.mediumDifficultyChecked)
+            .disposed(by: disposeBag)
+        
+        hardDifficultyCheckBox.rx.state
+            .map { $0.rawValue == 1 ? true : false  }
+            .bind(to: viewModel.hardDifficultyChecked)
+            .disposed(by: disposeBag)
+        
+        undefinedDifficultyCheckBox.rx.state
+            .map { $0.rawValue == 1 ? true : false  }
+            .bind(to: viewModel.undefinedDifficultyChecked)
+            .disposed(by: disposeBag)
+        
+        viewModel.easyDifficultyChecked
+            .map { $0 ? NSControl.StateValue.on : NSControl.StateValue.off }
+            .bind(to: easyDifficultyCheckBox.rx.state)
+            .disposed(by: disposeBag)
+        
+        viewModel.mediumDifficultyChecked
+            .map { $0 ? NSControl.StateValue.on : NSControl.StateValue.off }
+            .bind(to: mediumDifficultyCheckBox.rx.state)
+            .disposed(by: disposeBag)
+        
+        viewModel.hardDifficultyChecked
+            .map { $0 ? NSControl.StateValue.on : NSControl.StateValue.off }
+            .bind(to: hardDifficultyCheckBox.rx.state)
+            .disposed(by: disposeBag)
+        
+        viewModel.undefinedDifficultyChecked
+            .map { $0 ? NSControl.StateValue.on : NSControl.StateValue.off }
+            .bind(to: undefinedDifficultyCheckBox.rx.state)
+            .disposed(by: disposeBag)
     }
     
     private func bindWordTextField() {

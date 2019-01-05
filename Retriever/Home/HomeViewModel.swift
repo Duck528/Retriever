@@ -42,6 +42,12 @@ class HomeViewModel {
     
     let latestSyncTime = BehaviorRelay<Date?>(value: nil)
     
+    let easyDifficultyChecked = BehaviorRelay<Bool>(value: false)
+    let mediumDifficultyChecked = BehaviorRelay<Bool>(value: false)
+    let hardDifficultyChecked = BehaviorRelay<Bool>(value: false)
+    let undefinedDifficultyChecked = BehaviorRelay<Bool>(value: false)
+    let filterWordsMap = BehaviorRelay<[WordItem.WordDifficulty: Bool]>(value: [:])
+    
     var wordAppendable: Observable<Bool> {
         let hasWordObs = wordText.asObservable()
             .map { !$0.isEmpty }
@@ -95,6 +101,7 @@ class HomeViewModel {
         bindReachability()
         bindSyncStatus()
         bindNumberOfWords()
+        bindFilterWordsByDifficultyOptions()
         
         fetchWordItemsWithoutSync()
         fetchLatestSyncTime()
@@ -125,6 +132,7 @@ class HomeViewModel {
         viewAction.onNext(.updateDiffculty(WordItem.WordDifficulty.easy))
     }
     
+    // 동기화 버튼이 눌린 경우
     func syncButtonTapped() {
         guard internetConnected.value else {
             return
@@ -161,13 +169,14 @@ class HomeViewModel {
         guard let editWordIndex = editWordIndex else {
             return
         }
-        self.editWordIndex = nil
         let wordItem = wordItems.value[editWordIndex.item].wordItem.value
         wordItem.word = wordText.value
         wordItem.mean = meanText.value
         wordItem.tags = []
         wordItem.additionalInfo = additionalInfoText.value
         wordItem.difficulty = WordItem.WordDifficulty.parse(int: difficulty.value)
+        
+        self.editWordIndex = nil
         
         updateLocalWordUsecase.execute(wordItem: wordItem)
             .map { WordItemCellViewModel(wordItem: $0) }
@@ -236,6 +245,7 @@ class HomeViewModel {
             }, onError: { error in
                 print(error.localizedDescription)
             }).do(onNext: { print("LocalFetchCount Without Sync: \($0.count)") })
+            .map { $0.filter { self.filterWordsMap.value[$0.difficulty] ?? false } }
             .map { $0.map { WordItemCellViewModel(wordItem: $0) } }
             .bind(to: wordItems)
             .disposed(by: disposeBag)
@@ -244,6 +254,7 @@ class HomeViewModel {
     private func fetchWordItemsAfterSync() {
         let fetchWordItemsObs = fetchLocalWordUsecase.execute()
             .do(onNext: { print("LocalFetchCount With Sync: \($0.count)") })
+            .map { $0.filter { self.filterWordsMap.value[$0.difficulty] ?? false } }
             .map { $0.map { WordItemCellViewModel(wordItem: $0) } }
         
         syncDatabaseUsecase.execute()
@@ -345,5 +356,37 @@ extension HomeViewModel {
                 return self.fetchNumberOfDeletedWordUsecase.execute()
             }.bind(to: numberOfDeletedWords)
             .disposed(by: disposeBag)
+    }
+    
+    private func bindFilterWordsByDifficultyOptions() {
+        Observable
+            .combineLatest(easyDifficultyChecked, mediumDifficultyChecked,
+                           hardDifficultyChecked, undefinedDifficultyChecked)
+            .map { easy, medium, hard, undefined -> [WordItem.WordDifficulty: Bool] in
+                let notChecked = (!easy && !medium && !hard && !undefined)
+                let filterMap: [WordItem.WordDifficulty: Bool]
+                if notChecked {
+                    filterMap = [
+                        .easy: true,
+                        .medium: true,
+                        .hard: true,
+                        .undefined: true
+                    ]
+                } else {
+                    filterMap = [
+                        .easy: easy,
+                        .medium: medium,
+                        .hard: hard,
+                        .undefined: undefined
+                    ]
+                }
+                return filterMap
+            }.bind(to: filterWordsMap)
+            .disposed(by: disposeBag)
+        
+        filterWordsMap
+            .subscribe(onNext: { _ in
+                self.fetchWordItemsWithoutSync()
+            }).disposed(by: disposeBag)
     }
 }
