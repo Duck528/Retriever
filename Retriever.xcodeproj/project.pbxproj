@@ -30,9 +30,6 @@
 		930FA1EE21DFC6AC00CE24A4 /* UpdateLatestSyncTimeUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930FA1ED21DFC6AC00CE24A4 /* UpdateLatestSyncTimeUsecase.swift */; };
 		930FA1F021DFD0D500CE24A4 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930FA1EF21DFD0D500CE24A4 /* Date+Extension.swift */; };
 		932896A421D677BF00C7CE5C /* ICloudWordItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932896A321D677BF00C7CE5C /* ICloudWordItem.swift */; };
-		932896A621D73E6800C7CE5C /* TKTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932896A521D73E6800C7CE5C /* TKTextField.swift */; };
-		932896AC21D7603900C7CE5C /* TKTagTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932896AB21D7603900C7CE5C /* TKTagTextView.swift */; };
-		932896AE21D7698300C7CE5C /* TKTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932896AD21D7698300C7CE5C /* TKTagView.swift */; };
 		9352D9E521CFFE460031FF15 /* TagItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9352D9E321CFFE460031FF15 /* TagItemCell.swift */; };
 		9352D9E621CFFE460031FF15 /* TagItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9352D9E421CFFE460031FF15 /* TagItemCell.xib */; };
 		9352D9E821CFFED00031FF15 /* TagItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9352D9E721CFFED00031FF15 /* TagItem.swift */; };
@@ -88,9 +85,6 @@
 		930FA1ED21DFC6AC00CE24A4 /* UpdateLatestSyncTimeUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateLatestSyncTimeUsecase.swift; sourceTree = "<group>"; };
 		930FA1EF21DFD0D500CE24A4 /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
 		932896A321D677BF00C7CE5C /* ICloudWordItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICloudWordItem.swift; sourceTree = "<group>"; };
-		932896A521D73E6800C7CE5C /* TKTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKTextField.swift; sourceTree = "<group>"; };
-		932896AB21D7603900C7CE5C /* TKTagTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKTagTextView.swift; sourceTree = "<group>"; };
-		932896AD21D7698300C7CE5C /* TKTagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKTagView.swift; sourceTree = "<group>"; };
 		9352D9E321CFFE460031FF15 /* TagItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagItemCell.swift; sourceTree = "<group>"; };
 		9352D9E421CFFE460031FF15 /* TagItemCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TagItemCell.xib; sourceTree = "<group>"; };
 		9352D9E721CFFED00031FF15 /* TagItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagItem.swift; sourceTree = "<group>"; };
@@ -280,9 +274,6 @@
 			isa = PBXGroup;
 			children = (
 				93EE701A21D116CB00728013 /* LeftAlignFlowLayout.swift */,
-				932896AB21D7603900C7CE5C /* TKTagTextView.swift */,
-				932896A521D73E6800C7CE5C /* TKTextField.swift */,
-				932896AD21D7698300C7CE5C /* TKTagView.swift */,
 				930FA1C221DA039600CE24A4 /* Reachability.swift */,
 				930FA1C421DA03AE00CE24A4 /* RxReachability.swift */,
 				930FA1E721DF886C00CE24A4 /* SyncAnimationView.swift */,
@@ -451,7 +442,6 @@
 				930FA1F021DFD0D500CE24A4 /* Date+Extension.swift in Sources */,
 				930FA1C721DA7EA900CE24A4 /* SaveLocalWordUsecase.swift in Sources */,
 				93EE702021D1272800728013 /* NSFont+Extension.swift in Sources */,
-				932896AC21D7603900C7CE5C /* TKTagTextView.swift in Sources */,
 				930FA1C121D9FC5200CE24A4 /* FetchLocalWordUsecase.swift in Sources */,
 				9352D9E821CFFED00031FF15 /* TagItem.swift in Sources */,
 				938CEC5621CFF0810035B80A /* HomeViewModel.swift in Sources */,
@@ -464,7 +454,6 @@
 				938CEC4C21CEB01D0035B80A /* NSColor+Extension.swift in Sources */,
 				930FA1B721D9325C00CE24A4 /* RMConfiguration.swift in Sources */,
 				938CEC4921CE89660035B80A /* IocContainer.swift in Sources */,
-				932896AE21D7698300C7CE5C /* TKTagView.swift in Sources */,
 				930FA1EE21DFC6AC00CE24A4 /* UpdateLatestSyncTimeUsecase.swift in Sources */,
 				93EE703421D5336B00728013 /* SaveRemoteWordUsecase.swift in Sources */,
 				932896A421D677BF00C7CE5C /* ICloudWordItem.swift in Sources */,
@@ -478,7 +467,6 @@
 				9352D9E521CFFE460031FF15 /* TagItemCell.swift in Sources */,
 				930FA1E821DF886C00CE24A4 /* SyncAnimationView.swift in Sources */,
 				930FA1C321DA039600CE24A4 /* Reachability.swift in Sources */,
-				932896A621D73E6800C7CE5C /* TKTextField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
