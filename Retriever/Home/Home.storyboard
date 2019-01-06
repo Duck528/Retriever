@@ -405,46 +405,51 @@
                                                                                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="Awy-vc-hdD">
                                                                                             <rect key="frame" x="45" y="1" width="288" height="34"/>
                                                                                             <subviews>
-                                                                                                <scrollView horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WjC-qa-VeE">
+                                                                                                <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WjC-qa-VeE">
                                                                                                     <rect key="frame" x="0.0" y="0.0" width="288" height="34"/>
                                                                                                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="kgo-ES-ueu">
-                                                                                                        <rect key="frame" x="1" y="1" width="286" height="32"/>
+                                                                                                        <rect key="frame" x="0.0" y="0.0" width="288" height="34"/>
                                                                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                                                         <subviews>
                                                                                                             <view translatesAutoresizingMaskIntoConstraints="NO" id="U17-El-Qc7">
-                                                                                                                <rect key="frame" x="0.0" y="0.0" width="286" height="32"/>
+                                                                                                                <rect key="frame" x="0.0" y="0.0" width="288" height="34"/>
                                                                                                                 <subviews>
-                                                                                                                    <scrollView wantsLayer="YES" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="baW-Pr-H6F">
-                                                                                                                        <rect key="frame" x="0.0" y="0.0" width="100" height="32"/>
-                                                                                                                        <clipView key="contentView" id="Qcx-gd-qNg">
-                                                                                                                            <rect key="frame" x="1" y="1" width="83" height="30"/>
+                                                                                                                    <scrollView wantsLayer="YES" focusRingType="none" borderType="none" horizontalLineScroll="2" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="baW-Pr-H6F">
+                                                                                                                        <rect key="frame" x="0.0" y="0.0" width="100" height="34"/>
+                                                                                                                        <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="Qcx-gd-qNg">
+                                                                                                                            <rect key="frame" x="0.0" y="0.0" width="100" height="34"/>
                                                                                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                                                                             <subviews>
                                                                                                                                 <collectionView id="8SM-wE-35q">
-                                                                                                                                    <rect key="frame" x="0.0" y="0.0" width="83" height="158"/>
-                                                                                                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
-                                                                                                                                    <collectionViewFlowLayout key="collectionViewLayout" minimumInteritemSpacing="10" minimumLineSpacing="10" scrollDirection="horizontal" id="hah-NB-rwU">
+                                                                                                                                    <rect key="frame" x="0.0" y="0.0" width="100" height="34"/>
+                                                                                                                                    <autoresizingMask key="autoresizingMask" heightSizable="YES"/>
+                                                                                                                                    <collectionViewFlowLayout key="collectionViewLayout" minimumInteritemSpacing="3" scrollDirection="horizontal" id="hah-NB-rwU">
                                                                                                                                         <size key="itemSize" width="50" height="50"/>
                                                                                                                                     </collectionViewFlowLayout>
-                                                                                                                                    <color key="primaryBackgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                                                                                    <color key="primaryBackgroundColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                                                                                                                    <connections>
+                                                                                                                                        <outlet property="dataSource" destination="rzy-vk-Z4i" id="qPG-oe-Axb"/>
+                                                                                                                                        <outlet property="delegate" destination="rzy-vk-Z4i" id="30X-1X-TPK"/>
+                                                                                                                                    </connections>
                                                                                                                                 </collectionView>
                                                                                                                             </subviews>
                                                                                                                         </clipView>
                                                                                                                         <constraints>
-                                                                                                                            <constraint firstAttribute="width" constant="100" id="s2m-bU-H4K"/>
+                                                                                                                            <constraint firstAttribute="width" priority="250" constant="100" id="s2m-bU-H4K"/>
                                                                                                                         </constraints>
+                                                                                                                        <edgeInsets key="contentInsets" left="0.0" right="0.0" top="0.0" bottom="0.0"/>
                                                                                                                         <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="WSr-TX-17k">
-                                                                                                                            <rect key="frame" x="1" y="15" width="98" height="16"/>
+                                                                                                                            <rect key="frame" x="-100" y="-100" width="100" height="16"/>
                                                                                                                             <autoresizingMask key="autoresizingMask"/>
                                                                                                                         </scroller>
-                                                                                                                        <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="h90-5s-zpz">
-                                                                                                                            <rect key="frame" x="84" y="1" width="15" height="30"/>
+                                                                                                                        <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="h90-5s-zpz">
+                                                                                                                            <rect key="frame" x="-100" y="-100" width="15" height="30"/>
                                                                                                                             <autoresizingMask key="autoresizingMask"/>
                                                                                                                         </scroller>
                                                                                                                     </scrollView>
-                                                                                                                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="uV4-Jr-DBZ">
-                                                                                                                        <rect key="frame" x="98" y="8" width="190" height="16"/>
-                                                                                                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" id="FJt-b9-SWM">
+                                                                                                                    <textField focusRingType="none" verticalHuggingPriority="750" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uV4-Jr-DBZ">
+                                                                                                                        <rect key="frame" x="98" y="8" width="192" height="18"/>
+                                                                                                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" focusRingType="none" id="FJt-b9-SWM">
                                                                                                                             <font key="font" usesAppearanceFont="YES"/>
                                                                                                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -470,11 +475,11 @@
                                                                                                         </constraints>
                                                                                                     </clipView>
                                                                                                     <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="p3J-fQ-z9o">
-                                                                                                        <rect key="frame" x="1" y="17" width="286" height="16"/>
+                                                                                                        <rect key="frame" x="0.0" y="18" width="288" height="16"/>
                                                                                                         <autoresizingMask key="autoresizingMask"/>
                                                                                                     </scroller>
-                                                                                                    <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="xXe-Le-oyj">
-                                                                                                        <rect key="frame" x="271" y="1" width="16" height="32"/>
+                                                                                                    <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="xXe-Le-oyj">
+                                                                                                        <rect key="frame" x="-100" y="-100" width="16" height="32"/>
                                                                                                         <autoresizingMask key="autoresizingMask"/>
                                                                                                     </scroller>
                                                                                                 </scrollView>
@@ -949,6 +954,7 @@
                         <outlet property="filterTagCollectionView" destination="55D-Z0-Usu" id="Geq-nC-bJp"/>
                         <outlet property="hardDifficultyCheckBox" destination="63y-H6-suq" id="Nc2-gH-L7B"/>
                         <outlet property="inputTagCollectionView" destination="8SM-wE-35q" id="Xyd-fl-UsO"/>
+                        <outlet property="inputTagScrollView" destination="baW-Pr-H6F" id="Kqs-Sn-MqG"/>
                         <outlet property="inputTagTextField" destination="uV4-Jr-DBZ" id="2Oi-Gr-NDN"/>
                         <outlet property="latestSyncTimeLabel" destination="0TY-NV-7bz" id="9Di-Jl-Jfy"/>
                         <outlet property="meanTextField" destination="xjI-vf-H0L" id="lGi-cK-ong"/>

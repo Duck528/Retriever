@@ -18,6 +18,7 @@ class HomeViewModel {
         case updateWordAppendMode
         case reloadWordAtIndex(IndexPath)
         case updateDiffculty(WordItem.WordDifficulty)
+        case clearInputTagText
     }
     
     enum SyncStatus {
@@ -353,7 +354,7 @@ extension HomeViewModel {
     }
     
     private func clearInputTagText() {
-        tagText.accept("")
+        viewAction.onNext(.clearInputTagText)
     }
 }
 

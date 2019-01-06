@@ -24,7 +24,7 @@ class HomeViewController: NSViewController {
     @IBOutlet weak var additionalInfoTextView: NSTextView!
     @IBOutlet weak var difficultyPopUpButton: NSPopUpButton!
     @IBOutlet weak var inputTagCollectionView: NSCollectionView!
-    
+    @IBOutlet weak var inputTagScrollView: NSScrollView!
     
     // Append Word Section
     @IBOutlet weak var appendWordSectionView: NSView!
@@ -106,15 +106,24 @@ extension HomeViewController {
         wordCollectionView.register(
             WordItemCell.self,
             forItemWithIdentifier: NSUserInterfaceItemIdentifier("WordCell"))
+        
+        inputTagCollectionView.register(
+            TagItemCell.self,
+            forItemWithIdentifier: NSUserInterfaceItemIdentifier("TagCell"))
+        inputTagScrollView.documentView?
+            .enclosingScrollView?
+            .scrollerInsets = NSEdgeInsets.init(top: 0, left: 0, bottom: 100, right: 0)
     }
 }
 
 extension HomeViewController: NSCollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: NSCollectionView, layout collectionViewLayout: NSCollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> NSSize {
         if collectionView == filterTagCollectionView {
-            return calculateTagCellSize(at: indexPath)
+            return calculateFilterTagCellSize(at: indexPath)
         } else if collectionView == wordCollectionView {
             return calculateWordCellSize(in: collectionView, at: indexPath)
+        } else if collectionView == inputTagCollectionView {
+            return calculateInputTagCellSize(at: indexPath)
         } else {
             return .zero
         }
@@ -127,11 +136,19 @@ extension HomeViewController: NSCollectionViewDelegateFlowLayout {
         viewModel.selectWordToEdit(at: indexPath)
     }
     
-    private func calculateTagCellSize(at indexPath: IndexPath) -> CGSize {
+    private func calculateFilterTagCellSize(at indexPath: IndexPath) -> CGSize {
         let tagTitle = viewModel.allTags.value[indexPath.item].tagItem.value.title
         let width = NSFont.helveticaNeueBold(size: 13)
             .size(text: tagTitle, constrainedToWidth: CGFloat.greatestFiniteMagnitude)
-            .width + 25
+            .width + 10
+        return CGSize(width: width, height: 20)
+    }
+    
+    private func calculateInputTagCellSize(at indexPath: IndexPath) -> CGSize {
+        let tagTitle = viewModel.wordTags.value[indexPath.item].tagItem.value.title
+        let width = NSFont.helveticaNeueBold(size: 13)
+            .size(text: tagTitle, constrainedToWidth: CGFloat.greatestFiniteMagnitude)
+            .width + 10
         return CGSize(width: width, height: 20)
     }
     
@@ -144,25 +161,17 @@ extension HomeViewController: NSCollectionViewDelegateFlowLayout {
 extension HomeViewController: NSCollectionViewDataSource {
     func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == filterTagCollectionView {
-            return numberOfTagItems(in: section)
+            return numberOfFilterTagItems(in: section)
         } else if collectionView == wordCollectionView {
             return numberOfWordItems(in: section)
+        } else if collectionView == inputTagCollectionView {
+            return numberOfWordTagItems(in: section)
         } else {
             return 0
         }
     }
     
-    func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
-        if collectionView == filterTagCollectionView {
-            return configureTagItem(collectionView, at: indexPath)
-        } else if collectionView == wordCollectionView {
-            return configureWordItem(collectionView, at: indexPath)
-        } else {
-            return NSCollectionViewItem()
-        }
-    }
-    
-    private func numberOfTagItems(in section: Int) -> Int {
+    private func numberOfFilterTagItems(in section: Int) -> Int {
         return viewModel.allTags.value.count
     }
     
@@ -170,7 +179,23 @@ extension HomeViewController: NSCollectionViewDataSource {
         return viewModel.wordItems.value.count
     }
     
-    private func configureTagItem(_ collectionView: NSCollectionView, at indexPath: IndexPath) -> NSCollectionViewItem {
+    private func numberOfWordTagItems(in section: Int) -> Int {
+        return viewModel.wordTags.value.count
+    }
+    
+    func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
+        if collectionView == filterTagCollectionView {
+            return configureFilterTagItem(collectionView, at: indexPath)
+        } else if collectionView == wordCollectionView {
+            return configureWordItem(collectionView, at: indexPath)
+        } else if collectionView == inputTagCollectionView {
+            return configureWordTagItem(collectionView, at: indexPath)
+        } else {
+            return NSCollectionViewItem()
+        }
+    }
+    
+    private func configureFilterTagItem(_ collectionView: NSCollectionView, at indexPath: IndexPath) -> NSCollectionViewItem {
         guard let item = collectionView.makeItem(
             withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "TagCell"),
             for: indexPath) as? TagItemCell else {
@@ -188,6 +213,17 @@ extension HomeViewController: NSCollectionViewDataSource {
                 return NSCollectionViewItem()
         }
         let cellViewModel = viewModel.wordItems.value[indexPath.item]
+        item.bind(to: cellViewModel)
+        return item
+    }
+    
+    private func configureWordTagItem(_ collectionView: NSCollectionView, at indexPath: IndexPath) -> NSCollectionViewItem {
+        guard let item = collectionView.makeItem(
+            withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "TagCell"),
+            for: indexPath) as? TagItemCell else {
+                return NSCollectionViewItem()
+        }
+        let cellViewModel = viewModel.wordTags.value[indexPath.item]
         item.bind(to: cellViewModel)
         return item
     }
@@ -211,6 +247,7 @@ extension HomeViewController {
         bindWordAppendableStatus()
         bindLatestSyncTime()
         bindEditWordToolSection()
+        bindInputTagCollectionViewWidthChanged()
         bindBottomStatusDashboardSection()
     }
     
@@ -231,6 +268,8 @@ extension HomeViewController {
                     self.wordCollectionView.reloadItems(at: [indexPath])
                 case .updateDiffculty(let difficulty):
                     self.difficultyPopUpButton.title = difficulty.title
+                case .clearInputTagText:
+                    self.inputTagTextField.stringValue = ""
                 }
             }).disposed(by: disposeBag)
     }
@@ -385,9 +424,12 @@ extension HomeViewController {
             .bind(to: viewModel.tagText)
             .disposed(by: disposeBag)
         
-        viewModel.tagText
-            .bind(to: inputTagTextField.rx.text)
-            .disposed(by: disposeBag)
+        viewModel.wordTags
+            .map { $0.count }
+            .distinctUntilChanged()
+            .subscribe(onNext: { _ in
+                self.inputTagCollectionView.reloadData()
+            }).disposed(by: disposeBag)
     }
     
     private func bindAdditionalInfoTextView() {
@@ -440,6 +482,17 @@ extension HomeViewController {
             .throttle(0.5, latest: true, scheduler: MainScheduler.instance)
             .subscribe(onNext: {
                 self.viewModel.syncButtonTapped()
+            }).disposed(by: disposeBag)
+    }
+    
+    private func bindInputTagCollectionViewWidthChanged() {
+        viewModel.wordTags
+            .map { _ in self.inputTagCollectionView.collectionViewLayout?.collectionViewContentSize }
+            .filterOptional()
+            .map { $0.width }
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { changedWidth in
+                self.inputTagScrollView.findConstraint(for: .width)?.constant = changedWidth
             }).disposed(by: disposeBag)
     }
     
