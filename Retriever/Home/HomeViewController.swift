@@ -13,15 +13,18 @@ import RxSwift
 class HomeViewController: NSViewController {
     // 좌측 필터링 섹션
     @IBOutlet weak var searchWordTextField: NSTextField!
-    @IBOutlet weak var tagCollectionView: NSCollectionView!
+    @IBOutlet weak var filterTagCollectionView: NSCollectionView!
     @IBOutlet weak var wordCollectionView: NSCollectionView!
     @IBOutlet weak var wordCollectionScrollView: NSScrollView!
     
     // 사용자로부터 Word가 입력되는 컨트롤 모음
+    @IBOutlet weak var inputTagTextField: NSTextField!
     @IBOutlet weak var wordTextField: NSTextField!
     @IBOutlet weak var meanTextField: NSTextField!
     @IBOutlet weak var additionalInfoTextView: NSTextView!
     @IBOutlet weak var difficultyPopUpButton: NSPopUpButton!
+    @IBOutlet weak var inputTagCollectionView: NSCollectionView!
+    
     
     // Append Word Section
     @IBOutlet weak var appendWordSectionView: NSView!
@@ -94,8 +97,8 @@ extension HomeViewController {
     }
     
     private func setupCollectionView() {
-        tagCollectionView.backgroundColors = [.clear]
-        tagCollectionView.register(
+        filterTagCollectionView.backgroundColors = [.clear]
+        filterTagCollectionView.register(
             TagItemCell.self,
             forItemWithIdentifier: NSUserInterfaceItemIdentifier("TagCell"))
         
@@ -108,7 +111,7 @@ extension HomeViewController {
 
 extension HomeViewController: NSCollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: NSCollectionView, layout collectionViewLayout: NSCollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> NSSize {
-        if collectionView == tagCollectionView {
+        if collectionView == filterTagCollectionView {
             return calculateTagCellSize(at: indexPath)
         } else if collectionView == wordCollectionView {
             return calculateWordCellSize(in: collectionView, at: indexPath)
@@ -140,7 +143,7 @@ extension HomeViewController: NSCollectionViewDelegateFlowLayout {
 
 extension HomeViewController: NSCollectionViewDataSource {
     func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
-        if collectionView == tagCollectionView {
+        if collectionView == filterTagCollectionView {
             return numberOfTagItems(in: section)
         } else if collectionView == wordCollectionView {
             return numberOfWordItems(in: section)
@@ -150,7 +153,7 @@ extension HomeViewController: NSCollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
-        if collectionView == tagCollectionView {
+        if collectionView == filterTagCollectionView {
             return configureTagItem(collectionView, at: indexPath)
         } else if collectionView == wordCollectionView {
             return configureWordItem(collectionView, at: indexPath)
@@ -203,6 +206,7 @@ extension HomeViewController {
         bindSaveWordButton()
         bindWordTextField()
         bindMeanTextField()
+        bindInputTagTextField()
         bindAdditionalInfoTextView()
         bindWordAppendableStatus()
         bindLatestSyncTime()
@@ -274,7 +278,7 @@ extension HomeViewController {
         viewModel.allTags
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { _ in
-                self.tagCollectionView.reloadData()
+                self.filterTagCollectionView.reloadData()
             }).disposed(by: disposeBag)
     }
     
@@ -371,6 +375,18 @@ extension HomeViewController {
         
         viewModel.meanText
             .bind(to: meanTextField.rx.text)
+            .disposed(by: disposeBag)
+    }
+    
+    private func bindInputTagTextField() {
+        // Two-Way 바인딩
+        inputTagTextField.rx.text
+            .filterOptional()
+            .bind(to: viewModel.tagText)
+            .disposed(by: disposeBag)
+        
+        viewModel.tagText
+            .bind(to: inputTagTextField.rx.text)
             .disposed(by: disposeBag)
     }
     

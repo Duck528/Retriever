@@ -27,7 +27,7 @@ class TagItemCell: NSCollectionViewItem, BindableType {
         }
     }
     
-    @IBOutlet weak var titleTextField: NSTextField!
+    @IBOutlet weak var tagTitleLabel: NSTextField!
     @IBOutlet weak var backgroundBox: NSBox!
     @IBOutlet weak var selectTagButton: NSButton!
     
@@ -53,7 +53,7 @@ class TagItemCell: NSCollectionViewItem, BindableType {
 extension TagItemCell {
     private func clearCell() {
         disposeBag = DisposeBag()
-        titleTextField.stringValue = ""
+        tagTitleLabel.stringValue = ""
     }
 }
 
@@ -61,13 +61,13 @@ extension TagItemCell {
     private func bindTagItemCellViewModel() {
         viewModel.tagItem
             .subscribe(onNext: { tagItem in
-                self.titleTextField.stringValue = tagItem.title
+                self.tagTitleLabel.stringValue = tagItem.title
             }).disposed(by: disposeBag)
         
         viewModel.selected
             .subscribeOn(MainScheduler.instance)
             .subscribe(onNext: { selected in
-//                self.backgroundBox.fillColor = selected ? NSColor.red : Colors.lightGray.color
+                self.backgroundBox.fillColor = selected ? NSColor.red : Colors.lightGray.color
             }).disposed(by: disposeBag)
     }
     

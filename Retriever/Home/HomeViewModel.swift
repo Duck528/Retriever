@@ -31,6 +31,9 @@ class HomeViewModel {
     
     let wordText = BehaviorRelay<String>(value: "")
     let meanText = BehaviorRelay<String>(value: "")
+    let tagText = BehaviorRelay<String>(value: "")
+    let wordTags = BehaviorRelay<[TagItemCellViewModel]>(value: [])
+    
     let additionalInfoText = BehaviorRelay<String>(value: "")
     let difficulty = BehaviorRelay<Int>(value: WordItem.WordDifficulty.easy.rawValue)
     
@@ -106,6 +109,7 @@ class HomeViewModel {
         bindFilterWordsByDifficultyOptions()
         bindFilterWordsBySearchedText()
         bindMinIntervalTimer()
+        bindInputTagText()
         
         fetchWordItemsWithoutSync()
         fetchLatestSyncTime()
@@ -228,7 +232,21 @@ class HomeViewModel {
                 }
             }.disposed(by: disposeBag)
     }
-    
+}
+
+extension HomeViewModel {
+    private func configureWordItem() -> WordItem {
+        let wordItem = WordItem(
+            word: wordText.value,
+            mean: meanText.value,
+            lastModified: Date(),
+            additionalInfo: additionalInfoText.value,
+            difficulty: difficulty.value)
+        return wordItem
+    }
+}
+
+extension HomeViewModel {
     private func saveWordToLocal(_ wordItem: WordItem) -> Completable {
         return saveLocalWordUsecase.execute(wordItem: wordItem)
             .map { WordItemCellViewModel(wordItem: $0) }
@@ -257,7 +275,7 @@ class HomeViewModel {
                 } else {
                     return $0.word.lowercased().starts(with: filterWord)
                 }
-            }}.map { $0.map { WordItemCellViewModel(wordItem: $0) } }
+                }}.map { $0.map { WordItemCellViewModel(wordItem: $0) } }
             .bind(to: wordItems)
             .disposed(by: disposeBag)
     }
@@ -273,7 +291,7 @@ class HomeViewModel {
                 } else {
                     return $0.word.lowercased().starts(with: filterWord)
                 }
-            }}.map { $0.map { WordItemCellViewModel(wordItem: $0) } }
+                }}.map { $0.map { WordItemCellViewModel(wordItem: $0) } }
         
         syncDatabaseUsecase.execute()
             .andThen(fetchWordItemsObs)
@@ -320,17 +338,22 @@ class HomeViewModel {
         meanText.accept("")
         additionalInfoText.accept("")
     }
-}
-
-extension HomeViewModel {
-    private func configureWordItem() -> WordItem {
-        let wordItem = WordItem(
-            word: wordText.value,
-            mean: meanText.value,
-            lastModified: Date(),
-            additionalInfo: additionalInfoText.value,
-            difficulty: difficulty.value)
-        return wordItem
+    
+    private func bindInputTagText() {
+        tagText
+            .filter { $0.contains(",") }
+            .map { $0.split(separator: ",") }
+            .map { $0.map { String($0) } }
+            .map { $0.map { TagItemCellViewModel(tagItem: TagItem(title: $0)) } }
+            .map { self.wordTags.value + $0 }
+            .do(onNext: { _ in
+                self.clearInputTagText()
+            }).bind(to: wordTags)
+            .disposed(by: disposeBag)
+    }
+    
+    private func clearInputTagText() {
+        tagText.accept("")
     }
 }
 
