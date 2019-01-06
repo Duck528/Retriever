@@ -345,7 +345,7 @@ extension HomeViewModel {
             .filter { $0.contains(",") }
             .map { $0.split(separator: ",") }
             .map { $0.map { String($0) } }
-            .map { $0.map { TagItemCellViewModel(tagItem: TagItem(title: $0)) } }
+            .map { $0.map { TagItemCellViewModel(tagItem: TagItem(title: $0), deletable: true) } }
             .map { self.wordTags.value + $0 }
             .do(onNext: { _ in
                 self.clearInputTagText()

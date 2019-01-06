@@ -30,6 +30,7 @@ class TagItemCell: NSCollectionViewItem, BindableType {
     @IBOutlet weak var tagTitleLabel: NSTextField!
     @IBOutlet weak var backgroundBox: NSBox!
     @IBOutlet weak var selectTagButton: NSButton!
+    @IBOutlet weak var deleteTagButton: NSButton!
     
     var viewModel: TagItemCellViewModel!
     var disposeBag = DisposeBag()
@@ -37,16 +38,12 @@ class TagItemCell: NSCollectionViewItem, BindableType {
     func bindViewModel() {
         bindTagItemCellViewModel()
         bindSelectButton()
+        bindDeleteButton()
     }
     
     override func prepareForReuse() {
         clearCell()
         super.prepareForReuse()
-    }
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        backgroundBox.cornerRadius = 60
     }
 }
 
@@ -67,7 +64,7 @@ extension TagItemCell {
         viewModel.selected
             .subscribeOn(MainScheduler.instance)
             .subscribe(onNext: { selected in
-                self.backgroundBox.fillColor = selected ? NSColor.red : Colors.lightGray.color
+                self.backgroundBox.fillColor = selected ? NSColor.red : NSColor.clear
             }).disposed(by: disposeBag)
     }
     
@@ -75,22 +72,47 @@ extension TagItemCell {
         selectTagButton.rx.tap
             .throttle(0.5, latest: true, scheduler: MainScheduler.instance)
             .subscribe(onNext: {
-                self.viewModel.toggleTag()
+                self.viewModel.selectTagButtonTapped()
             }).disposed(by: disposeBag)
+    }
+    
+    private func bindDeleteButton() {
+        deleteTagButton.rx.tap
+            .throttle(0.5, latest: true, scheduler: MainScheduler.instance)
+            .filter { !self.viewModel.deletable.value }
+            .subscribe(onNext: {
+                self.viewModel.deleteTagButtonTapped()
+            }).disposed(by: disposeBag)
+        
+        viewModel.deletable
+            .map { !$0 }
+            .distinctUntilChanged()
+            .bind(to: deleteTagButton.rx.isHidden)
+            .disposed(by: disposeBag)
     }
 }
 
 class TagItemCellViewModel {
     let tagItem: BehaviorRelay<TagItem>
-    var selected: BehaviorRelay<Bool>
+    let selected: BehaviorRelay<Bool>
+    let deletable: BehaviorRelay<Bool>
     
-    init(tagItem: TagItem, selected: Bool = false) {
+    init(tagItem: TagItem, selected: Bool = false, deletable: Bool = false) {
         self.tagItem = BehaviorRelay<TagItem>(value: tagItem)
         self.selected = BehaviorRelay<Bool>(value: selected)
+        self.deletable = BehaviorRelay<Bool>(value: deletable)
     }
     
     func toggleTag() {
         let flag = !selected.value
         selected.accept(flag)
+    }
+    
+    func selectTagButtonTapped() {
+        toggleTag()
+    }
+    
+    func deleteTagButtonTapped() {
+        
     }
 }

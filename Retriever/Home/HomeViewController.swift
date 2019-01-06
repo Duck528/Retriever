@@ -137,7 +137,7 @@ extension HomeViewController: NSCollectionViewDelegateFlowLayout {
         let tagTitle = viewModel.allTags.value[indexPath.item].tagItem.value.title
         let width = NSFont.helveticaNeueBold(size: 13)
             .size(text: tagTitle, constrainedToWidth: CGFloat.greatestFiniteMagnitude)
-            .width + 10
+            .width + 15
         return CGSize(width: width, height: 20)
     }
     
@@ -145,7 +145,7 @@ extension HomeViewController: NSCollectionViewDelegateFlowLayout {
         let tagTitle = viewModel.wordTags.value[indexPath.item].tagItem.value.title
         let width = NSFont.helveticaNeueBold(size: 13)
             .size(text: tagTitle, constrainedToWidth: CGFloat.greatestFiniteMagnitude)
-            .width + 10
+            .width + 45
         return CGSize(width: width, height: 20)
     }
     

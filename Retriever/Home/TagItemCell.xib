@@ -8,6 +8,7 @@
         <customObject id="-2" userLabel="File's Owner" customClass="TagItemCell" customModule="Retriever" customModuleProvider="target">
             <connections>
                 <outlet property="backgroundBox" destination="Gbv-Du-hgR" id="kGm-PU-kBQ"/>
+                <outlet property="deleteTagButton" destination="83C-Qu-PCT" id="WVn-uK-JsB"/>
                 <outlet property="selectTagButton" destination="FNQ-RY-YLl" id="zlE-lh-DXQ"/>
                 <outlet property="tagTitleLabel" destination="55P-ky-cNT" id="J8G-0L-G4x"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
@@ -16,37 +17,49 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="Hz6-mo-xeY">
-            <rect key="frame" x="0.0" y="0.0" width="160" height="19"/>
+            <rect key="frame" x="0.0" y="0.0" width="171" height="19"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="NJV-Sd-0Up">
-                    <rect key="frame" x="0.0" y="0.0" width="160" height="19"/>
+                    <rect key="frame" x="0.0" y="0.0" width="171" height="19"/>
                     <subviews>
-                        <box boxType="custom" cornerRadius="10" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="Gbv-Du-hgR">
-                            <rect key="frame" x="0.0" y="0.0" width="160" height="19"/>
+                        <box boxType="custom" borderType="line" cornerRadius="10" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="Gbv-Du-hgR">
+                            <rect key="frame" x="0.0" y="0.0" width="171" height="19"/>
                             <view key="contentView" id="XTm-3H-450">
-                                <rect key="frame" x="1" y="1" width="158" height="17"/>
+                                <rect key="frame" x="1" y="1" width="169" height="17"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="55P-ky-cNT">
-                                        <rect key="frame" x="-2" y="0.0" width="162" height="17"/>
-                                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Tag Title" id="0Wt-vn-Khd">
+                                        <rect key="frame" x="8" y="0.0" width="60" height="17"/>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" alignment="center" title="Tag Title" id="0Wt-vn-Khd">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                         </textFieldCell>
                                     </textField>
+                                    <button translatesAutoresizingMaskIntoConstraints="NO" id="83C-Qu-PCT">
+                                        <rect key="frame" x="147" y="3" width="12" height="12"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="12" id="1pV-bd-4Q0"/>
+                                            <constraint firstAttribute="width" constant="12" id="p6Y-rR-Bvc"/>
+                                        </constraints>
+                                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="deleteTag" imagePosition="overlaps" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="mrR-oc-3ze">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                    </button>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="55P-ky-cNT" firstAttribute="leading" secondItem="XTm-3H-450" secondAttribute="leading" id="BDi-kN-1C0"/>
-                                    <constraint firstAttribute="bottom" secondItem="55P-ky-cNT" secondAttribute="bottom" id="Yqc-JP-Rat"/>
-                                    <constraint firstAttribute="trailing" secondItem="55P-ky-cNT" secondAttribute="trailing" id="jh3-7f-lxJ"/>
-                                    <constraint firstItem="55P-ky-cNT" firstAttribute="top" secondItem="XTm-3H-450" secondAttribute="top" id="m2c-zE-xAp"/>
+                                    <constraint firstAttribute="bottom" secondItem="55P-ky-cNT" secondAttribute="bottom" id="5Hi-jc-HuX"/>
+                                    <constraint firstItem="55P-ky-cNT" firstAttribute="leading" secondItem="XTm-3H-450" secondAttribute="leading" constant="10" id="Vhh-Mp-Czk"/>
+                                    <constraint firstItem="83C-Qu-PCT" firstAttribute="centerY" secondItem="XTm-3H-450" secondAttribute="centerY" id="XIi-20-PzI"/>
+                                    <constraint firstAttribute="trailing" secondItem="83C-Qu-PCT" secondAttribute="trailing" constant="10" id="Y6S-IR-4ht"/>
+                                    <constraint firstItem="55P-ky-cNT" firstAttribute="top" secondItem="XTm-3H-450" secondAttribute="top" id="dbl-Xz-CJP"/>
                                 </constraints>
                             </view>
                         </box>
                         <button translatesAutoresizingMaskIntoConstraints="NO" id="FNQ-RY-YLl">
-                            <rect key="frame" x="0.0" y="0.0" width="160" height="19"/>
+                            <rect key="frame" x="0.0" y="0.0" width="171" height="19"/>
                             <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="D0n-fB-8kW">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="system"/>
@@ -71,7 +84,10 @@
                 <constraint firstItem="NJV-Sd-0Up" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="MwI-Zh-NIX"/>
                 <constraint firstAttribute="trailing" secondItem="NJV-Sd-0Up" secondAttribute="trailing" id="vUC-Rq-8YN"/>
             </constraints>
-            <point key="canvasLocation" x="-21" y="158.5"/>
+            <point key="canvasLocation" x="8.5" y="170.5"/>
         </customView>
     </objects>
+    <resources>
+        <image name="deleteTag" width="12" height="12"/>
+    </resources>
 </document>
