@@ -62,7 +62,7 @@ extension TagItemCell {
             }).disposed(by: disposeBag)
         
         viewModel.selected
-            .subscribeOn(MainScheduler.instance)
+            .observeOn(MainScheduler.instance)
             .subscribe(onNext: { selected in
                 self.backgroundBox.fillColor = selected ? NSColor.red : NSColor.clear
             }).disposed(by: disposeBag)
@@ -79,14 +79,15 @@ extension TagItemCell {
     private func bindDeleteButton() {
         deleteTagButton.rx.tap
             .throttle(0.5, latest: true, scheduler: MainScheduler.instance)
-            .filter { !self.viewModel.deletable.value }
             .subscribe(onNext: {
                 self.viewModel.deleteTagButtonTapped()
             }).disposed(by: disposeBag)
         
         viewModel.deletable
-            .map { !$0 }
             .distinctUntilChanged()
+            .do(onNext: { deletable in
+                self.selectTagButton.isHidden = deletable
+            }).map { !$0 }
             .bind(to: deleteTagButton.rx.isHidden)
             .disposed(by: disposeBag)
     }
@@ -96,6 +97,7 @@ class TagItemCellViewModel {
     let tagItem: BehaviorRelay<TagItem>
     let selected: BehaviorRelay<Bool>
     let deletable: BehaviorRelay<Bool>
+    let deleteRequested = PublishSubject<TagItemCellViewModel>()
     
     init(tagItem: TagItem, selected: Bool = false, deletable: Bool = false) {
         self.tagItem = BehaviorRelay<TagItem>(value: tagItem)
@@ -113,6 +115,6 @@ class TagItemCellViewModel {
     }
     
     func deleteTagButtonTapped() {
-        
+        deleteRequested.onNext(self)
     }
 }

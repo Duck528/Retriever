@@ -346,11 +346,27 @@ extension HomeViewModel {
             .map { $0.split(separator: ",") }
             .map { $0.map { String($0) } }
             .map { $0.map { TagItemCellViewModel(tagItem: TagItem(title: $0), deletable: true) } }
-            .map { self.wordTags.value + $0 }
+            .flatMapLatest { cellViewModels -> Observable<[TagItemCellViewModel]> in
+                cellViewModels.forEach {
+                    $0.deleteRequested
+                        .subscribe(onNext: { cellViewModel in
+                            self.removeTag(to: cellViewModel)
+                        }).disposed(by: self.disposeBag)
+                }
+                return .just(cellViewModels)
+            }.map { self.wordTags.value + $0 }
             .do(onNext: { _ in
                 self.clearInputTagText()
             }).bind(to: wordTags)
             .disposed(by: disposeBag)
+    }
+    
+    private func removeTag(to cellViewModel: TagItemCellViewModel) {
+        if let index = wordTags.value.firstIndex(where: { $0 === cellViewModel }) {
+            var removedWordTags = wordTags.value
+            removedWordTags.remove(at: index)
+            self.wordTags.accept(removedWordTags)
+        }
     }
     
     private func clearInputTagText() {
