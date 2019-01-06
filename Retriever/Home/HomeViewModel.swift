@@ -111,6 +111,7 @@ class HomeViewModel {
         bindFilterWordsBySearchedText()
         bindMinIntervalTimer()
         bindInputTagText()
+        bindFilteringTagsFromWordItems()
         
         fetchWordItemsWithoutSync()
         fetchLatestSyncTime()
@@ -262,14 +263,7 @@ extension HomeViewModel {
     
     private func fetchWordItemsWithoutSync() {
         fetchLocalWordUsecase.execute()
-            .do(onNext: { wordItems in
-                let allTags = wordItems
-                    .flatMap { $0.tags }
-                    .map { TagItemCellViewModel(tagItem: $0) }
-                self.allTags.accept(allTags)
-            }, onError: { error in
-                print(error.localizedDescription)
-            }).do(onNext: { print("LocalFetchCount Without Sync: \($0.count)") })
+            .do(onNext: { print("LocalFetchCount Without Sync: \($0.count)") })
             .map { $0.filter { self.filterWordsMap.value[$0.difficulty] ?? false } }
             .map { $0.filter {
                 let filterWord = self.wordToSearch.value.lowercased()
@@ -298,15 +292,7 @@ extension HomeViewModel {
         
         syncDatabaseUsecase.execute()
             .andThen(fetchWordItemsObs)
-            .do(onNext: { wordItems in
-                let allTags = wordItems
-                    .flatMap { $0.wordItem.value.tags }
-                    .map { TagItemCellViewModel(tagItem: $0) }
-                self.allTags.accept(allTags)
-                self.syncStatus.accept(.stable)
-            }, onError: { error in
-                print(error.localizedDescription)
-            }).flatMapLatest { wordItems -> Observable<[WordItemCellViewModel]> in
+            .flatMapLatest { wordItems -> Observable<[WordItemCellViewModel]> in
                 return self.updateLatestSyncTimeUsecase
                     .execute()
                     .map { _ in wordItems }
@@ -427,6 +413,15 @@ extension HomeViewModel {
             .flatMapLatest { _ -> Observable<Int> in
                 return self.fetchNumberOfDeletedWordUsecase.execute()
             }.bind(to: numberOfDeletedWords)
+            .disposed(by: disposeBag)
+    }
+    
+    private func bindFilteringTagsFromWordItems() {
+        wordItems
+            .map { $0.map { $0.wordItem.value.tags } }
+            .map { $0.reduce([]) { $0 + $1 }}
+            .map { $0.map { TagItemCellViewModel(tagItem: $0) } }
+            .bind(to: allTags)
             .disposed(by: disposeBag)
     }
     
