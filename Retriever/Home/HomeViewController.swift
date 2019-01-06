@@ -24,7 +24,7 @@ class HomeViewController: NSViewController {
     @IBOutlet weak var additionalInfoTextView: NSTextView!
     @IBOutlet weak var difficultyPopUpButton: NSPopUpButton!
     @IBOutlet weak var inputTagCollectionView: NSCollectionView!
-    @IBOutlet weak var inputTagScrollView: NSScrollView!
+    @IBOutlet weak var inputTagSectionView: NSView!
     
     // Append Word Section
     @IBOutlet weak var appendWordSectionView: NSView!
@@ -110,9 +110,6 @@ extension HomeViewController {
         inputTagCollectionView.register(
             TagItemCell.self,
             forItemWithIdentifier: NSUserInterfaceItemIdentifier("TagCell"))
-        inputTagScrollView.documentView?
-            .enclosingScrollView?
-            .scrollerInsets = NSEdgeInsets.init(top: 0, left: 0, bottom: 100, right: 0)
     }
 }
 
@@ -237,6 +234,7 @@ extension HomeViewController {
         bindSearchToWord()
         bindTagCollectionView()
         bindWordCollectionView()
+        bindInputTagSectionView()
         bindCancelAppendWordButton()
         bindPresentAppendWordSectionButton()
         bindSaveWordButton()
@@ -247,7 +245,6 @@ extension HomeViewController {
         bindWordAppendableStatus()
         bindLatestSyncTime()
         bindEditWordToolSection()
-        bindInputTagCollectionViewWidthChanged()
         bindBottomStatusDashboardSection()
     }
     
@@ -432,6 +429,15 @@ extension HomeViewController {
             }).disposed(by: disposeBag)
     }
     
+    private func bindInputTagSectionView() {
+        viewModel.wordTags
+            .map { $0.count > 0 }
+            .map { $0 == true ? 70 : 0  }
+            .subscribe(onNext: {
+                self.inputTagSectionView.findConstraint(for: .height)?.constant = $0
+            }).disposed(by: disposeBag)
+    }
+    
     private func bindAdditionalInfoTextView() {
         // Two-Way 바인딩
         additionalInfoTextView.rx.string
@@ -482,17 +488,6 @@ extension HomeViewController {
             .throttle(0.5, latest: true, scheduler: MainScheduler.instance)
             .subscribe(onNext: {
                 self.viewModel.syncButtonTapped()
-            }).disposed(by: disposeBag)
-    }
-    
-    private func bindInputTagCollectionViewWidthChanged() {
-        viewModel.wordTags
-            .map { _ in self.inputTagCollectionView.collectionViewLayout?.collectionViewContentSize }
-            .filterOptional()
-            .map { $0.width }
-            .observeOn(MainScheduler.instance)
-            .subscribe(onNext: { changedWidth in
-                self.inputTagScrollView.findConstraint(for: .width)?.constant = changedWidth
             }).disposed(by: disposeBag)
     }
     
