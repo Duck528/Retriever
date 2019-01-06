@@ -103,10 +103,27 @@ class RMWordItem: Object, Storable {
 
 extension RMWordItem {
     private func parseTags(_ tags: String) -> [TagItem] {
-        return []
+        let tagItems = tags.trimmingCharacters(in: .whitespacesAndNewlines)
+            .split(separator: ",")
+            .map { String($0) }
+            .map { TagItem(title: $0) }
+        return tagItems
     }
     
     private func convertTagsToCSVFormatString(_ tags: [String]) -> String {
-        return ""
+        var csvFormatString = tags
+            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+            .reduce("") { results, tag in
+            return "\(results),\(tag)"
+        }
+        
+        if csvFormatString.starts(with: ",") {
+            csvFormatString = String(csvFormatString.dropFirst())
+        }
+        if csvFormatString.last == "," {
+            csvFormatString = String(csvFormatString.dropLast())
+        }
+        
+        return csvFormatString
     }
 }

@@ -178,10 +178,12 @@ class HomeViewModel {
         guard let editWordIndex = editWordIndex else {
             return
         }
+        
         let wordItem = wordItems.value[editWordIndex.item].wordItem.value
         wordItem.word = wordText.value
         wordItem.mean = meanText.value
-        wordItem.tags = []
+        wordItem.tags = wordTags.value
+            .map { $0.tagItem.value }
         wordItem.additionalInfo = additionalInfoText.value
         wordItem.difficulty = WordItem.WordDifficulty.parse(int: difficulty.value)
         
@@ -331,12 +333,24 @@ extension HomeViewModel {
         let editWordItem = wordItems.value[editWordIndex.item].wordItem.value
         wordText.accept(editWordItem.word)
         meanText.accept(editWordItem.mean)
+        let tagCellViewModels = editWordItem.tags
+            .map { TagItemCellViewModel(tagItem: $0, deletable: true) }
+        tagCellViewModels.forEach { cellViewModel in
+            cellViewModel.deleteRequested
+                .subscribe(onNext: { cellViewModel in
+                    self.removeTag(to: cellViewModel)
+                }).disposed(by: self.disposeBag)
+        }
+        wordTags.accept(tagCellViewModels)
         additionalInfoText.accept(editWordItem.additionalInfo)
     }
     
     private func clearWordItemComponents() {
         wordText.accept("")
         meanText.accept("")
+        tagText.accept("")
+        viewAction.onNext(.clearInputTagText)
+        wordTags.accept([])
         additionalInfoText.accept("")
     }
     
