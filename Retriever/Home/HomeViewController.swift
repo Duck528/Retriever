@@ -279,7 +279,7 @@ extension HomeViewController {
     }
     
     private func showAppendWordSection() {
-        wordCollectionScrollView.contentInsets.bottom = 300
+        wordCollectionScrollView.contentInsets.bottom = 370
         appendWordSectionView.findConstraint(for: .bottom)?.constant = 0
         presentAppendWordSectionView.findConstraint(for: .bottom)?.constant = -presentAppendWordSectionView.bounds.height
     }

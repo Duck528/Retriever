@@ -83,6 +83,7 @@ class HomeViewModel {
     let deleteLocalWordUsecase: DeleteLocalWordUsecase
     let fetchNumberOfUpdatedWordUsecase: FetchNumberOfUpdatedWordUsecase
     let fetchNumberOfDeletedWordUsecase: FetchNumberOfDeletedWordUsecase
+    let fetchAllTagsUsecase: FetchAllTagsUsecase
     
     let fetchLatestSyncTimeUsecase: FetchLatestSyncTimeUsecase
     let updateLatestSyncTimeUsecase: UpdateLatestSyncTimeUsecase
@@ -103,6 +104,7 @@ class HomeViewModel {
         fetchNumberOfDeletedWordUsecase = Assembler().resolve()
         fetchLatestSyncTimeUsecase = Assembler().resolve()
         updateLatestSyncTimeUsecase = Assembler().resolve()
+        fetchAllTagsUsecase = Assembler().resolve()
         
         bindReachability()
         bindSyncStatus()
@@ -312,6 +314,13 @@ extension HomeViewModel {
             .disposed(by: disposeBag)
     }
     
+    private func fetchAllTags() {
+        fetchAllTagsUsecase.execute()
+            .map { $0.map { TagItemCellViewModel(tagItem: $0) } }
+            .bind(to: allTags)
+            .disposed(by: disposeBag)
+    }
+    
     private func updateWordItemComponents() {
         guard let editWordIndex = editWordIndex else {
             return
@@ -417,12 +426,12 @@ extension HomeViewModel {
     }
     
     private func bindFilteringTagsFromWordItems() {
-        wordItems
-            .map { $0.map { $0.wordItem.value.tags } }
-            .map { $0.reduce([]) { $0 + $1 }}
-            .map { $0.map { TagItemCellViewModel(tagItem: $0) } }
-            .bind(to: allTags)
-            .disposed(by: disposeBag)
+//        wordItems
+//            .map { $0.map { $0.wordItem.value.tags } }
+//            .map { $0.reduce([]) { $0 + $1 }}
+//            .map { $0.map { TagItemCellViewModel(tagItem: $0) } }
+//            .bind(to: allTags)
+//            .disposed(by: disposeBag)
     }
     
     private func bindFilterWordsByDifficultyOptions() {
