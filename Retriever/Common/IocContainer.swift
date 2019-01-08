@@ -79,4 +79,9 @@ extension UsecaseAssembler where Self: Assembler {
     func resolve() -> UpdateLatestSyncTimeUsecase {
         return UpdateLatestSyncTimeUsecase()
     }
+    
+    func resolve() -> FetchAllLocalTagsUsecase {
+        let wordItemDAO = RMWordItemDAO()
+        return FetchAllLocalTagsUsecase(wordItemDAO: wordItemDAO)
+    }
 }

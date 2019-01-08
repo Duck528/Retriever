@@ -18,6 +18,7 @@ class HomeViewModel {
         case updateWordAppendMode
         case reloadWordAtIndex(IndexPath)
         case updateDiffculty(WordItem.WordDifficulty)
+        case clearInputTagText
     }
     
     enum SyncStatus {
@@ -31,6 +32,9 @@ class HomeViewModel {
     
     let wordText = BehaviorRelay<String>(value: "")
     let meanText = BehaviorRelay<String>(value: "")
+    let tagText = BehaviorRelay<String>(value: "")
+    let wordTags = BehaviorRelay<[TagItemCellViewModel]>(value: [])
+    
     let additionalInfoText = BehaviorRelay<String>(value: "")
     let difficulty = BehaviorRelay<Int>(value: WordItem.WordDifficulty.easy.rawValue)
     
@@ -79,12 +83,14 @@ class HomeViewModel {
     let deleteLocalWordUsecase: DeleteLocalWordUsecase
     let fetchNumberOfUpdatedWordUsecase: FetchNumberOfUpdatedWordUsecase
     let fetchNumberOfDeletedWordUsecase: FetchNumberOfDeletedWordUsecase
+    let fetchAllLocalTagsUsecase: FetchAllLocalTagsUsecase
     
     let fetchLatestSyncTimeUsecase: FetchLatestSyncTimeUsecase
     let updateLatestSyncTimeUsecase: UpdateLatestSyncTimeUsecase
     
     let wordItems = BehaviorRelay<[WordItemCellViewModel]>(value: [])
     let allTags = BehaviorRelay<[TagItemCellViewModel]>(value: [])
+    let selectedTags = BehaviorRelay<[TagItemCellViewModel]>(value: [])
     
     let disposeBag = DisposeBag()
     
@@ -99,6 +105,7 @@ class HomeViewModel {
         fetchNumberOfDeletedWordUsecase = Assembler().resolve()
         fetchLatestSyncTimeUsecase = Assembler().resolve()
         updateLatestSyncTimeUsecase = Assembler().resolve()
+        fetchAllLocalTagsUsecase = Assembler().resolve()
         
         bindReachability()
         bindSyncStatus()
@@ -106,9 +113,11 @@ class HomeViewModel {
         bindFilterWordsByDifficultyOptions()
         bindFilterWordsBySearchedText()
         bindMinIntervalTimer()
+        bindInputTagText()
         
         fetchWordItemsWithoutSync()
         fetchLatestSyncTime()
+        fetchAllLocalTags()
     }
     
     func selectWordToEdit(at indexPath: IndexPath) {
@@ -173,10 +182,12 @@ class HomeViewModel {
         guard let editWordIndex = editWordIndex else {
             return
         }
+        
         let wordItem = wordItems.value[editWordIndex.item].wordItem.value
         wordItem.word = wordText.value
         wordItem.mean = meanText.value
-        wordItem.tags = []
+        wordItem.tags = wordTags.value
+            .map { $0.tagItem.value }
         wordItem.additionalInfo = additionalInfoText.value
         wordItem.difficulty = WordItem.WordDifficulty.parse(int: difficulty.value)
         
@@ -184,7 +195,10 @@ class HomeViewModel {
         
         updateLocalWordUsecase.execute(wordItem: wordItem)
             .map { WordItemCellViewModel(wordItem: $0) }
-            .observeOn(MainScheduler.instance)
+            .flatMapLatest { wordItem -> Observable<WordItemCellViewModel> in
+                self.fetchAllLocalTags()
+                return .just(wordItem)
+            }.observeOn(MainScheduler.instance)
             .subscribe(onNext: { updatedWordItem in
                 var updatedWordItems = self.wordItems.value
                 updatedWordItems[editWordIndex.item] = updatedWordItem
@@ -228,27 +242,24 @@ class HomeViewModel {
                 }
             }.disposed(by: disposeBag)
     }
-    
-    private func saveWordToLocal(_ wordItem: WordItem) -> Completable {
-        return saveLocalWordUsecase.execute(wordItem: wordItem)
-            .map { WordItemCellViewModel(wordItem: $0) }
-            .flatMapLatest { savedWordItem -> Observable<WordItemCellViewModel> in
-                let appendedWordItems = self.wordItems.value + [savedWordItem]
-                self.wordItems.accept(appendedWordItems)
-                return .just(savedWordItem)
-            }.ignoreElements()
+}
+
+extension HomeViewModel {
+    private func configureWordItem() -> WordItem {
+        let wordItem = WordItem(
+            word: wordText.value,
+            mean: meanText.value,
+            lastModified: Date(),
+            additionalInfo: additionalInfoText.value,
+            difficulty: difficulty.value)
+        return wordItem
     }
-    
+}
+
+extension HomeViewModel {
     private func fetchWordItemsWithoutSync() {
         fetchLocalWordUsecase.execute()
-            .do(onNext: { wordItems in
-                let allTags = wordItems
-                    .flatMap { $0.tags }
-                    .map { TagItemCellViewModel(tagItem: $0) }
-                self.allTags.accept(allTags)
-            }, onError: { error in
-                print(error.localizedDescription)
-            }).do(onNext: { print("LocalFetchCount Without Sync: \($0.count)") })
+            .do(onNext: { print("LocalFetchCount Without Sync: \($0.count)") })
             .map { $0.filter { self.filterWordsMap.value[$0.difficulty] ?? false } }
             .map { $0.filter {
                 let filterWord = self.wordToSearch.value.lowercased()
@@ -257,7 +268,9 @@ class HomeViewModel {
                 } else {
                     return $0.word.lowercased().starts(with: filterWord)
                 }
-            }}.map { $0.map { WordItemCellViewModel(wordItem: $0) } }
+                }}
+            .map { $0.map { WordItemCellViewModel(wordItem: $0) } }
+            .map { self.filterWordItemsByTags(wordItems: $0, tags: self.getSelectedFilterTags()) }
             .bind(to: wordItems)
             .disposed(by: disposeBag)
     }
@@ -273,19 +286,12 @@ class HomeViewModel {
                 } else {
                     return $0.word.lowercased().starts(with: filterWord)
                 }
-            }}.map { $0.map { WordItemCellViewModel(wordItem: $0) } }
+            }}
+            .map { $0.map { WordItemCellViewModel(wordItem: $0) } }
         
         syncDatabaseUsecase.execute()
             .andThen(fetchWordItemsObs)
-            .do(onNext: { wordItems in
-                let allTags = wordItems
-                    .flatMap { $0.wordItem.value.tags }
-                    .map { TagItemCellViewModel(tagItem: $0) }
-                self.allTags.accept(allTags)
-                self.syncStatus.accept(.stable)
-            }, onError: { error in
-                print(error.localizedDescription)
-            }).flatMapLatest { wordItems -> Observable<[WordItemCellViewModel]> in
+            .flatMapLatest { wordItems -> Observable<[WordItemCellViewModel]> in
                 return self.updateLatestSyncTimeUsecase
                     .execute()
                     .map { _ in wordItems }
@@ -305,6 +311,57 @@ class HomeViewModel {
             .disposed(by: disposeBag)
     }
     
+    private func fetchAllLocalTags() {
+        fetchAllLocalTagsUsecase.execute()
+            .map { tagItems in tagItems.map { TagItemCellViewModel(tagItem: $0) } }
+            .flatMapLatest { tagItems -> Observable<[TagItemCellViewModel]> in
+                for tagItem in tagItems {
+                    tagItem.selected
+                        .subscribe(onNext: { isSelected in
+                            self.fetchWordItemsWithoutSync()
+                        }).disposed(by: self.disposeBag)
+                }
+                return .just(tagItems)
+            }.bind(to: allTags)
+            .disposed(by: disposeBag)
+    }
+    
+    private func getSelectedFilterTags() -> [TagItem] {
+        return allTags.value
+            .filter { $0.selected.value }
+            .map { $0.tagItem.value }
+    }
+    
+    private func filterWordItemsByTags(wordItems: [WordItemCellViewModel], tags: [TagItem]) -> [WordItemCellViewModel] {
+        guard tags.count > 0 else {
+            return wordItems
+        }
+        
+        var mutableWordItems: [WordItemCellViewModel] = []
+        for wordItem in wordItems {
+            let wordTags = wordItem.wordItem.value.tags
+            for wordTag in wordTags {
+                if tags.contains(where: { wordTag.title == $0.title }) {
+                    mutableWordItems.append(wordItem)
+                    break
+                }
+            }
+        }
+        return mutableWordItems
+    }
+}
+
+extension HomeViewModel {
+    private func saveWordToLocal(_ wordItem: WordItem) -> Completable {
+        return saveLocalWordUsecase.execute(wordItem: wordItem)
+            .map { WordItemCellViewModel(wordItem: $0) }
+            .flatMapLatest { savedWordItem -> Observable<WordItemCellViewModel> in
+                let appendedWordItems = self.wordItems.value + [savedWordItem]
+                self.wordItems.accept(appendedWordItems)
+                return .just(savedWordItem)
+            }.ignoreElements()
+    }
+    
     private func updateWordItemComponents() {
         guard let editWordIndex = editWordIndex else {
             return
@@ -312,25 +369,37 @@ class HomeViewModel {
         let editWordItem = wordItems.value[editWordIndex.item].wordItem.value
         wordText.accept(editWordItem.word)
         meanText.accept(editWordItem.mean)
+        let tagCellViewModels = editWordItem.tags
+            .map { TagItemCellViewModel(tagItem: $0, deletable: true) }
+        tagCellViewModels.forEach { cellViewModel in
+            cellViewModel.deleteRequested
+                .subscribe(onNext: { cellViewModel in
+                    self.removeTag(to: cellViewModel)
+                }).disposed(by: self.disposeBag)
+        }
+        wordTags.accept(tagCellViewModels)
         additionalInfoText.accept(editWordItem.additionalInfo)
     }
     
     private func clearWordItemComponents() {
         wordText.accept("")
         meanText.accept("")
+        tagText.accept("")
+        viewAction.onNext(.clearInputTagText)
+        wordTags.accept([])
         additionalInfoText.accept("")
     }
-}
-
-extension HomeViewModel {
-    private func configureWordItem() -> WordItem {
-        let wordItem = WordItem(
-            word: wordText.value,
-            mean: meanText.value,
-            lastModified: Date(),
-            additionalInfo: additionalInfoText.value,
-            difficulty: difficulty.value)
-        return wordItem
+    
+    private func removeTag(to cellViewModel: TagItemCellViewModel) {
+        if let index = wordTags.value.firstIndex(where: { $0 === cellViewModel }) {
+            var removedWordTags = wordTags.value
+            removedWordTags.remove(at: index)
+            self.wordTags.accept(removedWordTags)
+        }
+    }
+    
+    private func clearInputTagText() {
+        viewAction.onNext(.clearInputTagText)
     }
 }
 
@@ -420,5 +489,26 @@ extension HomeViewModel {
             .subscribe(onNext: { _ in
                 self.fetchLatestSyncTime()
             }).disposed(by: disposeBag)
+    }
+    
+    private func bindInputTagText() {
+        tagText
+            .filter { $0.contains(",") }
+            .map { $0.split(separator: ",") }
+            .map { $0.map { String($0) } }
+            .map { $0.map { TagItemCellViewModel(tagItem: TagItem(title: $0), deletable: true) } }
+            .flatMapLatest { cellViewModels -> Observable<[TagItemCellViewModel]> in
+                cellViewModels.forEach {
+                    $0.deleteRequested
+                        .subscribe(onNext: { cellViewModel in
+                            self.removeTag(to: cellViewModel)
+                        }).disposed(by: self.disposeBag)
+                }
+                return .just(cellViewModels)
+            }.map { self.wordTags.value + $0 }
+            .do(onNext: { _ in
+                self.clearInputTagText()
+            }).bind(to: wordTags)
+            .disposed(by: disposeBag)
     }
 }

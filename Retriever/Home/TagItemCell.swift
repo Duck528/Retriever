@@ -14,22 +14,23 @@ class TagItemCell: NSCollectionViewItem, BindableType {
     typealias ViewModelType = TagItemCellViewModel
     
     enum Colors {
-        case lightBlue
-        case lightGray
+        case clear
+        case ruby
         
         var color: NSColor {
             switch self {
-            case .lightBlue:
-                return NSColor(red: 68, green: 144, blue: 255)
-            case .lightGray:
-                return NSColor.lightGray
+            case .clear:
+                return NSColor.clear
+            case .ruby:
+                return NSColor(calibratedRed: 0.878, green: 0.666, blue: 0.372, alpha: 1)
             }
         }
     }
     
-    @IBOutlet weak var titleTextField: NSTextField!
+    @IBOutlet weak var tagTitleLabel: NSTextField!
     @IBOutlet weak var backgroundBox: NSBox!
     @IBOutlet weak var selectTagButton: NSButton!
+    @IBOutlet weak var deleteTagButton: NSButton!
     
     var viewModel: TagItemCellViewModel!
     var disposeBag = DisposeBag()
@@ -37,23 +38,19 @@ class TagItemCell: NSCollectionViewItem, BindableType {
     func bindViewModel() {
         bindTagItemCellViewModel()
         bindSelectButton()
+        bindDeleteButton()
     }
     
     override func prepareForReuse() {
         clearCell()
         super.prepareForReuse()
     }
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        backgroundBox.cornerRadius = 60
-    }
 }
 
 extension TagItemCell {
     private func clearCell() {
         disposeBag = DisposeBag()
-        titleTextField.stringValue = ""
+        tagTitleLabel.stringValue = ""
     }
 }
 
@@ -61,13 +58,13 @@ extension TagItemCell {
     private func bindTagItemCellViewModel() {
         viewModel.tagItem
             .subscribe(onNext: { tagItem in
-                self.titleTextField.stringValue = tagItem.title
+                self.tagTitleLabel.stringValue = tagItem.title
             }).disposed(by: disposeBag)
         
         viewModel.selected
-            .subscribeOn(MainScheduler.instance)
+            .observeOn(MainScheduler.instance)
             .subscribe(onNext: { selected in
-//                self.backgroundBox.fillColor = selected ? NSColor.red : Colors.lightGray.color
+                self.backgroundBox.fillColor = selected ? Colors.ruby.color : Colors.clear.color
             }).disposed(by: disposeBag)
     }
     
@@ -75,22 +72,49 @@ extension TagItemCell {
         selectTagButton.rx.tap
             .throttle(0.5, latest: true, scheduler: MainScheduler.instance)
             .subscribe(onNext: {
-                self.viewModel.toggleTag()
+                self.viewModel.selectTagButtonTapped()
             }).disposed(by: disposeBag)
+    }
+    
+    private func bindDeleteButton() {
+        deleteTagButton.rx.tap
+            .throttle(0.5, latest: true, scheduler: MainScheduler.instance)
+            .subscribe(onNext: {
+                self.viewModel.deleteTagButtonTapped()
+            }).disposed(by: disposeBag)
+        
+        viewModel.deletable
+            .distinctUntilChanged()
+            .do(onNext: { deletable in
+                self.selectTagButton.isHidden = deletable
+            }).map { !$0 }
+            .bind(to: deleteTagButton.rx.isHidden)
+            .disposed(by: disposeBag)
     }
 }
 
 class TagItemCellViewModel {
     let tagItem: BehaviorRelay<TagItem>
-    var selected: BehaviorRelay<Bool>
+    let deletable: BehaviorRelay<Bool>
+    let deleteRequested = PublishSubject<TagItemCellViewModel>()
+    let selected: BehaviorRelay<Bool>
     
-    init(tagItem: TagItem, selected: Bool = false) {
+    init(tagItem: TagItem, selected: Bool = false, deletable: Bool = false) {
         self.tagItem = BehaviorRelay<TagItem>(value: tagItem)
         self.selected = BehaviorRelay<Bool>(value: selected)
+        self.deletable = BehaviorRelay<Bool>(value: deletable)
     }
     
-    func toggleTag() {
+    private func toggleTag() {
         let flag = !selected.value
         selected.accept(flag)
+    }
+    
+    func selectTagButtonTapped() {
+        toggleTag()
+    }
+    
+    func deleteTagButtonTapped() {
+        deleteRequested.onNext(self)
     }
 }
