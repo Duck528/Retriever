@@ -95,9 +95,9 @@ extension TagItemCell {
 
 class TagItemCellViewModel {
     let tagItem: BehaviorRelay<TagItem>
-    let selected: BehaviorRelay<Bool>
     let deletable: BehaviorRelay<Bool>
     let deleteRequested = PublishSubject<TagItemCellViewModel>()
+    let selected: BehaviorRelay<Bool>
     
     init(tagItem: TagItem, selected: Bool = false, deletable: Bool = false) {
         self.tagItem = BehaviorRelay<TagItem>(value: tagItem)
@@ -105,7 +105,7 @@ class TagItemCellViewModel {
         self.deletable = BehaviorRelay<Bool>(value: deletable)
     }
     
-    func toggleTag() {
+    private func toggleTag() {
         let flag = !selected.value
         selected.accept(flag)
     }

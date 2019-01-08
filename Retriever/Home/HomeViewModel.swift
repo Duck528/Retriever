@@ -83,13 +83,14 @@ class HomeViewModel {
     let deleteLocalWordUsecase: DeleteLocalWordUsecase
     let fetchNumberOfUpdatedWordUsecase: FetchNumberOfUpdatedWordUsecase
     let fetchNumberOfDeletedWordUsecase: FetchNumberOfDeletedWordUsecase
-    let fetchAllTagsUsecase: FetchAllTagsUsecase
+    let fetchAllLocalTagsUsecase: FetchAllLocalTagsUsecase
     
     let fetchLatestSyncTimeUsecase: FetchLatestSyncTimeUsecase
     let updateLatestSyncTimeUsecase: UpdateLatestSyncTimeUsecase
     
     let wordItems = BehaviorRelay<[WordItemCellViewModel]>(value: [])
     let allTags = BehaviorRelay<[TagItemCellViewModel]>(value: [])
+    let selectedTags = BehaviorRelay<[TagItemCellViewModel]>(value: [])
     
     let disposeBag = DisposeBag()
     
@@ -104,7 +105,7 @@ class HomeViewModel {
         fetchNumberOfDeletedWordUsecase = Assembler().resolve()
         fetchLatestSyncTimeUsecase = Assembler().resolve()
         updateLatestSyncTimeUsecase = Assembler().resolve()
-        fetchAllTagsUsecase = Assembler().resolve()
+        fetchAllLocalTagsUsecase = Assembler().resolve()
         
         bindReachability()
         bindSyncStatus()
@@ -113,10 +114,10 @@ class HomeViewModel {
         bindFilterWordsBySearchedText()
         bindMinIntervalTimer()
         bindInputTagText()
-        bindFilteringTagsFromWordItems()
         
         fetchWordItemsWithoutSync()
         fetchLatestSyncTime()
+        fetchAllLocalTags()
     }
     
     func selectWordToEdit(at indexPath: IndexPath) {
@@ -253,16 +254,6 @@ extension HomeViewModel {
 }
 
 extension HomeViewModel {
-    private func saveWordToLocal(_ wordItem: WordItem) -> Completable {
-        return saveLocalWordUsecase.execute(wordItem: wordItem)
-            .map { WordItemCellViewModel(wordItem: $0) }
-            .flatMapLatest { savedWordItem -> Observable<WordItemCellViewModel> in
-                let appendedWordItems = self.wordItems.value + [savedWordItem]
-                self.wordItems.accept(appendedWordItems)
-                return .just(savedWordItem)
-            }.ignoreElements()
-    }
-    
     private func fetchWordItemsWithoutSync() {
         fetchLocalWordUsecase.execute()
             .do(onNext: { print("LocalFetchCount Without Sync: \($0.count)") })
@@ -274,7 +265,9 @@ extension HomeViewModel {
                 } else {
                     return $0.word.lowercased().starts(with: filterWord)
                 }
-                }}.map { $0.map { WordItemCellViewModel(wordItem: $0) } }
+                }}
+            .map { $0.map { WordItemCellViewModel(wordItem: $0) } }
+            .map { self.filterWordItemsByTags(wordItems: $0, tags: self.getSelectedFilterTags()) }
             .bind(to: wordItems)
             .disposed(by: disposeBag)
     }
@@ -290,7 +283,8 @@ extension HomeViewModel {
                 } else {
                     return $0.word.lowercased().starts(with: filterWord)
                 }
-                }}.map { $0.map { WordItemCellViewModel(wordItem: $0) } }
+            }}
+            .map { $0.map { WordItemCellViewModel(wordItem: $0) } }
         
         syncDatabaseUsecase.execute()
             .andThen(fetchWordItemsObs)
@@ -314,11 +308,55 @@ extension HomeViewModel {
             .disposed(by: disposeBag)
     }
     
-    private func fetchAllTags() {
-        fetchAllTagsUsecase.execute()
-            .map { $0.map { TagItemCellViewModel(tagItem: $0) } }
-            .bind(to: allTags)
+    private func fetchAllLocalTags() {
+        fetchAllLocalTagsUsecase.execute()
+            .map { tagItems in tagItems.map { TagItemCellViewModel(tagItem: $0) } }
+            .flatMapLatest { tagItems -> Observable<[TagItemCellViewModel]> in
+                for tagItem in tagItems {
+                    tagItem.selected
+                        .subscribe(onNext: { isSelected in
+                            self.fetchWordItemsWithoutSync()
+                        }).disposed(by: self.disposeBag)
+                }
+                return .just(tagItems)
+            }.bind(to: allTags)
             .disposed(by: disposeBag)
+    }
+    
+    private func getSelectedFilterTags() -> [TagItem] {
+        return allTags.value
+            .filter { $0.selected.value }
+            .map { $0.tagItem.value }
+    }
+    
+    private func filterWordItemsByTags(wordItems: [WordItemCellViewModel], tags: [TagItem]) -> [WordItemCellViewModel] {
+        guard tags.count > 0 else {
+            return wordItems
+        }
+        
+        var mutableWordItems: [WordItemCellViewModel] = []
+        for wordItem in wordItems {
+            let wordTags = wordItem.wordItem.value.tags
+            for wordTag in wordTags {
+                if tags.contains(where: { wordTag.title == $0.title }) {
+                    mutableWordItems.append(wordItem)
+                    break
+                }
+            }
+        }
+        return mutableWordItems
+    }
+}
+
+extension HomeViewModel {
+    private func saveWordToLocal(_ wordItem: WordItem) -> Completable {
+        return saveLocalWordUsecase.execute(wordItem: wordItem)
+            .map { WordItemCellViewModel(wordItem: $0) }
+            .flatMapLatest { savedWordItem -> Observable<WordItemCellViewModel> in
+                let appendedWordItems = self.wordItems.value + [savedWordItem]
+                self.wordItems.accept(appendedWordItems)
+                return .just(savedWordItem)
+            }.ignoreElements()
     }
     
     private func updateWordItemComponents() {
@@ -347,27 +385,6 @@ extension HomeViewModel {
         viewAction.onNext(.clearInputTagText)
         wordTags.accept([])
         additionalInfoText.accept("")
-    }
-    
-    private func bindInputTagText() {
-        tagText
-            .filter { $0.contains(",") }
-            .map { $0.split(separator: ",") }
-            .map { $0.map { String($0) } }
-            .map { $0.map { TagItemCellViewModel(tagItem: TagItem(title: $0), deletable: true) } }
-            .flatMapLatest { cellViewModels -> Observable<[TagItemCellViewModel]> in
-                cellViewModels.forEach {
-                    $0.deleteRequested
-                        .subscribe(onNext: { cellViewModel in
-                            self.removeTag(to: cellViewModel)
-                        }).disposed(by: self.disposeBag)
-                }
-                return .just(cellViewModels)
-            }.map { self.wordTags.value + $0 }
-            .do(onNext: { _ in
-                self.clearInputTagText()
-            }).bind(to: wordTags)
-            .disposed(by: disposeBag)
     }
     
     private func removeTag(to cellViewModel: TagItemCellViewModel) {
@@ -425,15 +442,6 @@ extension HomeViewModel {
             .disposed(by: disposeBag)
     }
     
-    private func bindFilteringTagsFromWordItems() {
-//        wordItems
-//            .map { $0.map { $0.wordItem.value.tags } }
-//            .map { $0.reduce([]) { $0 + $1 }}
-//            .map { $0.map { TagItemCellViewModel(tagItem: $0) } }
-//            .bind(to: allTags)
-//            .disposed(by: disposeBag)
-    }
-    
     private func bindFilterWordsByDifficultyOptions() {
         Observable
             .combineLatest(easyDifficultyChecked, mediumDifficultyChecked,
@@ -478,5 +486,26 @@ extension HomeViewModel {
             .subscribe(onNext: { _ in
                 self.fetchLatestSyncTime()
             }).disposed(by: disposeBag)
+    }
+    
+    private func bindInputTagText() {
+        tagText
+            .filter { $0.contains(",") }
+            .map { $0.split(separator: ",") }
+            .map { $0.map { String($0) } }
+            .map { $0.map { TagItemCellViewModel(tagItem: TagItem(title: $0), deletable: true) } }
+            .flatMapLatest { cellViewModels -> Observable<[TagItemCellViewModel]> in
+                cellViewModels.forEach {
+                    $0.deleteRequested
+                        .subscribe(onNext: { cellViewModel in
+                            self.removeTag(to: cellViewModel)
+                        }).disposed(by: self.disposeBag)
+                }
+                return .just(cellViewModels)
+            }.map { self.wordTags.value + $0 }
+            .do(onNext: { _ in
+                self.clearInputTagText()
+            }).bind(to: wordTags)
+            .disposed(by: disposeBag)
     }
 }

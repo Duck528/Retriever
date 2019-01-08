@@ -1,5 +1,5 @@
 //
-//  FetchAllTagsUsecase.swift
+//  FetchAllLocalTagsUsecase.swift
 //  Retriever
 //
 //  Created by thekan on 07/01/2019.
@@ -8,7 +8,7 @@
 
 import RxSwift
 
-class FetchAllTagsUsecase {
+class FetchAllLocalTagsUsecase {
     let wordItemDAO: RMWordItemDAO
     
     init(wordItemDAO: RMWordItemDAO) {
