@@ -288,6 +288,7 @@ extension HomeViewModel {
                 }
             }}
             .map { $0.map { WordItemCellViewModel(wordItem: $0) } }
+            .map { self.filterWordItemsByTags(wordItems: $0, tags: self.getSelectedFilterTags()) }
         
         syncDatabaseUsecase.execute()
             .andThen(fetchWordItemsObs)
@@ -420,13 +421,7 @@ extension HomeViewModel {
         Observable
             .combineLatest(numberOfUpdatedWords.skip(1), numberOfDeletedWords.skip(1))
             .skip(1)
-            .distinctUntilChanged { before, after in
-                if before.0 == after.0 && before.1 == after.1 {
-                    return true
-                } else {
-                    return false
-                }
-            }.map { $0 == 0 && $1 == 0 ? SyncStatus.stable : SyncStatus.unSynced }
+            .map { $0 == 0 && $1 == 0 ? SyncStatus.stable : SyncStatus.unSynced }
             .bind(to: syncStatus)
             .disposed(by: disposeBag)
     }
