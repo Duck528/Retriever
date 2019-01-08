@@ -195,7 +195,10 @@ class HomeViewModel {
         
         updateLocalWordUsecase.execute(wordItem: wordItem)
             .map { WordItemCellViewModel(wordItem: $0) }
-            .observeOn(MainScheduler.instance)
+            .flatMapLatest { wordItem -> Observable<WordItemCellViewModel> in
+                self.fetchAllLocalTags()
+                return .just(wordItem)
+            }.observeOn(MainScheduler.instance)
             .subscribe(onNext: { updatedWordItem in
                 var updatedWordItems = self.wordItems.value
                 updatedWordItems[editWordIndex.item] = updatedWordItem
