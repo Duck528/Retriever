@@ -90,7 +90,6 @@ class HomeViewModel {
     
     let wordItems = BehaviorRelay<[WordItemCellViewModel]>(value: [])
     let allTags = BehaviorRelay<[TagItemCellViewModel]>(value: [])
-    let selectedTags = BehaviorRelay<[TagItemCellViewModel]>(value: [])
     
     let disposeBag = DisposeBag()
     
@@ -314,7 +313,7 @@ extension HomeViewModel {
     
     private func fetchAllLocalTags() {
         fetchAllLocalTagsUsecase.execute()
-            .map { tagItems in tagItems.map { TagItemCellViewModel(tagItem: $0) } }
+            .map { tagItems in tagItems.map { TagItemCellViewModel(tagItem: $0, selectable: true) } }
             .flatMapLatest { tagItems -> Observable<[TagItemCellViewModel]> in
                 for tagItem in tagItems {
                     tagItem.selected
@@ -491,7 +490,7 @@ extension HomeViewModel {
             .filter { $0.contains(",") }
             .map { $0.split(separator: ",") }
             .map { $0.map { String($0) } }
-            .map { $0.map { TagItemCellViewModel(tagItem: TagItem(title: $0), deletable: true) } }
+            .map { $0.map { TagItemCellViewModel(tagItem: TagItem(title: $0), deletable: true, selectable: false) } }
             .flatMapLatest { cellViewModels -> Observable<[TagItemCellViewModel]> in
                 cellViewModels.forEach {
                     $0.deleteRequested

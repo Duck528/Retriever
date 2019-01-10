@@ -120,7 +120,8 @@ extension HomeViewController {
 }
 
 extension HomeViewController: NSCollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: NSCollectionView, layout collectionViewLayout: NSCollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> NSSize {
+    func collectionView(_ collectionView: NSCollectionView,
+                        layout collectionViewLayout: NSCollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> NSSize {
         if collectionView == filterTagCollectionView {
             return calculateFilterTagCellSize(at: indexPath)
         } else if collectionView == wordCollectionView {
@@ -140,7 +141,7 @@ extension HomeViewController: NSCollectionViewDelegateFlowLayout {
     }
     
     private func calculateFilterTagCellSize(at indexPath: IndexPath) -> CGSize {
-        let tagTitle = viewModel.allTags.value[indexPath.item].tagItem.value.title
+        let tagTitle = "#\(viewModel.allTags.value[indexPath.item].tagItem.value.title)"
         let width = NSFont.helveticaNeueBold(size: 13)
             .size(text: tagTitle, constrainedToWidth: CGFloat.greatestFiniteMagnitude)
             .width + 30
@@ -148,7 +149,7 @@ extension HomeViewController: NSCollectionViewDelegateFlowLayout {
     }
     
     private func calculateInputTagCellSize(at indexPath: IndexPath) -> CGSize {
-        let tagTitle = viewModel.wordTags.value[indexPath.item].tagItem.value.title
+        let tagTitle = "#\(viewModel.wordTags.value[indexPath.item].tagItem.value.title)"
         let width = NSFont.helveticaNeueBold(size: 13)
             .size(text: tagTitle, constrainedToWidth: CGFloat.greatestFiniteMagnitude)
             .width + 45
@@ -157,9 +158,7 @@ extension HomeViewController: NSCollectionViewDelegateFlowLayout {
     
     private func calculateWordCellSize(in collectionView: NSCollectionView, at indexPath: IndexPath) -> CGSize {
         let width = collectionView.frame.width
-        let numberOfTags = viewModel.wordItems.value[indexPath.item].tags.value.count
-        let height: CGFloat = numberOfTags > 0 ? 129 : 95
-        return CGSize(width: width, height: height)
+        return CGSize(width: width, height: 99)
     }
 }
 

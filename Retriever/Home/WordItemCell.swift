@@ -73,35 +73,11 @@ extension WordItemCell: NSCollectionViewDelegateFlowLayout {
     }
     
     private func calculateTagCellSize(at indexPath: IndexPath) -> CGSize {
-        let tagTitle = viewModel.tags.value[indexPath.item].tagItem.value.title
+        let tagTitle = "#\(viewModel.tags.value[indexPath.item].tagItem.value.title)"
         let width = NSFont.helveticaNeueBold(size: 13)
             .size(text: tagTitle, constrainedToWidth: CGFloat.greatestFiniteMagnitude)
             .width + 30
         return CGSize(width: width, height: 20)
-    }
-    
-    func collectionView(_ collectionView: NSCollectionView,
-                        layout collectionViewLayout: NSCollectionViewLayout,
-                        insetForSectionAt section: Int) -> NSEdgeInsets {
-        guard let flowLayout = collectionViewLayout as? NSCollectionViewFlowLayout else {
-            return NSEdgeInsetsZero
-        }
-        
-        let numberOfItems = viewModel.tags.value.count
-        
-        var tagsWidth: CGFloat = 0
-        for i in (0 ..< numberOfItems) {
-            tagsWidth += calculateTagCellSize(at: IndexPath(item: i, section: 0)).width
-            tagsWidth += flowLayout.minimumInteritemSpacing
-        }
-        tagsWidth -= flowLayout.minimumInteritemSpacing
-        
-        let diff = (collectionView.bounds.width - tagsWidth) / 2
-        if diff > 0 {
-            return NSEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
-        } else {
-            return NSEdgeInsetsZero
-        }
     }
 }
 
@@ -122,7 +98,7 @@ class WordItemCellViewModel {
     init(wordItem: WordItem) {
         self.wordItem = BehaviorRelay<WordItem>(value: wordItem)
         let tagItems = wordItem.tags
-            .map { TagItemCellViewModel(tagItem: $0) }
+            .map { TagItemCellViewModel(tagItem: $0, selectable: false) }
         self.tags = BehaviorRelay<[TagItemCellViewModel]>(value: tagItems)
     }
 }
