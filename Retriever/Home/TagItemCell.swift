@@ -50,6 +50,7 @@ class TagItemCell: NSCollectionViewItem, BindableType {
 extension TagItemCell {
     private func clearCell() {
         disposeBag = DisposeBag()
+        viewModel = nil
         tagTitleLabel.stringValue = ""
     }
 }
