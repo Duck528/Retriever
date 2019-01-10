@@ -50,6 +50,7 @@ class TagItemCell: NSCollectionViewItem, BindableType {
 extension TagItemCell {
     private func clearCell() {
         disposeBag = DisposeBag()
+        viewModel = nil
         tagTitleLabel.stringValue = ""
     }
 }
@@ -58,7 +59,7 @@ extension TagItemCell {
     private func bindTagItemCellViewModel() {
         viewModel.tagItem
             .subscribe(onNext: { tagItem in
-                self.tagTitleLabel.stringValue = tagItem.title
+                self.tagTitleLabel.stringValue = "#\(tagItem.title)"
             }).disposed(by: disposeBag)
         
         viewModel.selected
@@ -85,24 +86,31 @@ extension TagItemCell {
         
         viewModel.deletable
             .distinctUntilChanged()
-            .do(onNext: { deletable in
-                self.selectTagButton.isHidden = deletable
-            }).map { !$0 }
+            .map { !$0 }
             .bind(to: deleteTagButton.rx.isHidden)
+            .disposed(by: disposeBag)
+        
+        viewModel.selectable
+            .map { !$0 }
+            .distinctUntilChanged()
+            .bind(to: selectTagButton.rx.isHidden)
             .disposed(by: disposeBag)
     }
 }
 
 class TagItemCellViewModel {
     let tagItem: BehaviorRelay<TagItem>
-    let deletable: BehaviorRelay<Bool>
     let deleteRequested = PublishSubject<TagItemCellViewModel>()
     let selected: BehaviorRelay<Bool>
     
-    init(tagItem: TagItem, selected: Bool = false, deletable: Bool = false) {
+    let deletable: BehaviorRelay<Bool>
+    let selectable: BehaviorRelay<Bool>
+    
+    init(tagItem: TagItem, selected: Bool = false, deletable: Bool = false, selectable: Bool = false) {
         self.tagItem = BehaviorRelay<TagItem>(value: tagItem)
         self.selected = BehaviorRelay<Bool>(value: selected)
         self.deletable = BehaviorRelay<Bool>(value: deletable)
+        self.selectable = BehaviorRelay<Bool>(value: selectable)
     }
     
     private func toggleTag() {

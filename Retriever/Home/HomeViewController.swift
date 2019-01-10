@@ -73,6 +73,11 @@ class HomeViewController: NSViewController {
         bindViewModel()
     }
     
+    override func viewDidLayout() {
+        super.viewDidLayout()
+        wordCollectionView.collectionViewLayout?.invalidateLayout()
+    }
+    
     @IBAction func difficultyPopYpButtonItemChanged(_ sender: NSPopUpButton) {
         let index = sender.indexOfSelectedItem
         viewModel.difficulty.accept(index)
@@ -91,6 +96,7 @@ class HomeViewController: NSViewController {
 
 extension HomeViewController {
     private func setupViews() {
+        view.postsFrameChangedNotifications = true
         setupCollectionView()
         hideAppendWordSection()
         showAppendWordToolSection()
@@ -114,7 +120,8 @@ extension HomeViewController {
 }
 
 extension HomeViewController: NSCollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: NSCollectionView, layout collectionViewLayout: NSCollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> NSSize {
+    func collectionView(_ collectionView: NSCollectionView,
+                        layout collectionViewLayout: NSCollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> NSSize {
         if collectionView == filterTagCollectionView {
             return calculateFilterTagCellSize(at: indexPath)
         } else if collectionView == wordCollectionView {
@@ -134,7 +141,7 @@ extension HomeViewController: NSCollectionViewDelegateFlowLayout {
     }
     
     private func calculateFilterTagCellSize(at indexPath: IndexPath) -> CGSize {
-        let tagTitle = viewModel.allTags.value[indexPath.item].tagItem.value.title
+        let tagTitle = "#\(viewModel.allTags.value[indexPath.item].tagItem.value.title)"
         let width = NSFont.helveticaNeueBold(size: 13)
             .size(text: tagTitle, constrainedToWidth: CGFloat.greatestFiniteMagnitude)
             .width + 30
@@ -142,7 +149,7 @@ extension HomeViewController: NSCollectionViewDelegateFlowLayout {
     }
     
     private func calculateInputTagCellSize(at indexPath: IndexPath) -> CGSize {
-        let tagTitle = viewModel.wordTags.value[indexPath.item].tagItem.value.title
+        let tagTitle = "#\(viewModel.wordTags.value[indexPath.item].tagItem.value.title)"
         let width = NSFont.helveticaNeueBold(size: 13)
             .size(text: tagTitle, constrainedToWidth: CGFloat.greatestFiniteMagnitude)
             .width + 45
@@ -150,8 +157,8 @@ extension HomeViewController: NSCollectionViewDelegateFlowLayout {
     }
     
     private func calculateWordCellSize(in collectionView: NSCollectionView, at indexPath: IndexPath) -> CGSize {
-        let width = NSScreen.main?.frame.width ?? collectionView.frame.width
-        return CGSize(width: width, height: 90)
+        let width = collectionView.frame.width
+        return CGSize(width: width, height: 99)
     }
 }
 
