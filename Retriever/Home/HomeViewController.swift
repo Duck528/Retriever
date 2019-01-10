@@ -73,6 +73,11 @@ class HomeViewController: NSViewController {
         bindViewModel()
     }
     
+    override func viewDidLayout() {
+        super.viewDidLayout()
+        wordCollectionView.collectionViewLayout?.invalidateLayout()
+    }
+    
     @IBAction func difficultyPopYpButtonItemChanged(_ sender: NSPopUpButton) {
         let index = sender.indexOfSelectedItem
         viewModel.difficulty.accept(index)
@@ -91,6 +96,7 @@ class HomeViewController: NSViewController {
 
 extension HomeViewController {
     private func setupViews() {
+        view.postsFrameChangedNotifications = true
         setupCollectionView()
         hideAppendWordSection()
         showAppendWordToolSection()
@@ -150,8 +156,10 @@ extension HomeViewController: NSCollectionViewDelegateFlowLayout {
     }
     
     private func calculateWordCellSize(in collectionView: NSCollectionView, at indexPath: IndexPath) -> CGSize {
-        let width = NSScreen.main?.frame.width ?? collectionView.frame.width
-        return CGSize(width: width, height: 90)
+        let width = collectionView.frame.width
+        let numberOfTags = viewModel.wordItems.value[indexPath.item].tags.value.count
+        let height: CGFloat = numberOfTags > 0 ? 129 : 90
+        return CGSize(width: width, height: height)
     }
 }
 
