@@ -145,7 +145,7 @@
                                                                     <autoresizingMask key="autoresizingMask"/>
                                                                 </scroller>
                                                                 <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="R7g-w9-OCP">
-                                                                    <rect key="frame" x="264" y="0.0" width="16" height="327"/>
+                                                                    <rect key="frame" x="264" y="0.0" width="16" height="337"/>
                                                                     <autoresizingMask key="autoresizingMask"/>
                                                                 </scroller>
                                                             </scrollView>
@@ -865,11 +865,10 @@
                                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="U7R-1N-saG">
                                                 <rect key="frame" x="0.0" y="0.0" width="873" height="0.0"/>
                                                 <subviews>
-                                                    <box fixedFrame="YES" boxType="custom" borderType="none" borderWidth="0.0" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="jIp-UJ-u8Y">
-                                                        <rect key="frame" x="0.0" y="-30" width="873" height="30"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                        <view key="contentView" ambiguous="YES" id="6hK-Ny-Fe2">
-                                                            <rect key="frame" x="0.0" y="0.0" width="873" height="30"/>
+                                                    <box boxType="custom" borderType="none" borderWidth="0.0" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="jIp-UJ-u8Y">
+                                                        <rect key="frame" x="0.0" y="0.0" width="873" height="0.0"/>
+                                                        <view key="contentView" id="6hK-Ny-Fe2">
+                                                            <rect key="frame" x="0.0" y="0.0" width="873" height="0.0"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         </view>
                                                         <color key="borderColor" red="1" green="0.41176470588235292" blue="0.27450980392156865" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -888,7 +887,11 @@
                                                     <constraint firstItem="8A2-Lv-vxj" firstAttribute="leading" secondItem="U7R-1N-saG" secondAttribute="leading" id="343-ia-9n1"/>
                                                     <constraint firstAttribute="bottom" secondItem="8A2-Lv-vxj" secondAttribute="bottom" id="Fl8-sD-V03"/>
                                                     <constraint firstAttribute="trailing" secondItem="8A2-Lv-vxj" secondAttribute="trailing" id="SSO-7x-0L2"/>
+                                                    <constraint firstItem="jIp-UJ-u8Y" firstAttribute="top" secondItem="U7R-1N-saG" secondAttribute="top" id="Y41-J7-WLN"/>
+                                                    <constraint firstItem="jIp-UJ-u8Y" firstAttribute="leading" secondItem="U7R-1N-saG" secondAttribute="leading" id="akf-55-0qH"/>
+                                                    <constraint firstAttribute="trailing" secondItem="jIp-UJ-u8Y" secondAttribute="trailing" id="gin-G5-NhL"/>
                                                     <constraint firstItem="8A2-Lv-vxj" firstAttribute="top" secondItem="U7R-1N-saG" secondAttribute="top" id="uJn-iP-2Ft"/>
+                                                    <constraint firstAttribute="bottom" secondItem="jIp-UJ-u8Y" secondAttribute="bottom" id="z6d-17-6hg"/>
                                                 </constraints>
                                             </customView>
                                         </subviews>
