@@ -57,10 +57,9 @@ extension TagItemCell {
 
 extension TagItemCell {
     private func bindTagItemCellViewModel() {
-        viewModel.tagItem
-            .subscribe(onNext: { tagItem in
-                self.tagTitleLabel.stringValue = "#\(tagItem.title)"
-            }).disposed(by: disposeBag)
+        viewModel.displayTagTitle
+            .bind(to: tagTitleLabel.rx.text)
+            .disposed(by: disposeBag)
         
         viewModel.selected
             .observeOn(MainScheduler.instance)
@@ -100,17 +99,27 @@ extension TagItemCell {
 
 class TagItemCellViewModel {
     let tagItem: BehaviorRelay<TagItem>
+    let numberOfUsed: BehaviorRelay<Int>
     let deleteRequested = PublishSubject<TagItemCellViewModel>()
     let selected: BehaviorRelay<Bool>
     
     let deletable: BehaviorRelay<Bool>
     let selectable: BehaviorRelay<Bool>
+    let hideNumberOfUsed: BehaviorRelay<Bool>
     
-    init(tagItem: TagItem, selected: Bool = false, deletable: Bool = false, selectable: Bool = false) {
+    let displayTagTitle = BehaviorRelay<String>(value: "")
+    let disposeBag = DisposeBag()
+    
+    init(tagItem: TagItem, selected: Bool = false, hideNumberOfUsed: Bool = true,
+         deletable: Bool = false, selectable: Bool = false, numberOfUsed: Int = 0) {
         self.tagItem = BehaviorRelay<TagItem>(value: tagItem)
         self.selected = BehaviorRelay<Bool>(value: selected)
         self.deletable = BehaviorRelay<Bool>(value: deletable)
         self.selectable = BehaviorRelay<Bool>(value: selectable)
+        self.numberOfUsed = BehaviorRelay<Int>(value: numberOfUsed)
+        self.hideNumberOfUsed = BehaviorRelay<Bool>(value: hideNumberOfUsed)
+        
+        bindDisplayText()
     }
     
     private func toggleTag() {
@@ -124,5 +133,23 @@ class TagItemCellViewModel {
     
     func deleteTagButtonTapped() {
         deleteRequested.onNext(self)
+    }
+}
+
+extension TagItemCellViewModel {
+    private func bindDisplayText() {
+        Observable
+            .combineLatest(
+                tagItem.asObservable(),
+                numberOfUsed.asObservable(),
+                hideNumberOfUsed.asObservable())
+            .flatMapLatest { tagItem, numberOfUsed, hideNumberOfUsed -> Observable<String> in
+                if hideNumberOfUsed {
+                    return .just("#\(tagItem.title)")
+                } else {
+                    return .just("#\(tagItem.title)  \(numberOfUsed)")
+                }
+            }.bind(to: displayTagTitle)
+            .disposed(by: disposeBag)
     }
 }

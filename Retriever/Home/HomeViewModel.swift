@@ -313,7 +313,7 @@ extension HomeViewModel {
     
     private func fetchAllLocalTags() {
         fetchAllLocalTagsUsecase.execute()
-            .map { tagItems in tagItems.map { TagItemCellViewModel(tagItem: $0, selectable: true) } }
+            .map { tagItems in tagItems.map { TagItemCellViewModel(tagItem: $0, hideNumberOfUsed: false, selectable: true) } }
             .flatMapLatest { tagItems -> Observable<[TagItemCellViewModel]> in
                 for tagItem in tagItems {
                     tagItem.selected
