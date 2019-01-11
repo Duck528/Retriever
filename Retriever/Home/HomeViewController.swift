@@ -141,7 +141,7 @@ extension HomeViewController: NSCollectionViewDelegateFlowLayout {
     }
     
     private func calculateFilterTagCellSize(at indexPath: IndexPath) -> CGSize {
-        let tagTitle = "#\(viewModel.allTags.value[indexPath.item].tagItem.value.title)"
+        let tagTitle = viewModel.allTags.value[indexPath.item].displayTagTitle.value
         let width = NSFont.helveticaNeueBold(size: 13)
             .size(text: tagTitle, constrainedToWidth: CGFloat.greatestFiniteMagnitude)
             .width + 30
@@ -149,7 +149,7 @@ extension HomeViewController: NSCollectionViewDelegateFlowLayout {
     }
     
     private func calculateInputTagCellSize(at indexPath: IndexPath) -> CGSize {
-        let tagTitle = "#\(viewModel.wordTags.value[indexPath.item].tagItem.value.title)"
+        let tagTitle = viewModel.wordTags.value[indexPath.item].displayTagTitle.value
         let width = NSFont.helveticaNeueBold(size: 13)
             .size(text: tagTitle, constrainedToWidth: CGFloat.greatestFiniteMagnitude)
             .width + 45
