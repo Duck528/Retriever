@@ -314,14 +314,31 @@ extension HomeViewModel {
     private func fetchAllLocalTags() {
         fetchAllLocalTagsUsecase.execute()
             .map { tagItems in tagItems.map { TagItemCellViewModel(tagItem: $0, hideNumberOfUsed: false, selectable: true) } }
-            .flatMapLatest { tagItems -> Observable<[TagItemCellViewModel]> in
-                for tagItem in tagItems {
-                    tagItem.selected
+            .flatMapLatest { tags -> Observable<[TagItemCellViewModel]> in
+                let tagCountDict = tags
+                    .map { $0.tagItem.value.title }
+                    .reduce([String: Int]()) { result, tagTitle in
+                        var result = result
+                        if let value = result[tagTitle] {
+                            result[tagTitle] = value + 1
+                        } else {
+                            result[tagTitle] = 1
+                        }
+                        return result
+                    }
+                
+                for tag in tags {
+                    tag.selected
                         .subscribe(onNext: { isSelected in
                             self.fetchWordItemsWithoutSync()
                         }).disposed(by: self.disposeBag)
+                    if let count = tagCountDict[tag.tagItem.value.title] {
+                        tag.numberOfUsed.accept(count)
+                    } else {
+                        tag.numberOfUsed.accept(0)
+                    }
                 }
-                return .just(tagItems)
+                return .just(tags)
             }.bind(to: allTags)
             .disposed(by: disposeBag)
     }
