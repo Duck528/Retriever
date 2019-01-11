@@ -120,6 +120,9 @@ class HomeViewModel {
     }
     
     func selectWordToEdit(at indexPath: IndexPath) {
+        guard indexPath.item >= 0, indexPath.item < wordItems.value.count else {
+            return
+        }
         editWordIndex = indexPath
         let wordItem = wordItems.value[indexPath.item].wordItem.value
         viewAction.onNext(.updateWordEditMode)
@@ -200,6 +203,9 @@ class HomeViewModel {
             }.observeOn(MainScheduler.instance)
             .subscribe(onNext: { updatedWordItem in
                 var updatedWordItems = self.wordItems.value
+                guard editWordIndex.item >= 0, editWordIndex.item < updatedWordItems.count else {
+                    return
+                }
                 updatedWordItems[editWordIndex.item] = updatedWordItem
                 self.wordItems.accept(updatedWordItems)
                 self.clearWordItemComponents()
@@ -324,8 +330,9 @@ extension HomeViewModel {
     
     private func fetchAllLocalTags() {
         fetchAllLocalTagsUsecase.execute()
-            .map { tagItems in tagItems.map { TagItemCellViewModel(tagItem: $0, hideNumberOfUsed: false, selectable: true) } }
-            .flatMapLatest { tags -> Observable<[TagItemCellViewModel]> in
+            .map { tagItems in
+                tagItems.map { TagItemCellViewModel(tagItem: $0, hideNumberOfUsed: false, selectable: true) }
+            }.flatMapLatest { tags -> Observable<[TagItemCellViewModel]> in
                 let tagCountDict = tags
                     .map { $0.tagItem.value.title }
                     .reduce([String: Int]()) { result, tagTitle in
@@ -338,6 +345,7 @@ extension HomeViewModel {
                         return result
                     }
                 
+                let prevAllTags = self.allTags.value
                 var filteredTags: [TagItemCellViewModel] = []
                 for tag in tags {
                     if filteredTags.contains(where: { $0.tagItem.value.title == tag.tagItem.value.title }) {
@@ -350,6 +358,11 @@ extension HomeViewModel {
                         }).disposed(by: self.disposeBag)
                     let tagCount = tagCountDict[tag.tagItem.value.title] ?? 0
                     tag.numberOfUsed.accept(tagCount)
+                    
+                    if let prevTag = prevAllTags.first(where: { $0.tagItem.value.title == tag.tagItem.value.title }) {
+                        tag.selected.accept(prevTag.selected.value)
+                    }
+                    
                     filteredTags.append(tag)
                 }
                 return .just(filteredTags)
@@ -394,9 +407,12 @@ extension HomeViewModel {
     }
     
     private func updateWordItemComponents() {
-        guard let editWordIndex = editWordIndex else {
-            return
+        guard
+            let editWordIndex = editWordIndex,
+            editWordIndex.item >= 0, editWordIndex.item < wordItems.value.count else {
+                return
         }
+        
         let editWordItem = wordItems.value[editWordIndex.item].wordItem.value
         wordText.accept(editWordItem.word)
         meanText.accept(editWordItem.mean)
