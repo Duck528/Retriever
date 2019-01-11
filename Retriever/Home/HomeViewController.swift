@@ -83,6 +83,10 @@ class HomeViewController: NSViewController {
         viewModel.difficulty.accept(index)
     }
     
+    @IBAction func inputTagTextFieldReturnKeyEntered(_ sender: NSTextField) {
+        viewModel.inputTagReturnKeyEntered()
+    }
+    
     override init(nibName nibNameOrNil: NSNib.Name?, bundle nibBundleOrNil: Bundle?) {
         viewModel = Assembler().resolve()
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -232,7 +236,6 @@ extension HomeViewController: NSCollectionViewDataSource {
         return item
     }
 }
-
 
 extension HomeViewController {
     func bindViewModel() {

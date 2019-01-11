@@ -112,7 +112,7 @@ class HomeViewModel {
         bindFilterWordsByDifficultyOptions()
         bindFilterWordsBySearchedText()
         bindMinIntervalTimer()
-        bindInputTagText()
+//        bindInputTagText()
         
         fetchWordItemsWithoutSync()
         fetchLatestSyncTime()
@@ -240,6 +240,17 @@ class HomeViewModel {
                     print(error.localizedDescription)
                 }
             }.disposed(by: disposeBag)
+    }
+    
+    func inputTagReturnKeyEntered() {
+        let enteredTag = TagItem(title: tagText.value)
+        let tagVM = TagItemCellViewModel(tagItem: enteredTag, deletable: true, selectable: false)
+        tagVM.deleteRequested
+            .subscribe(onNext: { cellViewModel in
+                self.removeTag(to: cellViewModel)
+            }).disposed(by: disposeBag)
+        clearInputTagText()
+        wordTags.accept(wordTags.value + [tagVM])
     }
 }
 
