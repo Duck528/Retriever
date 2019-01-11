@@ -112,7 +112,7 @@ class HomeViewModel {
         bindFilterWordsByDifficultyOptions()
         bindFilterWordsBySearchedText()
         bindMinIntervalTimer()
-        bindInputTagText()
+//        bindInputTagText()
         
         fetchWordItemsWithoutSync()
         fetchLatestSyncTime()
@@ -241,6 +241,17 @@ class HomeViewModel {
                 }
             }.disposed(by: disposeBag)
     }
+    
+    func inputTagReturnKeyEntered() {
+        let enteredTag = TagItem(title: tagText.value)
+        let tagVM = TagItemCellViewModel(tagItem: enteredTag, deletable: true, selectable: false)
+        tagVM.deleteRequested
+            .subscribe(onNext: { cellViewModel in
+                self.removeTag(to: cellViewModel)
+            }).disposed(by: disposeBag)
+        clearInputTagText()
+        wordTags.accept(wordTags.value + [tagVM])
+    }
 }
 
 extension HomeViewModel {
@@ -327,18 +338,21 @@ extension HomeViewModel {
                         return result
                     }
                 
+                var filteredTags: [TagItemCellViewModel] = []
                 for tag in tags {
+                    if filteredTags.contains(where: { $0.tagItem.value.title == tag.tagItem.value.title }) {
+                        continue
+                    }
+
                     tag.selected
                         .subscribe(onNext: { isSelected in
                             self.fetchWordItemsWithoutSync()
                         }).disposed(by: self.disposeBag)
-                    if let count = tagCountDict[tag.tagItem.value.title] {
-                        tag.numberOfUsed.accept(count)
-                    } else {
-                        tag.numberOfUsed.accept(0)
-                    }
+                    let tagCount = tagCountDict[tag.tagItem.value.title] ?? 0
+                    tag.numberOfUsed.accept(tagCount)
+                    filteredTags.append(tag)
                 }
-                return .just(tags)
+                return .just(filteredTags)
             }.bind(to: allTags)
             .disposed(by: disposeBag)
     }

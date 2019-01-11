@@ -15,14 +15,11 @@ class TagItemCell: NSCollectionViewItem, BindableType {
     
     enum Colors {
         case clear
-        case ruby
         
         var color: NSColor {
             switch self {
             case .clear:
                 return NSColor.clear
-            case .ruby:
-                return NSColor(calibratedRed: 0.878, green: 0.666, blue: 0.372, alpha: 1)
             }
         }
     }
@@ -64,7 +61,7 @@ extension TagItemCell {
         viewModel.selected
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { selected in
-                self.backgroundBox.fillColor = selected ? Colors.ruby.color : Colors.clear.color
+                self.backgroundBox.fillColor = selected ? NSColor.lightGray : Colors.clear.color
             }).disposed(by: disposeBag)
     }
     
