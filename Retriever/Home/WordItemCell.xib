@@ -90,7 +90,7 @@
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
                         </button>
-                        <collectionView translatesAutoresizingMaskIntoConstraints="NO" id="guF-yj-Jm0">
+                        <collectionView allowsEmptySelection="NO" translatesAutoresizingMaskIntoConstraints="NO" id="guF-yj-Jm0">
                             <rect key="frame" x="320" y="11" width="158" height="78"/>
                             <collectionViewFlowLayout key="collectionViewLayout" minimumInteritemSpacing="10" minimumLineSpacing="10" id="Kos-GE-CGv" customClass="LeftAlignFlowLayout" customModule="Retriever" customModuleProvider="target">
                                 <size key="itemSize" width="50" height="50"/>

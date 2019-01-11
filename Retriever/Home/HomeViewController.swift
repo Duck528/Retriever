@@ -100,7 +100,9 @@ class HomeViewController: NSViewController {
 
 extension HomeViewController {
     private func setupViews() {
-        view.postsFrameChangedNotifications = true
+        statusDashboardView.wantsLayer = true
+        statusDashboardView.layerContentsRedrawPolicy = .duringViewResize
+        
         setupCollectionView()
         hideAppendWordSection()
         showAppendWordToolSection()
@@ -142,6 +144,7 @@ extension HomeViewController: NSCollectionViewDelegateFlowLayout {
             return
         }
         viewModel.selectWordToEdit(at: indexPath)
+        wordCollectionView.deselectAll(nil)
     }
     
     private func calculateFilterTagCellSize(at indexPath: IndexPath) -> CGSize {
