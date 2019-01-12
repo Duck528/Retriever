@@ -19,7 +19,6 @@ class LeftAlignFlowLayout: NSCollectionViewFlowLayout {
             }
             a.frame.origin.x = xPos
             xPos += a.frame.width + minimumInteritemSpacing
-            print("before Max Y: \(maxY), frame Max Y: \(a.frame.maxY)")
             maxY = max(a.frame.maxY, maxY)
         }
         return attributes
