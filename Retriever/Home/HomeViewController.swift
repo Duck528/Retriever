@@ -569,10 +569,18 @@ extension HomeViewController {
     
     private func hideStatusDashboard() {
         statusDashboardView.findConstraint(for: .height)?.constant = 0
+        NSAnimationContext.runAnimationGroup { context in
+            context.duration = 0.3
+            self.view.layoutSubtreeIfNeeded()
+        }
     }
     
     private func showStatusDashboard() {
         statusDashboardView.findConstraint(for: .height)?.constant = statusDashboardHeight
+        NSAnimationContext.runAnimationGroup { context in
+            context.duration = 0.3
+            self.view.layoutSubtreeIfNeeded()
+        }
     }
     
     private func showOfflineStatusToDashboard() {

@@ -18,6 +18,7 @@ class WordItemCell: NSCollectionViewItem, BindableType {
     @IBOutlet weak var syncWordButton: NSButton!
     @IBOutlet weak var diffcultyLabel: NSTextField!
     @IBOutlet weak var tagCollectionView: NSCollectionView!
+    @IBOutlet weak var backgroundBox: NSBox!
     
     var viewModel: WordItemCellViewModel!
     var disposeBag = DisposeBag()
@@ -31,6 +32,12 @@ class WordItemCell: NSCollectionViewItem, BindableType {
                 self.diffcultyLabel.stringValue = wordItem.difficulty.title
                 self.tagCollectionView.isHidden = wordItem.tags.count == 0
                 self.tagCollectionView.reloadData()
+            }).disposed(by: disposeBag)
+        
+        viewModel.selected
+            .map { $0 ? NSColor(calibratedHue: 0, saturation: 0, brightness: 0, alpha: 0.5) : NSColor.clear }
+            .subscribe(onNext: { color in
+                self.backgroundBox.fillColor = color
             }).disposed(by: disposeBag)
     }
     
@@ -94,11 +101,13 @@ extension WordItemCell {
 class WordItemCellViewModel {
     let wordItem: BehaviorRelay<WordItem>
     let tags: BehaviorRelay<[TagItemCellViewModel]>
+    let selected: BehaviorRelay<Bool>
     
-    init(wordItem: WordItem) {
+    init(wordItem: WordItem, selected: Bool = false) {
         self.wordItem = BehaviorRelay<WordItem>(value: wordItem)
         let tagItems = wordItem.tags
             .map { TagItemCellViewModel(tagItem: $0, selectable: false) }
         self.tags = BehaviorRelay<[TagItemCellViewModel]>(value: tagItems)
+        self.selected = BehaviorRelay<Bool>(value: selected)
     }
 }

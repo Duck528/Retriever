@@ -7,6 +7,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="WordItemCell" customModule="Retriever" customModuleProvider="target">
             <connections>
+                <outlet property="backgroundBox" destination="WVw-jT-kjI" id="hU7-1v-5af"/>
                 <outlet property="diffcultyLabel" destination="ddR-3K-np1" id="RGj-GF-e59"/>
                 <outlet property="meanTextField" destination="qjc-Np-0gY" id="cb0-7t-NZ9"/>
                 <outlet property="syncWordButton" destination="dJY-Gm-b6u" id="JtE-6b-DMg"/>
@@ -24,6 +25,14 @@
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="OlO-Ss-8ly">
                     <rect key="frame" x="0.0" y="0.0" width="498" height="99"/>
                     <subviews>
+                        <box boxType="custom" borderWidth="0.0" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="WVw-jT-kjI">
+                            <rect key="frame" x="0.0" y="0.0" width="498" height="99"/>
+                            <view key="contentView" id="0XS-V7-H9d">
+                                <rect key="frame" x="0.0" y="0.0" width="498" height="99"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </view>
+                            <color key="fillColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+                        </box>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tia-Tf-Rhx">
                             <rect key="frame" x="195" y="67" width="109" height="22"/>
                             <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Overnight" id="syk-kl-UA3">
@@ -101,9 +110,11 @@
                     <constraints>
                         <constraint firstItem="guF-yj-Jm0" firstAttribute="leading" secondItem="tia-Tf-Rhx" secondAttribute="trailing" constant="18" id="2lH-vc-EUl"/>
                         <constraint firstItem="KGU-wt-55p" firstAttribute="leading" secondItem="OlO-Ss-8ly" secondAttribute="leading" id="7OQ-uY-EDe"/>
+                        <constraint firstItem="WVw-jT-kjI" firstAttribute="top" secondItem="OlO-Ss-8ly" secondAttribute="top" id="7fZ-vZ-Jiy"/>
                         <constraint firstItem="qjc-Np-0gY" firstAttribute="leading" secondItem="tia-Tf-Rhx" secondAttribute="leading" id="7pC-kg-wad"/>
                         <constraint firstItem="oMd-lx-g6O" firstAttribute="top" secondItem="qjc-Np-0gY" secondAttribute="bottom" constant="7" id="91b-Sq-Yxa"/>
                         <constraint firstAttribute="bottom" secondItem="KGU-wt-55p" secondAttribute="bottom" id="ELL-sR-9kb"/>
+                        <constraint firstAttribute="bottom" secondItem="WVw-jT-kjI" secondAttribute="bottom" id="PO9-6F-E3x"/>
                         <constraint firstItem="oMd-lx-g6O" firstAttribute="centerX" secondItem="OlO-Ss-8ly" secondAttribute="centerX" id="Phk-sO-sVm"/>
                         <constraint firstItem="qjc-Np-0gY" firstAttribute="trailing" secondItem="tia-Tf-Rhx" secondAttribute="trailing" id="QoV-ZW-8An"/>
                         <constraint firstItem="tia-Tf-Rhx" firstAttribute="centerX" secondItem="OlO-Ss-8ly" secondAttribute="centerX" id="Qzk-qK-RJ5"/>
@@ -114,7 +125,9 @@
                         <constraint firstItem="guF-yj-Jm0" firstAttribute="top" secondItem="OlO-Ss-8ly" secondAttribute="top" constant="10" id="Ysa-xQ-G09"/>
                         <constraint firstAttribute="trailing" secondItem="KGU-wt-55p" secondAttribute="trailing" id="cwi-dm-3fo"/>
                         <constraint firstItem="dJY-Gm-b6u" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="OlO-Ss-8ly" secondAttribute="leading" constant="20" id="eUC-NK-YcS"/>
+                        <constraint firstAttribute="trailing" secondItem="WVw-jT-kjI" secondAttribute="trailing" id="gU4-XA-SiV"/>
                         <constraint firstItem="dJY-Gm-b6u" firstAttribute="top" secondItem="OlO-Ss-8ly" secondAttribute="top" constant="7" id="idm-eF-E6H"/>
+                        <constraint firstItem="WVw-jT-kjI" firstAttribute="leading" secondItem="OlO-Ss-8ly" secondAttribute="leading" id="o0l-K9-8IY"/>
                         <constraint firstItem="tia-Tf-Rhx" firstAttribute="leading" secondItem="dJY-Gm-b6u" secondAttribute="trailing" constant="8" id="xmb-6I-HEC"/>
                     </constraints>
                 </customView>
