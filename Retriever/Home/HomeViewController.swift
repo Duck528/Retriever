@@ -281,6 +281,8 @@ extension HomeViewController {
                     self.difficultyPopUpButton.title = difficulty.title
                 case .clearInputTagText:
                     self.inputTagTextField.stringValue = ""
+                case .scrollToWord(let indexPath):
+                    self.wordCollectionView.scrollToItems(at: [indexPath], scrollPosition: .bottom)
                 }
             }).disposed(by: disposeBag)
     }

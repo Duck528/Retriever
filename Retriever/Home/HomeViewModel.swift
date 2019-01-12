@@ -19,6 +19,7 @@ class HomeViewModel {
         case reloadWordAtIndex(IndexPath)
         case updateDiffculty(WordItem.WordDifficulty)
         case clearInputTagText
+        case scrollToWord(IndexPath)
     }
     
     enum SyncStatus {
@@ -65,13 +66,16 @@ class HomeViewModel {
     }
     var editWordIndex: IndexPath? {
         didSet {
-            if editWordIndex == nil {
-                clearWordItemComponents()
-                viewAction.onNext(.updateWordAppendMode)
-            } else {
+            if let indexPath = editWordIndex {
                 updateWordItemComponents()
                 updateSelectedStatusInWordItems(true)
                 viewAction.onNext(.updateWordEditMode)
+                viewAction.onNext(.updateWordEditMode)
+                viewAction.onNext(.showAppendWordSection)
+                viewAction.onNext(.scrollToWord(indexPath))
+            } else {
+                clearWordItemComponents()
+                viewAction.onNext(.updateWordAppendMode)
             }
         }
         willSet {
@@ -137,8 +141,6 @@ class HomeViewModel {
         
         editWordIndex = indexPath
         let wordItem = wordItems.value[indexPath.item].wordItem.value
-        viewAction.onNext(.updateWordEditMode)
-        viewAction.onNext(.showAppendWordSection)
         viewAction.onNext(.updateDiffculty(wordItem.difficulty))
     }
     
