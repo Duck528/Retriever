@@ -100,6 +100,7 @@ class HomeViewController: NSViewController {
 
 extension HomeViewController {
     private func setupViews() {
+        view.wantsLayer = true
         statusDashboardView.wantsLayer = true
         statusDashboardView.layerContentsRedrawPolicy = .duringViewResize
         
@@ -289,12 +290,24 @@ extension HomeViewController {
         appendWordSectionView.findConstraint(for: .bottom)?.constant = -appendWordSectionView.bounds.height
         presentAppendWordSectionView.findConstraint(for: .bottom)?.constant = 0
         difficultyPopUpButton.selectItem(at: 0)
+        
+        NSAnimationContext.runAnimationGroup { context in
+            context.duration = 0.3
+            context.allowsImplicitAnimation = true
+            self.view.layoutSubtreeIfNeeded()
+        }
     }
     
     private func showAppendWordSection() {
         wordCollectionScrollView.contentInsets.bottom = 370
         appendWordSectionView.findConstraint(for: .bottom)?.constant = 0
         presentAppendWordSectionView.findConstraint(for: .bottom)?.constant = -presentAppendWordSectionView.bounds.height
+        
+        NSAnimationContext.runAnimationGroup { context in
+            context.duration = 0.3
+            context.allowsImplicitAnimation = true
+            self.view.layoutSubtreeIfNeeded()
+        }
     }
     
     private func showAppendWordToolSection() {
