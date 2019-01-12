@@ -19,6 +19,7 @@ class HomeViewModel {
         case reloadWordAtIndex(IndexPath)
         case updateDiffculty(WordItem.WordDifficulty)
         case clearInputTagText
+        case scrollToWord(IndexPath)
     }
     
     enum SyncStatus {
@@ -65,13 +66,20 @@ class HomeViewModel {
     }
     var editWordIndex: IndexPath? {
         didSet {
-            if editWordIndex == nil {
+            if let indexPath = editWordIndex {
+                updateWordItemComponents()
+                updateSelectedStatusInWordItems(true)
+                viewAction.onNext(.updateWordEditMode)
+                viewAction.onNext(.updateWordEditMode)
+                viewAction.onNext(.showAppendWordSection)
+                viewAction.onNext(.scrollToWord(indexPath))
+            } else {
                 clearWordItemComponents()
                 viewAction.onNext(.updateWordAppendMode)
-            } else {
-                updateWordItemComponents()
-                viewAction.onNext(.updateWordEditMode)
             }
+        }
+        willSet {
+            updateSelectedStatusInWordItems(false)
         }
     }
     
@@ -112,7 +120,6 @@ class HomeViewModel {
         bindFilterWordsByDifficultyOptions()
         bindFilterWordsBySearchedText()
         bindMinIntervalTimer()
-//        bindInputTagText()
         
         fetchWordItemsWithoutSync()
         fetchLatestSyncTime()
@@ -123,10 +130,17 @@ class HomeViewModel {
         guard indexPath.item >= 0, indexPath.item < wordItems.value.count else {
             return
         }
+        
+        // 같은 index가 중복으로 선택된 경우 nil 삽입
+        if indexPath.item == editWordIndex?.item {
+            viewAction.onNext(.updateDiffculty(WordItem.WordDifficulty.easy))
+            viewAction.onNext(.hideAppendWordSection)
+            editWordIndex = nil
+            return
+        }
+        
         editWordIndex = indexPath
         let wordItem = wordItems.value[indexPath.item].wordItem.value
-        viewAction.onNext(.updateWordEditMode)
-        viewAction.onNext(.showAppendWordSection)
         viewAction.onNext(.updateDiffculty(wordItem.difficulty))
     }
     
@@ -426,6 +440,15 @@ extension HomeViewModel {
         }
         wordTags.accept(tagCellViewModels)
         additionalInfoText.accept(editWordItem.additionalInfo)
+    }
+    
+    private func updateSelectedStatusInWordItems(_ selected: Bool) {
+        guard
+            let indexPath = editWordIndex,
+            indexPath.item >= 0, indexPath.item < wordItems.value.count else {
+                return
+        }
+        wordItems.value[indexPath.item].selected.accept(selected)
     }
     
     private func clearWordItemComponents() {

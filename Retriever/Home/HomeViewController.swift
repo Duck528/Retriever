@@ -100,7 +100,10 @@ class HomeViewController: NSViewController {
 
 extension HomeViewController {
     private func setupViews() {
-        view.postsFrameChangedNotifications = true
+        view.wantsLayer = true
+        statusDashboardView.wantsLayer = true
+        statusDashboardView.layerContentsRedrawPolicy = .duringViewResize
+        
         setupCollectionView()
         hideAppendWordSection()
         showAppendWordToolSection()
@@ -142,6 +145,7 @@ extension HomeViewController: NSCollectionViewDelegateFlowLayout {
             return
         }
         viewModel.selectWordToEdit(at: indexPath)
+        wordCollectionView.deselectAll(nil)
     }
     
     private func calculateFilterTagCellSize(at indexPath: IndexPath) -> CGSize {
@@ -277,6 +281,8 @@ extension HomeViewController {
                     self.difficultyPopUpButton.title = difficulty.title
                 case .clearInputTagText:
                     self.inputTagTextField.stringValue = ""
+                case .scrollToWord(let indexPath):
+                    self.wordCollectionView.scrollToItems(at: [indexPath], scrollPosition: .bottom)
                 }
             }).disposed(by: disposeBag)
     }
@@ -286,12 +292,24 @@ extension HomeViewController {
         appendWordSectionView.findConstraint(for: .bottom)?.constant = -appendWordSectionView.bounds.height
         presentAppendWordSectionView.findConstraint(for: .bottom)?.constant = 0
         difficultyPopUpButton.selectItem(at: 0)
+        
+        NSAnimationContext.runAnimationGroup { context in
+            context.duration = 0.3
+            context.allowsImplicitAnimation = true
+            self.view.layoutSubtreeIfNeeded()
+        }
     }
     
     private func showAppendWordSection() {
         wordCollectionScrollView.contentInsets.bottom = 370
         appendWordSectionView.findConstraint(for: .bottom)?.constant = 0
         presentAppendWordSectionView.findConstraint(for: .bottom)?.constant = -presentAppendWordSectionView.bounds.height
+        
+        NSAnimationContext.runAnimationGroup { context in
+            context.duration = 0.3
+            context.allowsImplicitAnimation = true
+            self.view.layoutSubtreeIfNeeded()
+        }
     }
     
     private func showAppendWordToolSection() {
@@ -553,10 +571,18 @@ extension HomeViewController {
     
     private func hideStatusDashboard() {
         statusDashboardView.findConstraint(for: .height)?.constant = 0
+        NSAnimationContext.runAnimationGroup { context in
+            context.duration = 0.3
+            self.view.layoutSubtreeIfNeeded()
+        }
     }
     
     private func showStatusDashboard() {
         statusDashboardView.findConstraint(for: .height)?.constant = statusDashboardHeight
+        NSAnimationContext.runAnimationGroup { context in
+            context.duration = 0.3
+            self.view.layoutSubtreeIfNeeded()
+        }
     }
     
     private func showOfflineStatusToDashboard() {
