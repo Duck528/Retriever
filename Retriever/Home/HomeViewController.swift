@@ -479,6 +479,7 @@ extension HomeViewController {
     
     private func bindWordAppendableStatus() {
         viewModel.wordAppendable
+            .observeOn(MainScheduler.instance)
             .subscribe(onNext: { appendable in
                 self.appendWordButton.isEnabled = appendable
                 self.appendWordContinouslyButton.isEnabled = appendable
