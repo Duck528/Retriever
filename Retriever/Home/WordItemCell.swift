@@ -73,7 +73,7 @@ extension WordItemCell: NSCollectionViewDelegateFlowLayout {
     }
     
     private func calculateTagCellSize(at indexPath: IndexPath) -> CGSize {
-        let tagTitle = "#\(viewModel.tags.value[indexPath.item].tagItem.value.title)"
+        let tagTitle = viewModel.tags.value[indexPath.item].displayTagTitle.value
         let width = NSFont.helveticaNeueBold(size: 13)
             .size(text: tagTitle, constrainedToWidth: CGFloat.greatestFiniteMagnitude)
             .width + 30
