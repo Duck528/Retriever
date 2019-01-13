@@ -193,7 +193,7 @@ class HomeViewModel {
                     deletedWordItems.remove(at: indexPath.item)
                     self.wordItems.accept(deletedWordItems)
                     self.viewAction.onNext(.hideAppendWordSection)
-                    self.viewAction.onNext(.reloadWordItems)
+                    self.viewAction.onNext(ViewAction.reloadWordAtIndex(indexPath))
                     self.clearWordItemComponents()
                 case .error(let error):
                     print(error.localizedDescription)
@@ -215,8 +215,6 @@ class HomeViewModel {
         wordItem.additionalInfo = additionalInfoText.value
         wordItem.difficulty = WordItem.WordDifficulty.parse(int: difficulty.value)
         
-        self.editWordIndex = nil
-        
         updateLocalWordUsecase.execute(wordItem: wordItem)
             .map { WordItemCellViewModel(wordItem: $0) }
             .flatMapLatest { wordItem -> Observable<WordItemCellViewModel> in
@@ -230,8 +228,7 @@ class HomeViewModel {
                 }
                 updatedWordItems[indexPath.item] = updatedWordItem
                 self.wordItems.accept(updatedWordItems)
-                self.clearWordItemComponents()
-                self.viewAction.onNext(.hideAppendWordSection)
+                self.editWordIndex = nil
                 self.viewAction.onNext(.reloadWordAtIndex(indexPath))
             }).disposed(by: disposeBag)
     }
@@ -307,11 +304,13 @@ extension HomeViewModel {
                 } else {
                     return $0.word.lowercased().starts(with: filterWord)
                 }
-                }}
-            .map { $0.map { WordItemCellViewModel(wordItem: $0) } }
+                }
+            }.map { $0.map { WordItemCellViewModel(wordItem: $0) } }
             .map { self.filterWordItemsByTags(wordItems: $0, tags: self.getSelectedFilterTags()) }
-            .bind(to: wordItems)
-            .disposed(by: disposeBag)
+            .subscribe(onNext: { wordItems in
+                self.wordItems.accept(wordItems)
+                self.viewAction.onNext(.reloadWordItems)
+            }).disposed(by: disposeBag)
     }
     
     private func fetchWordItemsAfterSync() {
@@ -341,8 +340,10 @@ extension HomeViewModel {
                     .do(onNext: { latestSyncTime in
                         self.latestSyncTime.accept(latestSyncTime)
                     }).map { _ in wordItems }
-            }.bind(to: wordItems)
-            .disposed(by: disposeBag)
+            }.subscribe(onNext: { wordItems in
+                self.wordItems.accept(wordItems)
+                self.viewAction.onNext(.reloadWordItems)
+            }).disposed(by: disposeBag)
     }
     
     private func fetchLatestSyncTime() {
@@ -425,7 +426,8 @@ extension HomeViewModel {
             .flatMapLatest { savedWordItem -> Observable<WordItemCellViewModel> in
                 let appendedWordItems = self.wordItems.value + [savedWordItem]
                 self.wordItems.accept(appendedWordItems)
-                self.viewAction.onNext(.reloadWordItems)
+                let index = self.wordItems.value.count - 1
+                self.viewAction.onNext(ViewAction.reloadWordAtIndex(IndexPath(item: index, section: 0)))
                 return .just(savedWordItem)
             }.ignoreElements()
     }

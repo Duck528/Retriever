@@ -101,8 +101,7 @@ class HomeViewController: NSViewController {
 extension HomeViewController {
     private func setupViews() {
         view.wantsLayer = true
-        statusDashboardView.wantsLayer = true
-        statusDashboardView.layerContentsRedrawPolicy = .duringViewResize
+        wordCollectionView.wantsLayer = false
         
         setupCollectionView()
         hideAppendWordSection()
@@ -454,6 +453,7 @@ extension HomeViewController {
         viewModel.wordTags
             .map { $0.count > 0 }
             .map { $0 == true ? 70 : 0  }
+            .observeOn(MainScheduler.instance)
             .subscribe(onNext: {
                 self.inputTagSectionView.findConstraint(for: .height)?.constant = $0
             }).disposed(by: disposeBag)
