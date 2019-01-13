@@ -204,6 +204,9 @@ class HomeViewModel {
         guard let indexPath = editWordIndex else {
             return
         }
+        guard indexPath.item >= 0, indexPath.item < wordItems.value.count else {
+            return
+        }
         
         let wordItem = wordItems.value[indexPath.item].wordItem.value
         wordItem.word = wordText.value
@@ -457,10 +460,11 @@ extension HomeViewModel {
     }
     
     private func updateSelectedStatusInWordItems(_ selected: Bool) {
-        guard
-            let indexPath = editWordIndex,
-            indexPath.item >= 0, indexPath.item < wordItems.value.count else {
-                return
+        guard let indexPath = editWordIndex else {
+            return
+        }
+        guard indexPath.item >= 0, indexPath.item < wordItems.value.count else {
+            return
         }
         wordItems.value[indexPath.item].selected.accept(selected)
     }
