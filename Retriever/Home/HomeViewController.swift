@@ -452,6 +452,7 @@ extension HomeViewController {
         viewModel.wordTags
             .map { $0.count }
             .distinctUntilChanged()
+            .observeOn(MainScheduler.instance)
             .subscribe(onNext: { _ in
                 self.inputTagCollectionView.reloadData()
             }).disposed(by: disposeBag)

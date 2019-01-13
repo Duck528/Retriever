@@ -20,6 +20,8 @@ class HomeViewModel {
         case updateDiffculty(WordItem.WordDifficulty)
         case clearInputTagText
         case scrollToWord(IndexPath)
+        case reloadWordItems
+        case reloadWordAtIndexs([IndexPath])
     }
     
     enum SyncStatus {
@@ -231,6 +233,7 @@ class HomeViewModel {
                 self.wordItems.accept(updatedWordItems)
                 self.clearWordItemComponents()
                 self.viewAction.onNext(.hideAppendWordSection)
+                self.viewAction.onNext(.reloadIndexfdqs([indexPath]))
             }).disposed(by: disposeBag)
     }
     
