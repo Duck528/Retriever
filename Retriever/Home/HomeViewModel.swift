@@ -307,9 +307,10 @@ extension HomeViewModel {
                 if filterWord.isEmpty {
                     return true
                 } else {
-                    return $0.word.lowercased().starts(with: filterWord)
-                }
-                }
+                    let wordSearched = $0.word.lowercased().starts(with: filterWord)
+                    let meanSearched = $0.mean.lowercased().starts(with: filterWord)
+                    return wordSearched || meanSearched
+                }}
             }.map { $0.map { WordItemCellViewModel(wordItem: $0) } }
             .map { self.filterWordItemsByTags(wordItems: $0, tags: self.getSelectedFilterTags()) }
             .subscribe(onNext: { wordItems in
@@ -327,10 +328,11 @@ extension HomeViewModel {
                 if filterWord.isEmpty {
                     return true
                 } else {
-                    return $0.word.lowercased().starts(with: filterWord)
+                    let wordSearched = $0.word.lowercased().starts(with: filterWord)
+                    let meanSearched = $0.mean.lowercased().starts(with: filterWord)
+                    return wordSearched || meanSearched
                 }
-            }}
-            .map { $0.map { WordItemCellViewModel(wordItem: $0) } }
+            }}.map { $0.map { WordItemCellViewModel(wordItem: $0) } }
             .map { self.filterWordItemsByTags(wordItems: $0, tags: self.getSelectedFilterTags()) }
         
         syncDatabaseUsecase.execute()
