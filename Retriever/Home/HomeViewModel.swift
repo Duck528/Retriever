@@ -16,10 +16,11 @@ class HomeViewModel {
         case showAppendWordSection
         case updateWordEditMode
         case updateWordAppendMode
-        case reloadWordAtIndex(IndexPath)
         case updateDiffculty(WordItem.WordDifficulty)
-        case clearInputTagText
+        case reloadWordItems
+        case reloadWordAtIndex(IndexPath)
         case scrollToWord(IndexPath)
+        case clearInputTagText
     }
     
     enum SyncStatus {
@@ -64,6 +65,7 @@ class HomeViewModel {
         return Observable.combineLatest(hasWordObs, hasMeanObs)
             .map { $0 && $1 }
     }
+    
     var editWordIndex: IndexPath? {
         didSet {
             if let indexPath = editWordIndex {
@@ -76,6 +78,8 @@ class HomeViewModel {
             } else {
                 clearWordItemComponents()
                 viewAction.onNext(.updateWordAppendMode)
+                viewAction.onNext(.hideAppendWordSection)
+                viewAction.onNext(.updateDiffculty(WordItem.WordDifficulty.easy))
             }
         }
         willSet {
@@ -120,6 +124,7 @@ class HomeViewModel {
         bindFilterWordsByDifficultyOptions()
         bindFilterWordsBySearchedText()
         bindMinIntervalTimer()
+        bindWordItemsCountChanged()
         
         fetchWordItemsWithoutSync()
         fetchLatestSyncTime()
@@ -157,8 +162,6 @@ class HomeViewModel {
     
     func cancelEditWordButtonTapped() {
         editWordIndex = nil
-        viewAction.onNext(.hideAppendWordSection)
-        viewAction.onNext(.updateDiffculty(WordItem.WordDifficulty.easy))
     }
     
     // 동기화 버튼이 눌린 경우
@@ -172,21 +175,24 @@ class HomeViewModel {
     
     // 삭제 버튼이 눌린 경우
     func deleteSelectedWordButtonTapped() {
-        guard let editWordIndex = editWordIndex else {
+        guard let indexPath = editWordIndex else {
             return
         }
-        let wordItem = wordItems.value[editWordIndex.item].wordItem.value
+        guard indexPath.item >= 0, indexPath.item < wordItems.value.count else {
+            return
+        }
         
+        let wordItem = wordItems.value[indexPath.item].wordItem.value
         deleteLocalWordUsecase.execute(wordItem: wordItem)
             .observeOn(MainScheduler.instance)
             .subscribe { event in
                 switch event {
                 case .completed:
                     var deletedWordItems = self.wordItems.value
-                    deletedWordItems.remove(at: editWordIndex.item)
+                    deletedWordItems.remove(at: indexPath.item)
                     self.wordItems.accept(deletedWordItems)
-                    self.viewAction.onNext(.hideAppendWordSection)
-                    self.clearWordItemComponents()
+                    self.viewAction.onNext(.reloadWordItems)
+                    self.editWordIndex = nil
                 case .error(let error):
                     print(error.localizedDescription)
                 }
@@ -195,19 +201,17 @@ class HomeViewModel {
     
     // 업데이트 버튼이 눌린 경우
     func updateSelectedWordButtonTapped() {
-        guard let editWordIndex = editWordIndex else {
+        guard let indexPath = editWordIndex else {
             return
         }
         
-        let wordItem = wordItems.value[editWordIndex.item].wordItem.value
+        let wordItem = wordItems.value[indexPath.item].wordItem.value
         wordItem.word = wordText.value
         wordItem.mean = meanText.value
         wordItem.tags = wordTags.value
             .map { $0.tagItem.value }
         wordItem.additionalInfo = additionalInfoText.value
         wordItem.difficulty = WordItem.WordDifficulty.parse(int: difficulty.value)
-        
-        self.editWordIndex = nil
         
         updateLocalWordUsecase.execute(wordItem: wordItem)
             .map { WordItemCellViewModel(wordItem: $0) }
@@ -217,13 +221,13 @@ class HomeViewModel {
             }.observeOn(MainScheduler.instance)
             .subscribe(onNext: { updatedWordItem in
                 var updatedWordItems = self.wordItems.value
-                guard editWordIndex.item >= 0, editWordIndex.item < updatedWordItems.count else {
+                guard indexPath.item >= 0, indexPath.item < updatedWordItems.count else {
                     return
                 }
-                updatedWordItems[editWordIndex.item] = updatedWordItem
+                updatedWordItems[indexPath.item] = updatedWordItem
                 self.wordItems.accept(updatedWordItems)
-                self.clearWordItemComponents()
-                self.viewAction.onNext(.hideAppendWordSection)
+                self.editWordIndex = nil
+                self.viewAction.onNext(.reloadWordAtIndex(indexPath))
             }).disposed(by: disposeBag)
     }
     
@@ -263,6 +267,10 @@ class HomeViewModel {
     }
     
     func inputTagReturnKeyEntered() {
+        guard !tagText.value.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            return
+        }
+        
         let enteredTag = TagItem(title: tagText.value)
         let tagVM = TagItemCellViewModel(tagItem: enteredTag, deletable: true, selectable: false)
         tagVM.deleteRequested
@@ -298,11 +306,13 @@ extension HomeViewModel {
                 } else {
                     return $0.word.lowercased().starts(with: filterWord)
                 }
-                }}
-            .map { $0.map { WordItemCellViewModel(wordItem: $0) } }
+                }
+            }.map { $0.map { WordItemCellViewModel(wordItem: $0) } }
             .map { self.filterWordItemsByTags(wordItems: $0, tags: self.getSelectedFilterTags()) }
-            .bind(to: wordItems)
-            .disposed(by: disposeBag)
+            .subscribe(onNext: { wordItems in
+                self.wordItems.accept(wordItems)
+                self.viewAction.onNext(.reloadWordItems)
+            }).disposed(by: disposeBag)
     }
     
     private func fetchWordItemsAfterSync() {
@@ -332,8 +342,10 @@ extension HomeViewModel {
                     .do(onNext: { latestSyncTime in
                         self.latestSyncTime.accept(latestSyncTime)
                     }).map { _ in wordItems }
-            }.bind(to: wordItems)
-            .disposed(by: disposeBag)
+            }.subscribe(onNext: { wordItems in
+                self.wordItems.accept(wordItems)
+                self.viewAction.onNext(.reloadWordItems)
+            }).disposed(by: disposeBag)
     }
     
     private func fetchLatestSyncTime() {
@@ -416,6 +428,8 @@ extension HomeViewModel {
             .flatMapLatest { savedWordItem -> Observable<WordItemCellViewModel> in
                 let appendedWordItems = self.wordItems.value + [savedWordItem]
                 self.wordItems.accept(appendedWordItems)
+                let index = self.wordItems.value.count - 1
+                self.viewAction.onNext(ViewAction.reloadWordAtIndex(IndexPath(item: index, section: 0)))
                 return .just(savedWordItem)
             }.ignoreElements()
     }
@@ -574,5 +588,14 @@ extension HomeViewModel {
                 self.clearInputTagText()
             }).bind(to: wordTags)
             .disposed(by: disposeBag)
+    }
+    
+    private func bindWordItemsCountChanged() {
+        wordItems
+            .map { $0.count }
+            .distinctUntilChanged()
+            .subscribe(onNext: { _ in
+                self.editWordIndex = nil
+            }).disposed(by: disposeBag)
     }
 }

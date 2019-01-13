@@ -101,8 +101,7 @@ class HomeViewController: NSViewController {
 extension HomeViewController {
     private func setupViews() {
         view.wantsLayer = true
-        statusDashboardView.wantsLayer = true
-        statusDashboardView.layerContentsRedrawPolicy = .duringViewResize
+        wordCollectionView.wantsLayer = false
         
         setupCollectionView()
         hideAppendWordSection()
@@ -247,7 +246,6 @@ extension HomeViewController {
         bindDifficultyFilterOptions()
         bindSearchToWord()
         bindTagCollectionView()
-        bindWordCollectionView()
         bindInputTagSectionView()
         bindCancelAppendWordButton()
         bindPresentAppendWordSectionButton()
@@ -283,6 +281,8 @@ extension HomeViewController {
                     self.inputTagTextField.stringValue = ""
                 case .scrollToWord(let indexPath):
                     self.wordCollectionView.scrollToItems(at: [indexPath], scrollPosition: .bottom)
+                case .reloadWordItems:
+                    self.wordCollectionView.reloadData()
                 }
             }).disposed(by: disposeBag)
     }
@@ -320,15 +320,6 @@ extension HomeViewController {
     private func showEditWordToolSection() {
         editWordToolSection.isHidden = false
         appendWordToolSection.isHidden = true
-    }
-    
-    private func bindWordCollectionView() {
-        viewModel.wordItems
-            .skip(1)
-            .observeOn(MainScheduler.instance)
-            .subscribe(onNext: { _ in
-                self.wordCollectionView.reloadData()
-            }).disposed(by: disposeBag)
     }
     
     private func bindSearchToWord() {
@@ -452,6 +443,7 @@ extension HomeViewController {
         viewModel.wordTags
             .map { $0.count }
             .distinctUntilChanged()
+            .observeOn(MainScheduler.instance)
             .subscribe(onNext: { _ in
                 self.inputTagCollectionView.reloadData()
             }).disposed(by: disposeBag)
@@ -461,6 +453,7 @@ extension HomeViewController {
         viewModel.wordTags
             .map { $0.count > 0 }
             .map { $0 == true ? 70 : 0  }
+            .observeOn(MainScheduler.instance)
             .subscribe(onNext: {
                 self.inputTagSectionView.findConstraint(for: .height)?.constant = $0
             }).disposed(by: disposeBag)
@@ -479,6 +472,7 @@ extension HomeViewController {
     
     private func bindWordAppendableStatus() {
         viewModel.wordAppendable
+            .observeOn(MainScheduler.instance)
             .subscribe(onNext: { appendable in
                 self.appendWordButton.isEnabled = appendable
                 self.appendWordContinouslyButton.isEnabled = appendable
