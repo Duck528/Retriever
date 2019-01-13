@@ -267,6 +267,10 @@ class HomeViewModel {
     }
     
     func inputTagReturnKeyEntered() {
+        guard !tagText.value.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            return
+        }
+        
         let enteredTag = TagItem(title: tagText.value)
         let tagVM = TagItemCellViewModel(tagItem: enteredTag, deletable: true, selectable: false)
         tagVM.deleteRequested
