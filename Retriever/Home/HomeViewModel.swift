@@ -16,12 +16,11 @@ class HomeViewModel {
         case showAppendWordSection
         case updateWordEditMode
         case updateWordAppendMode
-        case reloadWordAtIndex(IndexPath)
         case updateDiffculty(WordItem.WordDifficulty)
-        case clearInputTagText
-        case scrollToWord(IndexPath)
         case reloadWordItems
-        case reloadWordAtIndexs([IndexPath])
+        case reloadWordAtIndex(IndexPath)
+        case scrollToWord(IndexPath)
+        case clearInputTagText
     }
     
     enum SyncStatus {
@@ -194,6 +193,7 @@ class HomeViewModel {
                     deletedWordItems.remove(at: indexPath.item)
                     self.wordItems.accept(deletedWordItems)
                     self.viewAction.onNext(.hideAppendWordSection)
+                    self.viewAction.onNext(.reloadWordItems)
                     self.clearWordItemComponents()
                 case .error(let error):
                     print(error.localizedDescription)
@@ -206,7 +206,6 @@ class HomeViewModel {
         guard let indexPath = editWordIndex else {
             return
         }
-        
         
         let wordItem = wordItems.value[indexPath.item].wordItem.value
         wordItem.word = wordText.value
@@ -233,7 +232,7 @@ class HomeViewModel {
                 self.wordItems.accept(updatedWordItems)
                 self.clearWordItemComponents()
                 self.viewAction.onNext(.hideAppendWordSection)
-                self.viewAction.onNext(.reloadIndexfdqs([indexPath]))
+                self.viewAction.onNext(.reloadWordAtIndex(indexPath))
             }).disposed(by: disposeBag)
     }
     
@@ -426,6 +425,7 @@ extension HomeViewModel {
             .flatMapLatest { savedWordItem -> Observable<WordItemCellViewModel> in
                 let appendedWordItems = self.wordItems.value + [savedWordItem]
                 self.wordItems.accept(appendedWordItems)
+                self.viewAction.onNext(.reloadWordItems)
                 return .just(savedWordItem)
             }.ignoreElements()
     }

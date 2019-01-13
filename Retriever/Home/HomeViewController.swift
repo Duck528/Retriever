@@ -283,6 +283,8 @@ extension HomeViewController {
                     self.inputTagTextField.stringValue = ""
                 case .scrollToWord(let indexPath):
                     self.wordCollectionView.scrollToItems(at: [indexPath], scrollPosition: .bottom)
+                case .reloadWordItems:
+                    self.wordCollectionView.reloadData()
                 }
             }).disposed(by: disposeBag)
     }
@@ -323,12 +325,12 @@ extension HomeViewController {
     }
     
     private func bindWordCollectionView() {
-        viewModel.wordItems
-            .skip(1)
-            .observeOn(MainScheduler.instance)
-            .subscribe(onNext: { _ in
-                self.wordCollectionView.reloadData()
-            }).disposed(by: disposeBag)
+//        viewModel.wordItems
+//            .skip(1)
+//            .observeOn(MainScheduler.instance)
+//            .subscribe(onNext: { _ in
+//                self.wordCollectionView.reloadData()
+//            }).disposed(by: disposeBag)
     }
     
     private func bindSearchToWord() {
