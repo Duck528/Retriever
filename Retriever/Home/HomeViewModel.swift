@@ -183,7 +183,6 @@ class HomeViewModel {
         }
         
         let wordItem = wordItems.value[indexPath.item].wordItem.value
-        
         deleteLocalWordUsecase.execute(wordItem: wordItem)
             .observeOn(MainScheduler.instance)
             .subscribe { event in
@@ -192,9 +191,8 @@ class HomeViewModel {
                     var deletedWordItems = self.wordItems.value
                     deletedWordItems.remove(at: indexPath.item)
                     self.wordItems.accept(deletedWordItems)
-                    self.viewAction.onNext(.hideAppendWordSection)
-                    self.viewAction.onNext(ViewAction.reloadWordAtIndex(indexPath))
-                    self.clearWordItemComponents()
+                    self.viewAction.onNext(.reloadWordItems)
+                    self.editWordIndex = nil
                 case .error(let error):
                     print(error.localizedDescription)
                 }
