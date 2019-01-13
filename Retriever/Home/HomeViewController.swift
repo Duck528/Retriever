@@ -247,7 +247,6 @@ extension HomeViewController {
         bindDifficultyFilterOptions()
         bindSearchToWord()
         bindTagCollectionView()
-        bindWordCollectionView()
         bindInputTagSectionView()
         bindCancelAppendWordButton()
         bindPresentAppendWordSectionButton()
@@ -322,15 +321,6 @@ extension HomeViewController {
     private func showEditWordToolSection() {
         editWordToolSection.isHidden = false
         appendWordToolSection.isHidden = true
-    }
-    
-    private func bindWordCollectionView() {
-//        viewModel.wordItems
-//            .skip(1)
-//            .observeOn(MainScheduler.instance)
-//            .subscribe(onNext: { _ in
-//                self.wordCollectionView.reloadData()
-//            }).disposed(by: disposeBag)
     }
     
     private func bindSearchToWord() {
