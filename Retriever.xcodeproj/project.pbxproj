@@ -48,6 +48,9 @@
 		938CEC5021CFF0620035B80A /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 938CEC4F21CFF0620035B80A /* Home.storyboard */; };
 		938CEC5421CFF0790035B80A /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938CEC5321CFF0790035B80A /* HomeViewController.swift */; };
 		938CEC5621CFF0810035B80A /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938CEC5521CFF0810035B80A /* HomeViewModel.swift */; };
+		93CE782221EB867E00A54B04 /* Quize.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 93CE782121EB867E00A54B04 /* Quize.storyboard */; };
+		93CE782421EB877300A54B04 /* QuizeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CE782321EB877300A54B04 /* QuizeViewController.swift */; };
+		93CE782621EB87CC00A54B04 /* QuizeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CE782521EB87CC00A54B04 /* QuizeViewModel.swift */; };
 		93EE701B21D116CB00728013 /* LeftAlignFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EE701A21D116CB00728013 /* LeftAlignFlowLayout.swift */; };
 		93EE702021D1272800728013 /* NSFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EE701F21D1272800728013 /* NSFont+Extension.swift */; };
 		93EE702221D1312A00728013 /* NSView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EE702121D1312A00728013 /* NSView+Extension.swift */; };
@@ -107,6 +110,9 @@
 		938CEC4F21CFF0620035B80A /* Home.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Home.storyboard; sourceTree = "<group>"; };
 		938CEC5321CFF0790035B80A /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		938CEC5521CFF0810035B80A /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		93CE782121EB867E00A54B04 /* Quize.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Quize.storyboard; sourceTree = "<group>"; };
+		93CE782321EB877300A54B04 /* QuizeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizeViewController.swift; sourceTree = "<group>"; };
+		93CE782521EB87CC00A54B04 /* QuizeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizeViewModel.swift; sourceTree = "<group>"; };
 		93EE701A21D116CB00728013 /* LeftAlignFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeftAlignFlowLayout.swift; sourceTree = "<group>"; };
 		93EE701F21D1272800728013 /* NSFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSFont+Extension.swift"; sourceTree = "<group>"; };
 		93EE702121D1312A00728013 /* NSView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSView+Extension.swift"; sourceTree = "<group>"; };
@@ -197,6 +203,7 @@
 			children = (
 				938CEC3E21CE63260035B80A /* Root */,
 				938CEC4E21CFF0400035B80A /* Home */,
+				93CE782021EB865D00A54B04 /* Quize */,
 				938CEC4721CE89350035B80A /* Common */,
 				93EE702921D357A500728013 /* Model */,
 				93EE702C21D3597500728013 /* Repository */,
@@ -270,6 +277,16 @@
 				93EE702F21D3867700728013 /* WordItemCell.swift */,
 			);
 			path = Home;
+			sourceTree = "<group>";
+		};
+		93CE782021EB865D00A54B04 /* Quize */ = {
+			isa = PBXGroup;
+			children = (
+				93CE782121EB867E00A54B04 /* Quize.storyboard */,
+				93CE782321EB877300A54B04 /* QuizeViewController.swift */,
+				93CE782521EB87CC00A54B04 /* QuizeViewModel.swift */,
+			);
+			path = Quize;
 			sourceTree = "<group>";
 		};
 		93EE701921D1164800728013 /* Util */ = {
@@ -388,6 +405,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				93CE782221EB867E00A54B04 /* Quize.storyboard in Resources */,
 				938CEC5021CFF0620035B80A /* Home.storyboard in Resources */,
 				938CEC4421CE638B0035B80A /* Root.storyboard in Resources */,
 				938CEC2B21CE5B950035B80A /* Assets.xcassets in Resources */,
@@ -448,7 +466,9 @@
 				930FA1C121D9FC5200CE24A4 /* FetchLocalWordUsecase.swift in Sources */,
 				9316016F21E2C239004891C3 /* FetchAllLocalTagsUsecase.swift in Sources */,
 				9352D9E821CFFED00031FF15 /* TagItem.swift in Sources */,
+				93CE782621EB87CC00A54B04 /* QuizeViewModel.swift in Sources */,
 				938CEC5621CFF0810035B80A /* HomeViewModel.swift in Sources */,
+				93CE782421EB877300A54B04 /* QuizeViewController.swift in Sources */,
 				93EE702221D1312A00728013 /* NSView+Extension.swift in Sources */,
 				930FA1CB21DB4BFB00CE24A4 /* UpdateLocalWordUsecase.swift in Sources */,
 				930FA1CD21DB862500CE24A4 /* FetchNumberOfUpdatedWordUsecase.swift in Sources */,
