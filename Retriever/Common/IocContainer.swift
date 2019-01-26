@@ -23,6 +23,10 @@ extension ViewModelAssembler where Self: Assembler {
     func resolve() -> HomeViewModel {
         return HomeViewModel()
     }
+    
+    func resolve() -> QuizeViewModel {
+        return QuizeViewModel()
+    }
 }
 
 extension UsecaseAssembler where Self: Assembler {

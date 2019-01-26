@@ -93,6 +93,20 @@
                                         <view key="view" id="hDd-D5-KlD">
                                             <rect key="frame" x="10" y="33" width="840" height="647"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <subviews>
+                                                <containerView translatesAutoresizingMaskIntoConstraints="NO" id="peq-66-m79">
+                                                    <rect key="frame" x="0.0" y="0.0" width="840" height="647"/>
+                                                    <connections>
+                                                        <segue destination="FDs-xX-Ysx" kind="embed" id="cfU-kd-LH2"/>
+                                                    </connections>
+                                                </containerView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="peq-66-m79" secondAttribute="trailing" id="PPe-Gf-aiN"/>
+                                                <constraint firstItem="peq-66-m79" firstAttribute="top" secondItem="hDd-D5-KlD" secondAttribute="top" id="YGU-tZ-q4j"/>
+                                                <constraint firstAttribute="bottom" secondItem="peq-66-m79" secondAttribute="bottom" id="oMu-Pd-jqP"/>
+                                                <constraint firstItem="peq-66-m79" firstAttribute="leading" secondItem="hDd-D5-KlD" secondAttribute="leading" id="yzU-yW-Fv5"/>
+                                            </constraints>
                                         </view>
                                     </tabViewItem>
                                     <tabViewItem label="통계" identifier="" id="q4A-pa-pRw">
@@ -137,7 +151,15 @@
                 <controllerPlaceholder storyboardName="Home" referencedIdentifier="Home" id="eaG-mT-Owb" sceneMemberID="viewController"/>
                 <customObject id="mfz-Kv-JoG" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-237" y="1286"/>
+            <point key="canvasLocation" x="-65" y="1286"/>
+        </scene>
+        <!--Quize-->
+        <scene sceneID="zHl-RG-BEn">
+            <objects>
+                <controllerPlaceholder storyboardName="Quize" referencedIdentifier="Quize" id="FDs-xX-Ysx" sceneMemberID="viewController"/>
+                <customObject id="5CB-tt-iKS" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="50" y="1286"/>
         </scene>
     </scenes>
 </document>
