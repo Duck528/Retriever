@@ -80,11 +80,12 @@ extension QuizeViewModel {
             .combineLatest(easyLevelFilterOn, mediumLevelFilterOn, hardLevelFilterOn, undefinedLevelFilterOn)
             .do(onNext: { print("\($0), \($1), \($2), \($3)") })
             .map { easyOn, mediumOn, hardOn, undefinedOn -> [WordItem.WordDifficulty: Bool] in
+                let hasChecked = easyOn || mediumOn || hardOn || undefinedOn
                 return [
-                    .easy: easyOn,
-                    .medium: mediumOn,
-                    .hard: hardOn,
-                    .undefined: undefinedOn
+                    .easy: hasChecked ? easyOn : true,
+                    .medium: hasChecked ? mediumOn : true,
+                    .hard: hasChecked ? hardOn : true,
+                    .undefined: hasChecked ? undefinedOn : true
                 ]
             }.bind(to: filterWordsMap)
             .disposed(by: disposeBag)
