@@ -78,7 +78,6 @@ extension QuizeViewModel {
     private func bindWordLevelToWordFilterMap() {
         Observable
             .combineLatest(easyLevelFilterOn, mediumLevelFilterOn, hardLevelFilterOn, undefinedLevelFilterOn)
-            .do(onNext: { print("\($0), \($1), \($2), \($3)") })
             .map { easyOn, mediumOn, hardOn, undefinedOn -> [WordItem.WordDifficulty: Bool] in
                 let hasChecked = easyOn || mediumOn || hardOn || undefinedOn
                 return [
