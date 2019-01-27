@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 
 class QuizeViewModel {    
-    let words = BehaviorRelay<[WordItem]>(value: [])
+    let filteredWords = BehaviorRelay<[WordItem]>(value: [])
     let totalNumberOfWord = BehaviorRelay<Int>(value: 0)
 
     let tags = BehaviorRelay<[TagItemCellViewModel]>(value: [])
@@ -50,7 +50,7 @@ extension QuizeViewModel {
         fetchLocalWordUsecase.execute()
             .map { self.filterWordItemsByTags(wordItems: $0, tags: selectedTags) }
             .map { wordItems in wordItems.filter { filterMap[$0.difficulty].value ?? false } }
-            .bind(to: words)
+            .bind(to: filteredWords)
             .disposed(by: disposeBag)
     }
     

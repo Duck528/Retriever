@@ -112,6 +112,12 @@ extension QuizeViewController {
             .map { String($0) }
             .bind(to: totalWordCountLabel.rx.text)
             .disposed(by: disposeBag)
+        
+        viewModel.filteredWords
+            .map { $0.count }
+            .map { String($0) }
+            .bind(to: totalFilteredWordCountLabel.rx.text)
+            .disposed(by: disposeBag)
     }
     
     private func bindToggleFilterButton() {
