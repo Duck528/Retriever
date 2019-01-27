@@ -44,6 +44,7 @@ class QuizeViewController: NSViewController, BindableType {
     }
     
     func bindViewModel() {
+        bindTagCollectionView()
         bindToggleFilterButton()
         bindWordsCount()
         bindWordDifficultyLevel()
@@ -60,20 +61,54 @@ class QuizeViewController: NSViewController, BindableType {
     }
 }
 
+extension QuizeViewController: NSCollectionViewDataSource {
+    func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
+        return viewModel.tags.value.count
+    }
+    
+    func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
+        let identifier = NSUserInterfaceItemIdentifier("TagCell")
+        guard let item = collectionView.makeItem(withIdentifier: identifier, for: indexPath) as? TagItemCell else {
+            return NSCollectionViewItem()
+        }
+        let cellViewModel = viewModel.tags.value[indexPath.item]
+        item.bind(to: cellViewModel)
+        return item
+    }
+}
+
+extension QuizeViewController: NSCollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: NSCollectionView,
+                        layout collectionViewLayout: NSCollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> NSSize {
+        return calculateFilterTagCellSize(at: indexPath)
+    }
+    
+    private func calculateFilterTagCellSize(at indexPath: IndexPath) -> CGSize {
+        let tagTitle = viewModel.tags.value[indexPath.item].displayTagTitle.value
+        let width = NSFont.helveticaNeueBold(size: 13)
+            .size(text: tagTitle, constrainedToWidth: CGFloat.greatestFiniteMagnitude)
+            .width + 30
+        return CGSize(width: width, height: 20)
+    }
+}
+
 extension QuizeViewController {
     private func setupViews() {
+        view.wantsLayer = true
+        filterContainerView.wantsLayer = true
         setupCollectionView()
     }
     
     private func setupCollectionView() {
-        let identifier = NSUserInterfaceItemIdentifier("wordCell")
-        tagCollectionView.register(WordItemCell.self, forItemWithIdentifier: identifier)
+        let identifier = NSUserInterfaceItemIdentifier("TagCell")
+        tagCollectionView.register(TagItemCell.self, forItemWithIdentifier: identifier)
     }
 }
 
 extension QuizeViewController {
     private func bindWordsCount() {
-        viewModel.totalWordsCountObs
+        viewModel.totalNumberOfWord
             .map { String($0) }
             .bind(to: totalWordCountLabel.rx.text)
             .disposed(by: disposeBag)
@@ -121,12 +156,21 @@ extension QuizeViewController {
         
         difficultLevelFilterButton.rx.state
             .map { $0.rawValue == 1 ? true : false }
-            .bind(to: viewModel.difficultyLevelFilterOn)
+            .bind(to: viewModel.hardLevelFilterOn)
             .disposed(by: disposeBag)
         
         undefinedLevelFilterButton.rx.state
             .map { $0.rawValue == 1 ? true : false }
             .bind(to: viewModel.undefinedLevelFilterOn)
             .disposed(by: disposeBag)
+    }
+    
+    private func bindTagCollectionView() {
+        viewModel.tags
+            .map { _ in }
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: {
+                self.tagCollectionView.reloadData()
+            }).disposed(by: disposeBag)
     }
 }

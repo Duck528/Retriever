@@ -67,28 +67,28 @@
                                                         </textField>
                                                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ZZE-fI-Jwt">
                                                             <rect key="frame" x="28" y="158" width="45" height="18"/>
-                                                            <buttonCell key="cell" type="check" title="쉬움" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="DE8-x8-mP1">
+                                                            <buttonCell key="cell" type="check" title="쉬움" bezelStyle="regularSquare" imagePosition="left" inset="2" id="DE8-x8-mP1">
                                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                 <font key="font" metaFont="system"/>
                                                             </buttonCell>
                                                         </button>
                                                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ahb-Qb-qvd">
                                                             <rect key="frame" x="84" y="158" width="45" height="18"/>
-                                                            <buttonCell key="cell" type="check" title="보통" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="0bG-MS-E0o">
+                                                            <buttonCell key="cell" type="check" title="보통" bezelStyle="regularSquare" imagePosition="left" inset="2" id="0bG-MS-E0o">
                                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                 <font key="font" metaFont="system"/>
                                                             </buttonCell>
                                                         </button>
                                                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="klo-vd-hJB">
                                                             <rect key="frame" x="143" y="158" width="56" height="18"/>
-                                                            <buttonCell key="cell" type="check" title="어려움" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="lDQ-WC-RJu">
+                                                            <buttonCell key="cell" type="check" title="어려움" bezelStyle="regularSquare" imagePosition="left" inset="2" id="lDQ-WC-RJu">
                                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                 <font key="font" metaFont="system"/>
                                                             </buttonCell>
                                                         </button>
                                                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QOc-BO-zUD">
                                                             <rect key="frame" x="210" y="158" width="94" height="18"/>
-                                                            <buttonCell key="cell" type="check" title="정의되지 않음" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="ptS-TE-GXo">
+                                                            <buttonCell key="cell" type="check" title="정의되지 않음" bezelStyle="regularSquare" imagePosition="left" inset="2" id="ptS-TE-GXo">
                                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                 <font key="font" metaFont="system"/>
                                                             </buttonCell>
@@ -101,19 +101,23 @@
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                         </textField>
-                                                        <scrollView wantsLayer="YES" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WR9-Jg-WHC">
+                                                        <scrollView wantsLayer="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WR9-Jg-WHC">
                                                             <rect key="frame" x="25" y="18" width="498" height="90"/>
-                                                            <clipView key="contentView" id="h3Q-k4-bUa">
-                                                                <rect key="frame" x="1" y="1" width="496" height="88"/>
+                                                            <clipView key="contentView" copiesOnScroll="NO" id="h3Q-k4-bUa">
+                                                                <rect key="frame" x="0.0" y="0.0" width="498" height="90"/>
                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                 <subviews>
                                                                     <collectionView id="7cV-7g-1Nd">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="496" height="158"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="498" height="90"/>
                                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
-                                                                        <collectionViewFlowLayout key="collectionViewLayout" minimumInteritemSpacing="10" minimumLineSpacing="10" id="ihZ-fH-RVN">
+                                                                        <collectionViewFlowLayout key="collectionViewLayout" minimumInteritemSpacing="10" minimumLineSpacing="10" id="ihZ-fH-RVN" customClass="LeftAlignFlowLayout" customModule="Retriever" customModuleProvider="target">
                                                                             <size key="itemSize" width="50" height="50"/>
                                                                         </collectionViewFlowLayout>
                                                                         <color key="primaryBackgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                        <connections>
+                                                                            <outlet property="dataSource" destination="cF7-zp-PEd" id="gz2-SZ-3V7"/>
+                                                                            <outlet property="delegate" destination="cF7-zp-PEd" id="b0D-XS-hFP"/>
+                                                                        </connections>
                                                                     </collectionView>
                                                                 </subviews>
                                                             </clipView>
@@ -121,11 +125,11 @@
                                                                 <constraint firstAttribute="height" constant="90" id="gvw-ao-1Jl"/>
                                                             </constraints>
                                                             <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="bt7-G8-aQd">
-                                                                <rect key="frame" x="1" y="67" width="446" height="16"/>
+                                                                <rect key="frame" x="-100" y="-100" width="446" height="16"/>
                                                                 <autoresizingMask key="autoresizingMask"/>
                                                             </scroller>
-                                                            <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="kU7-bz-laV">
-                                                                <rect key="frame" x="481" y="1" width="16" height="88"/>
+                                                            <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="kU7-bz-laV">
+                                                                <rect key="frame" x="482" y="0.0" width="16" height="90"/>
                                                                 <autoresizingMask key="autoresizingMask"/>
                                                             </scroller>
                                                         </scrollView>

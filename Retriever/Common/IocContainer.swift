@@ -88,4 +88,9 @@ extension UsecaseAssembler where Self: Assembler {
         let wordItemDAO = RMWordItemDAO()
         return FetchAllLocalTagsUsecase(wordItemDAO: wordItemDAO)
     }
+    
+    func resolve() -> FetchTotalLocalWordCountUsecase {
+        let wordItemDAO = RMWordItemDAO()
+        return FetchTotalLocalWordCountUsecase(wordItemDAO: wordItemDAO)
+    }
 }

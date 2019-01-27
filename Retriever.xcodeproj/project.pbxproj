@@ -48,6 +48,7 @@
 		938CEC5021CFF0620035B80A /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 938CEC4F21CFF0620035B80A /* Home.storyboard */; };
 		938CEC5421CFF0790035B80A /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938CEC5321CFF0790035B80A /* HomeViewController.swift */; };
 		938CEC5621CFF0810035B80A /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938CEC5521CFF0810035B80A /* HomeViewModel.swift */; };
+		93B9850121FE15FF004ABFD2 /* FetchTotalLocalWordCountUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B9850021FE15FF004ABFD2 /* FetchTotalLocalWordCountUsecase.swift */; };
 		93CE782221EB867E00A54B04 /* Quize.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 93CE782121EB867E00A54B04 /* Quize.storyboard */; };
 		93CE782421EB877300A54B04 /* QuizeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CE782321EB877300A54B04 /* QuizeViewController.swift */; };
 		93CE782621EB87CC00A54B04 /* QuizeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CE782521EB87CC00A54B04 /* QuizeViewModel.swift */; };
@@ -73,7 +74,7 @@
 		930FA1B621D9325C00CE24A4 /* RMConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMConfiguration.swift; sourceTree = "<group>"; };
 		930FA1B821D9330E00CE24A4 /* RMWordItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMWordItem.swift; sourceTree = "<group>"; };
 		930FA1BA21D93B8700CE24A4 /* RMWordItemDAO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMWordItemDAO.swift; sourceTree = "<group>"; };
-		930FA1BC21D93CC900CE24A4 /* SyncDatabaseUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SyncDatabaseUsecase.swift; path = Retriever/Extension/SyncDatabaseUsecase.swift; sourceTree = SOURCE_ROOT; };
+		930FA1BC21D93CC900CE24A4 /* SyncDatabaseUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SyncDatabaseUsecase.swift; path = Retriever/Usecase/SyncUsecase/SyncDatabaseUsecase.swift; sourceTree = SOURCE_ROOT; };
 		930FA1C021D9FC5200CE24A4 /* FetchLocalWordUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchLocalWordUsecase.swift; sourceTree = "<group>"; };
 		930FA1C221DA039600CE24A4 /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		930FA1C421DA03AE00CE24A4 /* RxReachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxReachability.swift; sourceTree = "<group>"; };
@@ -110,6 +111,7 @@
 		938CEC4F21CFF0620035B80A /* Home.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Home.storyboard; sourceTree = "<group>"; };
 		938CEC5321CFF0790035B80A /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		938CEC5521CFF0810035B80A /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		93B9850021FE15FF004ABFD2 /* FetchTotalLocalWordCountUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchTotalLocalWordCountUsecase.swift; sourceTree = "<group>"; };
 		93CE782121EB867E00A54B04 /* Quize.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Quize.storyboard; sourceTree = "<group>"; };
 		93CE782321EB877300A54B04 /* QuizeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizeViewController.swift; sourceTree = "<group>"; };
 		93CE782521EB87CC00A54B04 /* QuizeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizeViewModel.swift; sourceTree = "<group>"; };
@@ -279,6 +281,54 @@
 			path = Home;
 			sourceTree = "<group>";
 		};
+		93B984FB21FE157E004ABFD2 /* FetchUsecase */ = {
+			isa = PBXGroup;
+			children = (
+				93EE702721D3577F00728013 /* FetchRemoteWordUsecase.swift */,
+				930FA1C021D9FC5200CE24A4 /* FetchLocalWordUsecase.swift */,
+				930FA1CC21DB862500CE24A4 /* FetchNumberOfUpdatedWordUsecase.swift */,
+				930FA1CE21DB87F100CE24A4 /* FetchNumberOfDeletedWordUsecase.swift */,
+				930FA1EB21DFC69A00CE24A4 /* FetchLatestSyncTimeUsecase.swift */,
+				9316016E21E2C239004891C3 /* FetchAllLocalTagsUsecase.swift */,
+				93B9850021FE15FF004ABFD2 /* FetchTotalLocalWordCountUsecase.swift */,
+			);
+			path = FetchUsecase;
+			sourceTree = "<group>";
+		};
+		93B984FC21FE1596004ABFD2 /* SaveUsecase */ = {
+			isa = PBXGroup;
+			children = (
+				93EE703321D5336B00728013 /* SaveRemoteWordUsecase.swift */,
+				930FA1C621DA7EA900CE24A4 /* SaveLocalWordUsecase.swift */,
+			);
+			path = SaveUsecase;
+			sourceTree = "<group>";
+		};
+		93B984FD21FE15A4004ABFD2 /* UpdateUsecase */ = {
+			isa = PBXGroup;
+			children = (
+				930FA1ED21DFC6AC00CE24A4 /* UpdateLatestSyncTimeUsecase.swift */,
+				930FA1CA21DB4BFB00CE24A4 /* UpdateLocalWordUsecase.swift */,
+			);
+			path = UpdateUsecase;
+			sourceTree = "<group>";
+		};
+		93B984FE21FE15B2004ABFD2 /* DeleteUsecase */ = {
+			isa = PBXGroup;
+			children = (
+				930FA1C821DA8D3A00CE24A4 /* DeleteLocalWordUsecase.swift */,
+			);
+			path = DeleteUsecase;
+			sourceTree = "<group>";
+		};
+		93B984FF21FE15BB004ABFD2 /* SyncUsecase */ = {
+			isa = PBXGroup;
+			children = (
+				930FA1BC21D93CC900CE24A4 /* SyncDatabaseUsecase.swift */,
+			);
+			path = SyncUsecase;
+			sourceTree = "<group>";
+		};
 		93CE782021EB865D00A54B04 /* Quize */ = {
 			isa = PBXGroup;
 			children = (
@@ -303,18 +353,11 @@
 		93EE701C21D1182B00728013 /* Usecase */ = {
 			isa = PBXGroup;
 			children = (
-				93EE702721D3577F00728013 /* FetchRemoteWordUsecase.swift */,
-				930FA1C021D9FC5200CE24A4 /* FetchLocalWordUsecase.swift */,
-				93EE703321D5336B00728013 /* SaveRemoteWordUsecase.swift */,
-				930FA1C621DA7EA900CE24A4 /* SaveLocalWordUsecase.swift */,
-				930FA1BC21D93CC900CE24A4 /* SyncDatabaseUsecase.swift */,
-				930FA1C821DA8D3A00CE24A4 /* DeleteLocalWordUsecase.swift */,
-				930FA1CA21DB4BFB00CE24A4 /* UpdateLocalWordUsecase.swift */,
-				930FA1CC21DB862500CE24A4 /* FetchNumberOfUpdatedWordUsecase.swift */,
-				930FA1CE21DB87F100CE24A4 /* FetchNumberOfDeletedWordUsecase.swift */,
-				930FA1EB21DFC69A00CE24A4 /* FetchLatestSyncTimeUsecase.swift */,
-				930FA1ED21DFC6AC00CE24A4 /* UpdateLatestSyncTimeUsecase.swift */,
-				9316016E21E2C239004891C3 /* FetchAllLocalTagsUsecase.swift */,
+				93B984FF21FE15BB004ABFD2 /* SyncUsecase */,
+				93B984FE21FE15B2004ABFD2 /* DeleteUsecase */,
+				93B984FD21FE15A4004ABFD2 /* UpdateUsecase */,
+				93B984FC21FE1596004ABFD2 /* SaveUsecase */,
+				93B984FB21FE157E004ABFD2 /* FetchUsecase */,
 			);
 			path = Usecase;
 			sourceTree = "<group>";
@@ -488,6 +531,7 @@
 				930FA1BD21D93CC900CE24A4 /* SyncDatabaseUsecase.swift in Sources */,
 				938CEC5421CFF0790035B80A /* HomeViewController.swift in Sources */,
 				930FA1B921D9330E00CE24A4 /* RMWordItem.swift in Sources */,
+				93B9850121FE15FF004ABFD2 /* FetchTotalLocalWordCountUsecase.swift in Sources */,
 				9352D9E521CFFE460031FF15 /* TagItemCell.swift in Sources */,
 				930FA1E821DF886C00CE24A4 /* SyncAnimationView.swift in Sources */,
 				930FA1C321DA039600CE24A4 /* Reachability.swift in Sources */,
